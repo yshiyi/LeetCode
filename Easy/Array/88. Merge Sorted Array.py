@@ -73,20 +73,19 @@ class Solution(object):
                   In the second loop, I put any left elements in nums2 (they are greater then all elements in nums1) to the new array.
                   At the end, we transfer all elements from the new array to nums1.
         '''
-        # arr= []
-        #
-        # index=0
-        # for i in range(m):
-        #     if index < n and nums1[i] < nums2[index]:
-        #         arr.append(nums1[i])
-        #     else:
-        #         while index < n and nums2[index] < nums1[i]:
-        #             arr.append(nums2[index])
-        #             index += 1
-        #         arr.append(nums1[i])
-        #
-        # for i in range(index,n):
-        #     arr.append(nums2[i])
-        # for j in range(len(arr)):
-        #     nums1[j] = arr[j]
-        # return nums1
+        arr= []
+        index=0
+        for i in range(m):
+            if index < n and nums1[i] < nums2[index]:
+                arr.append(nums1[i])
+            else:
+                while index < n and nums2[index] < nums1[i]:
+                    arr.append(nums2[index])
+                    index += 1
+                arr.append(nums1[i])
+        
+        for i in range(index,n):
+            arr.append(nums2[i])
+        for j in range(len(arr)):
+            nums1[j] = arr[j]
+        return nums1
