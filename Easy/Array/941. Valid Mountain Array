@@ -31,9 +31,9 @@ class Solution(object):
         """
         
         '''
-        Method: At the begnning, we assume the valley of the array is at the last position.
-                For each element in array, we check if this one is the valley. If so, we update valley_index and switch off flag.
-                Just in case if the array is non-decreasing, the valley_index will be remain the same as the initial value at the end.
+        Method1 : At the begnning, we assume the valley of the array is at the last position.
+                  For each element in array, we check if this one is the valley. If so, we update valley_index and switch off flag.
+                  Just in case if the array is non-decreasing, the valley_index will be remain the same as the initial value at the end.
         '''
         valley_index = len(A)  # Initialize the index of valley
         flag = True  # When flag is True, we need to update the index of valley
@@ -54,4 +54,26 @@ class Solution(object):
         if valley_index == len(A):
             Mountain = False
         return Mountain
+        
+        
+        '''
+        Method 2: At first, we walk up from left to right, and save the index when we reach the peak.
+                  If the peak is at the start or at the end, it is not a mountain.
+                  After we reach the peak, we keep walking down to the right.
+                  If we stop at the end, then it is a mountain.
+        '''
+        i = 0
 
+        # walk up
+        while i < N = len(A) - 1 and A[i] < A[i+1]:
+            i += 1
+
+        # peak can't be first or last
+        if i == 0 or i == N = len(A) - 1:
+            return False
+
+        # walk down
+        while i < N = len(A) - 1 and A[i] > A[i+1]:
+            i += 1
+
+        return i == N = len(A)-1
