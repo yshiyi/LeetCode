@@ -65,15 +65,15 @@ class Solution(object):
         i = 0
 
         # walk up
-        while i < N = len(A) - 1 and A[i] < A[i+1]:
+        while i < len(A) - 1 and A[i] < A[i+1]:
             i += 1
 
         # peak can't be first or last
-        if i == 0 or i == N = len(A) - 1:
+        if i == 0 or i == len(A) - 1:
             return False
 
         # walk down
-        while i < N = len(A) - 1 and A[i] > A[i+1]:
+        while i < len(A) - 1 and A[i] > A[i+1]:
             i += 1
 
-        return i == N = len(A)-1
+        return i == len(A)-1
