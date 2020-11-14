@@ -1,5 +1,6 @@
 '''
 1299. Replace Elements with Greatest Element on Right Side
+Array
 
 Description:
 Given an array arr, replace every element in that array with the greatest element among the elements to its right, 
