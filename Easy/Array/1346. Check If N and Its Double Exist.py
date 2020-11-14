@@ -1,5 +1,6 @@
 '''
 1346. Check If N and Its Double Exist
+Array
 
 Description:
 Given an array arr of integers, check if there exists two integers N and M 
