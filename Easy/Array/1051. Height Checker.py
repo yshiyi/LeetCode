@@ -1,5 +1,6 @@
 '''
 1051. Height Checker
+Array
 
 Description:
 Students are asked to stand in non-decreasing order of heights for an annual photo.
