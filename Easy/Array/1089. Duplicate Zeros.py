@@ -1,5 +1,6 @@
 '''
 1089. Duplicate Zeros
+Array
 
 Description:
 Given a fixed length array arr of integers, duplicate each occurrence of zero, 
