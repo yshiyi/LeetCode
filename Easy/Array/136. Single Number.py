@@ -1,5 +1,6 @@
 '''
 136. Single Number
+Hash table, Bit manipulation
 
 Description:
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
