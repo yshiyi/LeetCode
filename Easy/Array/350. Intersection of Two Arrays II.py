@@ -1,5 +1,6 @@
 '''
 350. Intersection of Two Arrays II
+Hash Table, Two Pointers, Binary Search, Sort
 
 Description:
 Given two arrays, write a function to compute their intersection.
