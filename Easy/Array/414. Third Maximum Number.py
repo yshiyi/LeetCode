@@ -1,5 +1,6 @@
 '''
 414. Third Maximum Number
+Array
 
 Description:
 Given a non-empty array of integers, return the third maximum number in this array. 
