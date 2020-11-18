@@ -1,5 +1,6 @@
 '''
 905. Sort Array By Parity
+Array
 
 Description:
 Given an array A of non-negative integers, return an array consisting of all the even elements of A, 
@@ -23,7 +24,7 @@ class Solution(object):
         '''
         Method: Create two pointers.
                 The first pointer sweeps the entire array and searches for the even elements.
-                The second pointer counts the number of enven numbers. It stops at the odd element positions.
+                The second pointer counts the number of even numbers. It stops at the odd element positions.
         '''
         count = 0
         for i in range(len(A)):
