@@ -1,0 +1,150 @@
+This is a brief summary of all the problems in this folder.
+
+The typical design of built-in hash table is:
+  1. The key value can be any hashable type. And a value which belongs to a hashable type will have a hashcode. 
+     This code will be used in the mapping function to get the bucket index.
+  2. Each bucket contains an array to store all the values in the same bucket initially.
+  3. If there are too many values in the same bucket, these values will be maintained in a height-balanced binary search tree instead.
+The average time complexity of both insertion and search is still O(1). And the time complexity in the worst case is O(logN) for 
+both insertion and search by using height-balanced BST. It is a trade-off between insertion and search.
+
+####################
+Hash set:
+####################
+The hash set is one of the implementations of a set which is a data structure to store no repeated values. 
+Therefore, typically, a hash set is used to check if a value has ever appeared or not.
+hashset = set() # Initialize a hash set
+hashset.add(1)  # Add a new key
+hashset.remove(1)  # Remove a key
+hashset.clear  # Clear the hash set
+
+####################
+Hash map:
+####################
+The hash map is one of the implementations of a map which is used to store (key, value) pairs.
+Scenario I: When we need more information rather than only the key. Then we can build a mapping relationship between key and information by hash map.
+Scenario II: To aggregate all the information by key.
+hashmap = {}  # Initialize a hash map
+hashmap.pop('key', None)  # Return hashmap['key'] if key exists in the dictionary, and None otherwise
+del hashmap['key']  # To delete a key that is guaranteed to exist
+hashmap['pi'] = 3.1415 # Create a new key
+hashmap.clear()  # Clear the hash map
+
+####################
+Design the key
+####################
+1. When the order of each element in the string/array doesn't matter, you can use the sorted string/array as the key.
+   Keep in mind that a list can't be used as a key of a dictionary. We need to convert it to a string
+2. If you only care about the offset of each value, usually the offset from the first value, you can use the offset as the key.
+   e.g., (x0, x1, x2) --> (x0-x0, x1-x0, x2-x0)
+3. In a tree, you might want to directly use the TreeNode as key sometimes. But in most cases, the serialization of the subtree might be a better idea.
+4. In a matrix, you might want to use the row index or the column index as key.
+5. In a Sudoku, you can combine the row index and the column index to identify which block this element belongs to.
+   e.g., create a list contains 9 dictionaries
+   rows = [{} for i in range(9)]
+   columns = [{} for i in range(9)]
+   boxes = [{} for i in range(9)]
+6. Sometimes, in a matrix, you might want to aggregate the values in the same diagonal line.
+
+
+####################
+202. Happy Number
+Hash Table, Math
+Write an algorithm to determine if a number n is "happy". Replace the number by the sum of the squares of its digits. 
+If it is 1 at the end, then it is a happy number.
+Method: Creat a set to hold the numbers have seen. If the number has been seen before, the process will be an infinit loop and return false.
+
+########################################
+205. Isomorphic Strings
+Hash Table
+Two strings are isomorphic if the characters in s can be replaced to get t.
+Method : The goal is to check the pattern of two strings. Specifically, the repeated characters must appear at the same position.
+         Use zip() to combine two strings. Create two dictionaies to save the characters and their position.
+         Two characters must be both in the dictionaries or not. Otherwise, return false.
+         When encounter a seen character, check the previous position it appears before. If not the same, return false.
+
+########################################
+219. Contains Duplicate II
+Array, Hash Table
+Given an array of integers and an integer k, 
+find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and 
+the absolute difference between i and j is at most k.
+Method: If there are more than two duplicates, check if the difference between two indices is less than k.
+        Create three dictionaries.
+        The 1st one contains the char first time seen.
+        The 2nd one contains the char that appears in the 1st dic.
+        The 3rd one contains the minimum difference of the indices of two seen characters. 
+        At the end, remember to check the len(result.values()) in case there is no repeated char.
+
+########################################
+249. Group Shifted Strings
+Hash Table
+Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd". 
+We can keep "shifting" which forms the sequence: "abc" -> "bcd" -> ... -> "xyz" or "adg -> beh -> cfi ..."
+Method: The basic idea is to convert alphabet to integer by using ord(), e.g. ord('a') -> 97, chr(97) -> 'a'.
+        We use ord('a') - 97 to convert 'a' to 0.
+        Note that 'abc' -> 0,1,2, 'bcd' -> 1,2,3 and 'xyz' -> 23,24,25. If we subtract the first number from the list,
+          we can get  'abc' -> 0,1,2, 'bcd' -> 0,1,2 and 'xyz' -> 0,1,2
+        Notice that the successive letter of 'z' is 'a'. 'az' -> 0,25 and 'ba' -> 1,0.
+          If we subtract 1 from 1,0, we get 0, -1. In this case, we can take the modulus of 26.
+          0 % 26 = 0, -1 % 26 = 25.
+        Note: A list can't be a key in a dictionary. String is okay. 
+        
+        def convertWord(self, word):
+            L_word = []
+            for char in word:
+                L_word.append(ord(char))
+            L_word = [(num - L_word[0]) % 26 for num in L_word]
+            L_str = ''
+            for num in L_word:
+                L_str += str(num)
+            return L_str
+
+########################################
+349. Intersection of Two Arrays
+Hash Table, Two Pointers, Binary Search, Sort
+Given two arrays, write a function to compute their intersection.
+Method: Convert both nums1 and nums2 to set.
+        Use set(A).intersection(B) (or set1 & set2) to obtain the intersection
+
+########################################
+387. First Unique Character in a String
+Hash Table, String
+Given a string, find the first non-repeating character in it and return its index. 
+If it doesn't exist, return -1.
+Method: Create two dictionaries.
+        The 1st one contains the unseen (first time seen) char.
+        The 2nd one contains the ones have seen (contained in the 1st dictionary).
+        If len(seen.keys()) != 0, then return min(seen.values())
+
+########################################
+49. Group Anagrams
+Hash Table, String
+Given an array of strings strs, group the anagrams together. 
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase.
+Method: The basic idea is to compare the sorted string.
+        Create a dictionary. The key is the sorted string and the value is the original strin.
+        Note, sorted() returns a list. We need to convert this list to string.
+        The value of a dictionary can be a list. We need
+        if sorted_word not in result:
+            result[sorted_word] = [word]
+        else:
+            result[sorted_word] = result[sorted_word] + [word]
+
+########################################
+599. Minimum Index Sum of Two Lists
+Hash Table
+Find out the common interest between two lists with the least list index sum. 
+Method : Convert both lists to dictionary by using dict(zip(list, len(list)))
+         If the word is also in list2, we then check if the summation of two values is less than min.
+         If so, we reset the result and save the word to result.
+         If the sum is equal to the min, we append the result.
+
+
+
+
+
+
+
+
+
