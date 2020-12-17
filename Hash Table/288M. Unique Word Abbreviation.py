@@ -1,5 +1,5 @@
 """
-288. Unique Word Abbreviation
+288M. Unique Word Abbreviation
 Hash Table, Design
 
 Description:
