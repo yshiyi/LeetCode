@@ -45,7 +45,7 @@ class Solution(object):
         '''
         ans = collections.defaultdict(list)
         for s in strs:
-            ans[tuple(sorted(s))].append(s)
+            ans[str(sorted(s))].append(s)
         return ans.values()
         
         '''
@@ -57,7 +57,8 @@ class Solution(object):
         if len(strs) < 1:
             return [['']]
         for word in strs:
-            sorted_word = self.toString(sorted(word))
+            #  sorted_word = self.toString(sorted(word))
+            sorted_word = str(sorted(word))
             if sorted_word not in result:
                 result[sorted_word] = [word]
             else:
