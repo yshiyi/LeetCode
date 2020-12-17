@@ -1,5 +1,5 @@
 '''
-249. Group Shifted Strings
+249M. Group Shifted Strings
 Hash Table
 
 Description:
