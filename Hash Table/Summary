@@ -1,5 +1,26 @@
 This is a brief summary of all the problems in this folder.
 
+########### Sliding window ###########
+219. Contains Duplicate II
+3M. Longest Substring Without Repeating Characters
+
+########### collections ###########
+A. collections.defaultdict()
+   collections.defaultdict(list) - 288M. Unique Word Abbreviation, 49M. Group Anagrams
+   collections.defaultdict(int) - 454M. 4Sum II
+B. collections.Counter() - 347M. Top K Frequent Elements, 387. First Unique Character in a String, 771. Jewels and Stones
+
+
+########### Quickselect, a.k.a. Hoare's selection algorithm ###########
+347M. Top K Frequent Elements
+Quickseelct is a textbook algorithm typicaly used to solve the problems "find kth something": 
+kth smallest, kth largest, kth most frequent, kth less frequent, etc.
+It has O(N) average time complexity, and its worst case time complexity is O(N^2).
+Randomly select an element, and move less frequent elements to the left and others to the right.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 The typical design of built-in hash table is:
   1. The key value can be any hashable type. And a value which belongs to a hashable type will have a hashcode. 
      This code will be used in the mapping function to get the bucket index.
@@ -7,6 +28,7 @@ The typical design of built-in hash table is:
   3. If there are too many values in the same bucket, these values will be maintained in a height-balanced binary search tree instead.
 The average time complexity of both insertion and search is still O(1). And the time complexity in the worst case is O(logN) for 
 both insertion and search by using height-balanced BST. It is a trade-off between insertion and search.
+
 
 ####################
 Hash set:
@@ -45,43 +67,74 @@ Design the key
    columns = [{} for i in range(9)]
    boxes = [{} for i in range(9)]
 6. Sometimes, in a matrix, you might want to aggregate the values in the same diagonal line.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-####################
+################################################################################
+170. Two Sum III — Data structure design
+Hash Table
+Description:
+        Design and implement a TwoSum class. It should support the following operations: add and find.
+        add - Add the number to an internal data structure.
+        find - Find if there exists any pair of numbers which sum is equal to the value.
+Method: 
+        Create two sets.
+        The first set contains all the elements that need to be added.
+        The second set is used for function find. We sweep all the element in set1 and check if we have seen num - n.
+        If not, we then save n to set2. If yes, return true.
+
+
+################################################################################
 202. Happy Number
 Hash Table, Math
-Write an algorithm to determine if a number n is "happy". Replace the number by the sum of the squares of its digits. 
-If it is 1 at the end, then it is a happy number.
-Method: Creat a set to hold the numbers have seen. If the number has been seen before, the process will be an infinit loop and return false.
+Description:
+        Write an algorithm to determine if a number n is "happy". Replace the number by the sum of the squares of its digits. 
+        If it is 1 at the end, then it is a happy number.
+Method: 
+        Creat a set to hold the numbers have seen. If the number has been seen before, the process will be an infinit loop and return false.
 
-########################################
+
+################################################################################
 205. Isomorphic Strings
 Hash Table
-Two strings are isomorphic if the characters in s can be replaced to get t.
-Method : The goal is to check the pattern of two strings. Specifically, the repeated characters must appear at the same position.
-         Use zip() to combine two strings. Create two dictionaies to save the characters and their position.
-         Two characters must be both in the dictionaries or not. Otherwise, return false.
-         When encounter a seen character, check the previous position it appears before. If not the same, return false.
+Description:
+        Two strings are isomorphic if the characters in s can be replaced to get t.
+Method: 
+        The goal is to check the pattern of two strings. Specifically, the repeated characters must appear at the same position.
+        Use zip() to combine two strings. Create two dictionaries to save the characters and their position.
+        Two characters must be both in the dictionaries or not. Otherwise, return false.
+        When encounter a seen character, check the previous position it appears before. If not the same, return false.
 
-########################################
+
+################################################################################
 219. Contains Duplicate II
-Array, Hash Table
-Given an array of integers and an integer k, 
-find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and 
-the absolute difference between i and j is at most k.
-Method: If there are more than two duplicates, check if the difference between two indices is less than k.
-        Create three dictionaries.
-        The 1st one contains the char first time seen.
-        The 2nd one contains the char that appears in the 1st dic.
-        The 3rd one contains the minimum difference of the indices of two seen characters. 
-        At the end, remember to check the len(result.values()) in case there is no repeated char.
+Array, Hash Table, Sliding Window
+Description:
+          Given an array of integers and an integer k, 
+          find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and 
+          the absolute difference between i and j is at most k.
+Method1 : 
+          If there are more than two duplicates, check if the difference between two indices is less than k.
+          Create three dictionaries.
+          The 1st one contains the char first time seen.
+          The 2nd one contains the char that appears in the 1st dic, i.e. second time seen.
+          The 3rd one contains the minimum difference of the indices of two seen characters. 
+          At the end, remember to check the len(result.values()) in case there is no repeated char.
+Method 2:   
+          Using sliding window,
+          Make a sliding window with size k, and check if there is any duplicates in the window.
+          If the length of the window exceeds k, then remove the first number in the window.
 
-########################################
-249. Group Shifted Strings
+
+################################################################################
+249M. Group Shifted Strings
 Hash Table
-Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd". 
-We can keep "shifting" which forms the sequence: "abc" -> "bcd" -> ... -> "xyz" or "adg -> beh -> cfi ..."
-Method: The basic idea is to convert alphabet to integer by using ord(), e.g. ord('a') -> 97, chr(97) -> 'a'.
+Description:
+        Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd". 
+        We can keep "shifting" which forms the sequence: "abc" -> "bcd" -> ... -> "xyz" or "adg -> beh -> cfi ..."
+Method: 
+        The basic idea is to convert alphabet to integer by using ord(), e.g. ord('a') -> 97, chr(97) -> 'a'.
         We use ord('a') - 97 to convert 'a' to 0.
         Note that 'abc' -> 0,1,2, 'bcd' -> 1,2,3 and 'xyz' -> 23,24,25. If we subtract the first number from the list,
           we can get  'abc' -> 0,1,2, 'bcd' -> 0,1,2 and 'xyz' -> 0,1,2
@@ -100,50 +153,265 @@ Method: The basic idea is to convert alphabet to integer by using ord(), e.g. or
                 L_str += str(num)
             return L_str
 
-########################################
+
+################################################################################
+288M. Unique Word Abbreviation
+Hash Table, Design
+Desription:
+        An abbreviation of a word follows the form <first letter><number of characters><last letter>.
+        Assume you have a dictionary and given a word, find whether its abbreviation is unique in the dictionary. 
+        A word's abbreviation is unique if no other word from the dictionary has the same abbreviation.
+Method: 
+        At first, we need to find out the conditions to determine if a word's abbreviation is unique in the dictionary.
+        There are only two conditions we return true for isUnique("word"):
+             1. The abbreviation of the word does not appear in the dictionary.
+             2. The abbreviation of the word appears in the dictionary and the word appears one and only once in the dictionary.
+                In other words, if there are some other words have the same abbreviation, then return false.
+        Therefore, we need to create a dictionary in which the key is the abbreviation and the value is a set which contains words.
+        self.dic = defaultdict(list)
+
+
+################################################################################
+347M. Top K Frequent Elements
+Hash Table, Heap
+Description:
+          Given a non-empty array of integers, return the k most frequent elements.
+Method 1: 
+          Create a dictionary to the hold the distinct element and its frequency, i.e., element: frequency.
+          Sort the dictionary.values(), and add the first k keys to the answer.
+          Remember to remove the key from the dictionary after the insertion.
+          dic.keys()[dic.values().index(Val)]  <-  Find the key from the value
+Method 2: 
+          Similar to Method 1.
+          Use collections.Counter to convert a list to a counter. 
+          A counter is a kind of dictionary in which the keys are the distinct elements and values are their frequencies.
+          Then use heapq.nlargest(n, iterable, key) to extract the n elements with most frequency.
+          heapq.nlargest(n, iterable, key) return a list with the n largest elements from the dataset defined by iterable. 
+          key, if provided, specifies a function of one argument that is used to extract a comparison key from each element in iterable.
+          In this case, key=count.get obtains the value of each element in count.keys() and find the largest n values.
+          heapq.nlargest(k, count.keys(), key=count.get)
+
+          The property of this heap structure in Python is that each time the smallest of heap element is popped(min heap). 
+          Whenever elements are pushed or popped, heap structure in maintained. 
+          l = [5, 7, 9, 4, 3] 
+          # using heapify() to convert list into heap 
+          heapq.heapify(l)  # print(list(l)) -> [3, 4, 9, 5, 7]
+          # insert a value to heap
+          heapq.heappush(l, 10) # print(list(l)) -> [3, 4, 9, 5, 7, 10]
+          # pop the min value (which is 3) from heap
+          heapq.heappop(l)  # print(list(l)) -> [4, 5, 9, 10, 7]
+          # pop and return the smallest item from the heap, and also push the new item.
+          heapq.heapreplace(l, 2)  # print(list(l)) -> [2, 5, 9, 10, 7]
+Method 3: 
+          Use quickselect, a.k.a. Hoare's selection algorithm.
+          Quickseelct is a textbook algorithm typicaly used to solve the problems "find kth something": 
+          kth smallest, kth largest, kth most frequent, kth less frequent, etc.
+          It has O(N) average time complexity, and its worst case time complexity is O(N^2).
+          Randomly select an element, and move less frequent elements to the left and others to the right.
+          
+          # Count the frequency of each distinct element in nums
+          count = Counter(nums)
+          # Save the distinct elements in a list
+          dis_nums = list(count.keys())
+          
+          # Define partition() to sort nums.
+          # Elements with less frequency than pivot are moved to left, those with larger frequency are moved to right.
+          def partition(left, right, pivot_index):
+              pivot_freq = count[dis_nums[pivot_index]]
+              # Move the pivot to the right
+              dis_nums[pivot_index], dis_nums[right] = dis_nums[right], dis_nums[pivot_index]
+
+              # store_index points to the position where the pivot will be moved to.
+              # Specifically, it points to the position next to the elements with less frequency.
+              store_index = left
+              for i in range(left, right):
+                  if count[dis_nums[i]] < pivot_freq:
+                      dis_nums[i], dis_nums[store_index] = dis_nums[store_index], dis_nums[i]
+                      store_index += 1
+
+              # Move pivot to position of store_index
+              dis_nums[store_index], dis_nums[right] = dis_nums[right], dis_nums[store_index]
+              return store_index
+
+
+################################################################################
 349. Intersection of Two Arrays
 Hash Table, Two Pointers, Binary Search, Sort
-Given two arrays, write a function to compute their intersection.
-Method: Convert both nums1 and nums2 to set.
+Description:
+        Given two arrays, write a function to compute their intersection.
+Method: 
+        Convert both nums1 and nums2 to set to remove duplicates.
         Use set(A).intersection(B) (or set1 & set2) to obtain the intersection
 
-########################################
+
+################################################################################
+359. Logger Rate Limiter
+Hash Table
+Description:
+        Design a logger system that receive stream of messages along with its timestamps, 
+        each message should be printed if and only if it is not printed in the last 10 seconds.
+        Given a message and a timestamp (in seconds granularity), return true if the message should be printed in the given timestamp, otherwise returns false.
+        It is possible that several messages arrive roughly at the same time.
+Method: 
+        Create a dictionary to hold the message and its time stamp.
+        If the message has never been seen before or it doesn't show up in the last 10 steps, return true.
+            (if message not in logger or timestamp - logger[message] >= 10:)
+        Otherwise, return false.
+
+
+################################################################################
+380. Insert Delete GetRandom O(1)
+Array, Hash Table, Design
+Description:
+        Implement the RandomizedSet class:
+        1. bool insert(int val) Inserts an item val into the set if not present. Returns true if the item was not present, false otherwise.
+        2. bool remove(int val) Removes an item val from the set if present. Returns true if the item was present, false otherwise.
+        3. int getRandom() Returns a random element from the current set of elements (it's guaranteed that at least one element exists when this method is called). 
+           Each element must have the same probability of being returned.
+        Follow up: Could you implement the functions of the class with each function works in average O(1) time?
+Method: 
+        To insert or remove a value, we need to use hash table which takes O(1) operation time.
+        To randomly select a value, we need to use array which takes O(1) operation time. Hash table doesn't support such function.
+        Therefore, we need to create a array to save the unique values. 
+        We also need to create a dictionary in which the key is the unique value and the value is the index of that value in the array.
+        
+        To insert a value, if the value is not in the dictionary, we first save the value to the array.
+        And we save the value and the current length of the array in the dictionary. The current length of the array represents the index.
+        
+        As to remove a value, if we remove a value from the dictionary, the index will not be consistent.
+        In order to address this problem, we swap the last key and the target key in the dictionary and remove the target key.
+        We first determine the last key value in the array, nums[-1], and find out the index of the target value, Dic[val].
+        We then swap the last value and the target value in nums, nums[-1], nums[Dic[val]] = nums[Dic[val]], nums[-1].
+        Change the index of the last one in dictionary, Dic[nums[-1]] = Dic[val].
+        Finally, remove the last value from the array and remove the key [val] from the dictionary, nums.pop(-1)/del nums[-1], del Dic[val].
+        
+        To randomly select a value, we only need to randomly select one from the array nums using random.choice(nums).
+        This takes O(1) operation time.
+
+
+################################################################################
 387. First Unique Character in a String
 Hash Table, String
-Given a string, find the first non-repeating character in it and return its index. 
-If it doesn't exist, return -1.
-Method: Create two dictionaries.
-        The 1st one contains the unseen (first time seen) char.
-        The 2nd one contains the ones have seen (contained in the 1st dictionary).
-        If len(seen.keys()) != 0, then return min(seen.values())
+Description:
+        Given a string, find the first non-repeating character in it and return its index. 
+        If it doesn't exist, return -1.
+Method: 
+        Create two dictionaries.
+        The 1st one contains the unseen (first time seen) char. It only contains the unique characters.
+        The 2nd one contains the ones have seen (second time seen).
+        If the character doesn't belong to either dic, then it is saved to the 1st dic.
+        If the character is in the 1st and not in the 2nd, then it is saved to the 2nd and removed from the 1st.
+        If len(Unseen.keys()) != 0, then return min(Unseen.values())
+        This method is much faster than using Counter().
 
-########################################
-49. Group Anagrams
+
+################################################################################
+3M. Longest Substring Without Repeating Characters
+Hash Table, Two Pointers, String, Sliding Window
+Description:
+          Given a string s, find the length of the longest substring without repeating characters.
+Method 1: 
+          Brute force
+          Check all the elements one by one to see if there is any duplicate character.
+          There is only one pointer and two while loops in this method. 
+          Sweep the string from the beginning, and save the character and its position in a dictionary.
+          If we meet a duplicate character. We update the max_len with max_len = max(max_len, len(dic.keys())).
+          We then move the pointer back to its previous position + 1 and clear the dictionary.
+Method 2:
+          Slideing window
+          A sliding window is an abstract concept commonly used in array/string problems. 
+          A window is a range of elements in the array/string which usually defined by the start and end indices, i.e. [i, j)[i,j).
+          A sliding window is a window "slides" its two boundaries to the certain direction.
+
+          Notice that we use two while loops in method 1. We can improve that method by using two pointers.
+          Specifically, we don't need to move the pointer a little by little. 
+          We can skip all the elements in the sliding window and let it be j+1 directly.
+          The difference between two pointers defines the length of the substring.
+          The pointer p2 sweeps the whole string.
+          The pointer p1 points to the first character at the beginning and will move to max(Dic[s[p2]], p1) when there is a duplicate character.
+          Notice, we let Dic[s[p2]] = p2 + 1. If we let p1  = max(Dic[s[p2]], p1) + 1, p1 will shift by 1 when we meet a duplicate character.
+
+
+################################################################################
+454M. 4Sum II
+Hash Table, Binary Search
+Description:
+          Given four lists A, B, C, D of integer values, compute how many tuples (i, j, k, l) there are such that A[i] + B[j] + C[k] + D[l] is zero.
+Method 1: 
+          Create a dictionary to store the combinations of A and B. 
+          The key is the possible summation and the value is the number of appearances.
+                Dic[A(i)+B(j)] = Dic.get(A(i)+B(j), 0) + 1
+          Use dic.get(value, 0). Note, 0 is optional and is the return value when the specific key does not exist.
+Method 2: 
+          Similar idea to method 1.
+          Use collections.defaultdict to initialize a dictionary.
+                Dic = defaultdict(int), Dic[A(i) + B(j)] += 1, count += Dic[-(C(i)+D(j))]
+          Faster than method 1.
+
+
+################################################################################
+49M. Group Anagrams
 Hash Table, String
-Given an array of strings strs, group the anagrams together. 
-An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase.
-Method: The basic idea is to compare the sorted string.
-        Create a dictionary. The key is the sorted string and the value is the original strin.
-        Note, sorted() returns a list. We need to convert this list to string.
-        The value of a dictionary can be a list. We need
-        if sorted_word not in result:
-            result[sorted_word] = [word]
-        else:
-            result[sorted_word] = result[sorted_word] + [word]
+Description:
+          Given an array of strings strs, group the anagrams together. 
+          An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase.
+Method 1: 
+          The basic idea is to compare the sorted string.
+          Create a dictionary. The key is the sorted string and the value is the original string.
+          Note, sorted() returns a list. We need to convert this list to string. str(sorted(word))
+          The value of a dictionary can be a list. We need
+          if sorted_word not in result:
+              result[sorted_word] = [word]
+          else:
+              result[sorted_word] = result[sorted_word] + [word]
+Method 2:
+          Use collections to make a dictionary with list
+                ans = collections.defaultdict(list)
+                ans[str(sorted(word))].append(word)
+          
+          >>> s = [('yellow', 1), ('blue', 2), ('yellow', 3), ('blue', 4), ('red', 1)]
+          >>> d = defaultdict(list)
+          >>> for k, v in s:
+          ...     d[k].append(v)
+          ...
+          >>> d.items()
+          [('blue', [2, 4]), ('red', [1]), ('yellow', [1, 3])]
 
-########################################
+
+################################################################################
 599. Minimum Index Sum of Two Lists
 Hash Table
-Find out the common interest between two lists with the least list index sum. 
-Method : Convert both lists to dictionary by using dict(zip(list, len(list)))
-         If the word is also in list2, we then check if the summation of two values is less than min.
-         If so, we reset the result and save the word to result.
-         If the sum is equal to the min, we append the result.
+Description:
+        Find out the common interest between two lists with the least list index sum. 
+Method: 
+        Convert both lists to dictionary by using dict(zip(list, len(list)))
+        If the word is also in list2, we then check if the summation of two values is less than min.
+        If so, we clear the result and save the word to result.
+        If the sum is equal to the min, we append the result.
 
 
+################################################################################
+652M. Find Duplicate Subtrees
+Tree
+Description:
+        Given the root of a binary tree, return all duplicate subtrees.
+        For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+        Two trees are duplicate if they have the same structure with the same node values.
 
 
-
+################################################################################
+771. Jewels and Stones
+Hash Table
+Description:
+          You're given strings J representing the types of stones that are jewels, and S representing the stones you have.  
+          Each character in S is a type of stone you have.  You want to know how many of the stones you have are also jewels.
+          The letters in J are guaranteed distinct, and all characters in J and S are letters. 
+          Letters are case sensitive, so "a" is considered a different type of stone from "A".
+Method 1: 
+          Check each stone, if it is a jewel.
+Method 2:
+          Use collection2.Counter() to count the types of stones.
+          Check each stone, if is is a jewel. Slower than method 1.
 
 
 
