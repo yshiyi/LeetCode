@@ -67,18 +67,18 @@ class Solution(object):
         return False
     
     
-    """
-    Same method with less code
-    """
-		if not head:
-		    return False
-		fast, slow = head, head
-		# don' t need to check the slow pointer because the fast pointer can reach to the end of the list faster 
-		# if the list does't have a cycle.  
-		while fast and fast.next:
+	"""
+	Same method with less code
+    	"""
+	if not head:
+	    return False
+	fast, slow = head, head
+	# don' t need to check the slow pointer because the fast pointer can reach to the end of the list faster 
+	# if the list does't have a cycle.  
+	while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
             if fast == slow:
                 return True
-		return False
+	return False
 
