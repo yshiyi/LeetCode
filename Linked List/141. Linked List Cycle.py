@@ -52,6 +52,8 @@ class Solution(object):
             return False
         
         if head.next and head.next.next:
+	# if head and head.next:
+	# if head.next:
             slow = head.next
             fast = head.next.next
         
