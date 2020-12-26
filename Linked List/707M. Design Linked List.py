@@ -300,7 +300,144 @@ class MyLinkedList(object):
             temp2.prev = current.prev
 
         self.length -= 1
-        
+
+
+############################################################################################
+############################ Doubly Linked List ############################################
+############################ Using head and tail ###########################################
+############################################################################################
+class ListNode(object):
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+        self.prev = None
+
+
+class MyLinkedList(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        # self.head = ListNode(None)
+        # self.length = 0
+        self.head, self.tail = ListNode(None), ListNode(None)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.length = 0
+
+    def get(self, index):
+        """
+        Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+        :type index: int
+        :rtype: int
+        """
+        if index < 0 or index >= self.length:
+            return -1
+
+        cur = self.head
+
+        for _ in range(index + 1):
+            cur = cur.next
+
+        return cur.val
+
+    def addAtHead(self, val):
+        """
+        Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        # self.addAtIndex(0, val)
+        newNode = ListNode(val)
+        temp = self.head.next
+        temp.prev = newNode
+        newNode.next = temp
+        self.head.next = newNode
+        newNode.prev = self.head
+        self.length += 1
+
+    def addAtTail(self, val):
+        """
+        Append a node of value val to the last element of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        # self.addAtIndex(self.length, val)
+        newNode = ListNode(val)
+        temp = self.tail.prev
+        temp.next = newNode
+        newNode.prev = temp
+        newNode.next = self.tail
+        self.tail.prev = newNode
+        self.length += 1
+
+    def addAtIndex(self, index, val):
+        """
+        Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+        :type index: int
+        :type val: int
+        :rtype: None
+        """
+        if index > self.length:
+            return
+        if index <= 0:
+            self.addAtHead(val)
+            return
+        elif index == self.length:
+            self.addAtTail(val)
+            return
+
+        newNode = ListNode(val)
+        cur = self.head
+        for _ in range(index + 1):
+            cur = cur.next
+        # temp = cur.next
+        # cur.next = newNode
+        # newNode.next = temp
+        # temp.prev = newNode
+        # newNode.prev = cur
+
+        temp = cur.prev
+        cur.prev = newNode
+        newNode.next = cur
+        temp.next = newNode
+        newNode.prev = temp
+
+        self.length += 1
+
+    def deleteAtIndex(self, index):
+        """
+        Delete the index-th node in the linked list, if the index is valid.
+        :type index: int
+        :rtype: None
+        """
+        if index < 0 or index >= self.length:
+            return -1
+
+        current = self.head
+        if index == 0:
+            temp = self.head.next.next
+            self.head.next = temp
+            temp.prev = self.head
+        elif index == self.length:
+            temp = self.tail.prev.prev
+            temp.next = self.tail
+            self.tail.prev = temp
+        else:
+            for _ in range(index + 1):
+                current = current.next
+            # temp = current.next.next
+            # current.next = current.next.next
+            # temp.prev = current
+            temp1 = current.prev
+            temp2 = current.next
+            temp1.next = current.next
+            temp2.prev = current.prev
+
+        self.length -= 1
+
+
 
 
 obj = MyLinkedList()
