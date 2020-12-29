@@ -112,14 +112,14 @@ Note: Unlike the singly linked list, it is easy to get the previous node in cons
 ## Review
 Let's briefly review the performance of the singly linked list and doubly linked list.
 
-They are similar in many operations:
-    1. Both of them are not able to access the data at a random position in constant time.
-    2. Both of them are able to add a new node after given node or at the beginning of the list in O(1) time.
-    3. Both of them are able to delete the first node in O(1) time.
+They are similar in many operations:\
+    1. Both of them are not able to access the data at a random position in constant time.\
+    2. Both of them are able to add a new node after given node or at the beginning of the list in O(1) time.\
+    3. Both of them are able to delete the first node in O(1) time.\
 
-But it is a little different to delete a given node (including the last node).
+But it is a little different to delete a given node (including the last node).\
     1. In a singly linked list, it is not able to get the previous node of a given node 
-       so we have to spend O(N) time to find out the previous node before deleting the given node.
+       so we have to spend O(N) time to find out the previous node before deleting the given node.\
     2. In a doubly linked list, it will be much easier because we can get the previous node with 
        the "prev" reference field. So we can delete a given node in O(1) time.
 
