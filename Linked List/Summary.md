@@ -19,9 +19,9 @@ whereas in arrays the following elements will have to be shifted.
 ### Add Operation - Singly Linked List
 If we want to add a new value after a given node prev, we should: 
 prev|prev.field  ->  cur|cur.field  ->  next|next.field
-    1. Initialize a new node cur with the given value;
-    2. Link the "next" field of cur to prev's next node next;
-    3. Link the "next" field in prev to cur.
+* Initialize a new node cur with the given value;
+* Link the "next" field of cur to prev's next node next;
+* Link the "next" field in prev to cur.
 Unlike an array, we don’t need to move all elements past the inserted element. 
 Therefore, you can insert a new node into a linked list in O(1) time complexity, which is very efficient.
 
