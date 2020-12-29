@@ -1,5 +1,5 @@
 # Linked List
-This is a brief summary of the linked list and all the problems in this folder.
+This is a brief summary of the linked list.
 
 ## What is a linked list?
 
