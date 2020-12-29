@@ -25,12 +25,12 @@ prev|prev.field  ->  cur|cur.field  ->  next|next.field
 Unlike an array, we don’t need to move all elements past the inserted element. 
 Therefore, you can insert a new node into a linked list in O(1) time complexity, which is very efficient.
 
-%%%% Add a Node at the Beginning %%%%
+%%%% Add a Node at the Beginning %%%%\
 As we know, we use the head node head to represent the whole list.
 So it is essential to update head when adding a new node at the beginning of the list.
-    1. Initialize a new node cur;
-    2. Link the new node to our original head node head.
-    3. Assign cur to head.
+* Initialize a new node cur;
+* Link the new node to our original head node head.
+* Assign cur to head.
 For example, let's add a new node 9 at the beginning of the list.
 9  ->  23  ->  6  ->  15
     1. We initialize a new node 9 and link node 9 to current head node 23.
