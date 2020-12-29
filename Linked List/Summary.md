@@ -1,7 +1,8 @@
+# Linked List
 This is a brief summary of the linked list and all the problems in this folder.
 
+## What is a linked list?
 
-############################ What is a linked list? ############################
 Each node in a singly-linked list contains not only the value but also a reference field (or a pointer) to link to the next node. 
 By this way, the singly-linked list organizes all the nodes in a sequence.
 
@@ -14,9 +15,8 @@ The benefit of linked lists is that insertion and deletion from anywhere in the 
 whereas in arrays the following elements will have to be shifted.
 
 
-############################ Singly Linked List ############################################
-############################################################################################
-############################ Add Operation - Singly Linked List ############################
+## Singly Linked List 
+### Add Operation - Singly Linked List
 If we want to add a new value after a given node prev, we should: 
 prev|prev.field  ->  cur|cur.field  ->  next|next.field
     1. Initialize a new node cur with the given value;
@@ -37,7 +37,7 @@ For example, let's add a new node 9 at the beginning of the list.
     2. Assign node 9 to be our new head
 
 
-############################ Delete Operation - Singly Linked List ############################
+### Delete Operation - Singly Linked List
 If we want to delete an existing node cur from the singly linked list, we can do it in two steps:
 prev|prev.field  ->  cur|cur.field  ->  next|next.field
     1. Find cur's previous node prev and its next node next
@@ -56,7 +56,7 @@ If we want to delete the first node, we can simply assign the next node to head.
 The linked list begins at the head node, so node 23 is no longer in our linked list.
 
 
-############################ Two-Pointer in Linked List ############################
+## Two-Pointer in Linked List
 Imagine there are two runners with different speed. If they are running on a straight path, the fast runner will first arrive at the destination. 
 However, if they are running on a circular track, the fast runner will catch up with the slow runner if they keep running.
   1. If there is no cycle, the fast pointer will stop at the end of the linked list.
@@ -79,9 +79,7 @@ There are severl things we should pay attention:
         And you have to take our first tip into consideration when you define your end conditions.
 
 
-############################################################################################
-############################ Doubly Linked List ############################################
-############################################################################################
+## Doubly Linked List
 The doubly linked list works in a similar way but has one more reference field which is known as the "prev" field. 
 With this extra field, you are able to know the previous node of the current node.
 
@@ -91,7 +89,7 @@ We can access data in the same exact way as in a singly linked list:
     3. The time complexity in the worse case will be O(N), where N is the length of the linked list.
 
 
-############################ Add Operation - Doubly Linked List ############################
+### Add Operation - Doubly Linked List
 If we want to insert a new node cur after an existing node prev, we can divide this process into two steps:
 23  ->  6  ->  15,   add 9 between 6 and 15
     1. link cur with prev and next, where next is the original next node of prev;
@@ -101,7 +99,7 @@ If we want to insert a new node cur after an existing node prev, we can divide t
 Similar to the singly linked list, both the time and the space complexity of the add operation are O(1).
 
 
-############################ Delete Operation - Singly Linked List ############################
+### Delete Operation - Singly Linked List
 If we want to delete an existing node cur from the doubly linked list, 
 we can simply link its previous node prev with its next node next.
 Since we no longer need to traverse the linked list to get the previous node, 
@@ -111,9 +109,7 @@ Note: Unlike the singly linked list, it is easy to get the previous node in cons
 
 
 
-############################################################################################
-######################################## Review ############################################
-############################################################################################
+## Review
 Let's briefly review the performance of the singly linked list and doubly linked list.
 
 They are similar in many operations:
