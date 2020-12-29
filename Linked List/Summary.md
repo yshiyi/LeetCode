@@ -40,8 +40,8 @@ For example, let's add a new node 9 at the beginning of the list.
 ### Delete Operation - Singly Linked List
 If we want to delete an existing node cur from the singly linked list, we can do it in two steps:
 prev|prev.field  ->  cur|cur.field  ->  next|next.field
-    1. Find cur's previous node prev and its next node next
-    2. Link prev to cur's next node next
+    * Find cur's previous node prev and its next node next
+    * Link prev to cur's next node next
 In our first step, we need to find out prev and next. It is easy to find out next using the reference field of cur. 
 However, we have to traverse the linked list from the head node to find out prev which will take O(N) time on average, 
 where N is the length of the linked list. So the time complexity of deleting a node will be O(N).
