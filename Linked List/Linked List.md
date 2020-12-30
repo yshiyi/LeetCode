@@ -5,6 +5,7 @@
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
     * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
+    * [5. Reverse linked list](#5-Reverse-linked-list)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -220,11 +221,45 @@ else:
    return ans.next
 ```
 
+##  5. Reverse linked list
+[206. Reverse Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
+**Description:**
+Reverse a singly linked list.\
+Example:\
+Input: 1->2->3->4->5->NULL\
+Output: 5->4->3->2->1->NULL
 
+**Method:** 
+Note, if we let temp = current and current = temp.next, then when we modify current, we also modify temp.
+But, if we let temp = current.next, then the changes on current won't affect temp.
 
+```
+# Iterative method
+head2 = None
+current = head
+while current:
+   temp = current.next
+   current.next = head2
+   head2 = current
+   current = temp
+return head2
+```
+```
+# Recursive method
+   self.head2 = None
+   return self.CreateRev(head)
 
-
-
+def CreateRev(self, head):
+   if head:
+      temp = head.next
+      head.next = self.head2
+      self.head2 = head
+      head = temp
+   else:
+      return
+   self.CreateRev(head)
+   return self.head2
+```
 
 
 
