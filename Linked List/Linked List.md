@@ -1,6 +1,6 @@
 # Linked List
 <!-- GFM-TOC -->
-* [Leetcode Linded List](#Leetcode Linded List)
+* [Leetcode Linded List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
 <!-- GFM-TOC -->
 
