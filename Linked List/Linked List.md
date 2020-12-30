@@ -2,7 +2,7 @@
 <!-- GFM-TOC -->
 * [Leetcode Linded List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
-    
+    * [2. Determine the intersection of two linked lists](#1-Determine-the-intersection-of-two-linked-lists)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -67,3 +67,53 @@ while slow != fast:
 return slow
 ```
 
+##  2. Determine the intersection of two linked lists
+[160. Intersection of Two Linked Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)
+**Description:**\
+Write a program to find the node at which the intersection of two singly linked lists begins.
+```html
+A:          a1 → a2
+                    ↘
+                      c1 → c2 → c3
+                    ↗
+B:    b1 → b2 → b3
+```
+**Method 1: Hash Table**\
+Create only one set, traverse list A first and save all the nodes in A in the set.\
+Then check every node in list B. If there is any node appears in the set, then that node is the intersection.\
+Time complexity: O(m+n)\
+Space complexity: O(m) or O(n)\
+**Method 2: Two pointers**
+<pre>
+|<-  a  ->|<-  b  ->|
+                     <-  c  ->|
+          |<-  b  ->|
+</pre>
+If there is an intersection, then the travelled distance of two pointers should be the same.
+From the figure, we can see that the only way that two pointers can meet together is that they travel through a + 2b + c.
+Specifically, when p1 reaches the end of list A, it goes back to the head of list B. Do the same to p2.
+Eventually, p1 will travel through a + b + c + b, and p2 will travel through b + c + a + b.
+We need to recorde the end of each list. If the end is not the same, then there is no intersection.
+```
+if not headA or not headB:
+   return None
+pA, pB = headA, headB
+lastA, lastB = None, None
+while pA != pB:
+   if pA:
+       pA = pA.next
+   else:
+       lastA = pA
+       pA = headB
+
+   if pB:
+       pB = pB.next
+   else:
+       lastB = pB
+       pB = headA
+
+   if lastA and lastB:
+       if lastA != lastB:
+           return None
+return pA
+```
