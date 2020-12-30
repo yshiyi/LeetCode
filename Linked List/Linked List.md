@@ -3,7 +3,8 @@
 * [Leetcode Linded List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
-    * [3. Remove element from linked lists](#3-Remove-element-from-linked-list)
+    * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
+    * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -181,6 +182,38 @@ while p1.next:
 p2.next = p2.next.next
 return head
 ```
+
+##  4. Merge two sorted linked lists
+[21. Merge Two Sorted Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.py)\
+**Description:**\
+Merge two sorted linked lists and return it as a new sorted list. 
+The new list should be made by splicing together the nodes of the first two lists.\
+Example:\
+Input: l1 = [1,2,4], l2 = [1,3,4]\
+Output: [1,1,2,3,4,4]\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
