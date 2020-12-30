@@ -628,31 +628,127 @@ return dummy.next
 A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
 Return a deep copy of the list.
 The Linked List is represented in the input/output as a list of n nodes. 
-Each node is represented as a pair of [val, random_index] where:\
-* val: an integer representing Node.val\
+Each node is represented as a pair of [val, random_index] where:
+* val: an integer representing Node.val
 * random_index: the index of the node (range from 0 to n-1) where random pointer points to, or null if it does not point to any node.
 
+Example:\
+Input: head = [[7,null],[13,0],[11,4],[10,2],[1,0]]\
+Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]
 
+**Method 1:**\
+Iterative method\
+Create a global dictionary self.visitedDict to check if the node has already been copied. The keys are the old node and values are the new node. Then swap through the whole list.\
+We copy the current node in the original list. We then copy the next and random from the original. Since we have already created the next node, we can directly move to that node.
 
+```
+def __init__(self):
+  self.visitedDict = {}
 
+def copyNode(self, node):
+  if node is None:
+      return None
+  if node in self.visitedDict:
+      return self.visitedDict[node]
+  else:
+      newNode = Node(node.val, None, None)
+      self.visitedDict[node] = newNode
+      return newNode
 
+def copyRandomList(self, head):
+   new_head = self.copyNode(cur)
+   cur2 = new_head
+   while cur:
+      cur2.next = self.copyNode(cur.next)
+      cur2.random = self.copyNode(cur.random)
+      cur = cur.next
+      cur2 = cur2.next
 
+   return new_head
+```
 
+**Method 2:**\
+Recursive method\
+In the recursive function, we first need to check if the node is none. If so, then return none.\
+Then we check if this node has already been copied before, i.e., in the self.visitedDict. If it is in the dictionary, then return the value. If it is not, create a newnode with the head.val and call the recursive function to copy the next and random.\
+This recursive function will eventually swap through all the nodes in the original list.
 
+```
+def copyRandomList(self, head):
+   if head is None:
+      return head
 
+   if head in self.visitedDict:
+      return self.visitedDict[head]
+   else:
+      # newNode = self.copyNode(head)
+      newNode = Node(head.val, None, None)
+      self.visitedDict[head] = newNode
+      newNode.next = self.copyRandomList(head.next)
+      newNode.random = self.copyRandomList(head.random)
 
+      return newNode
+```
 
+##  10. Odd even linked list
+[328. Odd Even Linked List (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)\
+**Description:**\
+Given a singly linked list, group all odd nodes together followed by the even nodes. 
+Please note here we are talking about the node number and not the value in the nodes.
+You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
 
+Example:\
+Input: 1->2->3->4->5->NULL\
+Output: 1->3->5->2->4->NULL
 
+**Method 1:**
+Two pointers\
+Create a variable to count the position.
+When the fast pointer reaches the even position, take out the next odd node.
+Then incert this odd node to the next position to where the slow pointer points.
 
+```
+if head is None:
+   return head
+cur1, cur2 = head, head
 
+p = 1
+while cur2 and cur2.next:
+   if p % 2 == 0:
+       # Take out odd node
+       temp = cur2.next
+       # Incert node
+       temp.next = cur1.next
+       cur1.next = temp
+       # Move both pointers
+       cur1 = cur1.next
+       cur2.next = cur2.next.next
+       p += 1
+   else:
+       cur2 = cur2.next
+       p += 1
 
+return head
+```
 
+**Method 2:**\
+Create two list.
+Insert the odd nodes to the odd list and insert the even nodes to the even list.
+Finally, link two list together.
 
-
-
-
-
+```
+if head is None:
+   return head
+odd, even = head, head.next
+even_head = even
+while even and even.next:
+   odd.next = odd.next.next
+   odd = odd.next
+   even.next = even.next.next
+   even = even.next
+odd.next = even_head
+return head
+```
 
 
 
