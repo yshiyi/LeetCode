@@ -62,7 +62,7 @@ class Solution(object):
         
         """
         Method 2: Create two list
-                  Insert the odd nodes to the odd list and incert the even nodes to the even list.
+                  Insert the odd nodes to the odd list and insert the even nodes to the even list.
                   Finally, link two list together.
         """
         if head is None:
