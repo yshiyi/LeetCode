@@ -7,6 +7,8 @@
     * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
     * [5. Reverse linked list](#5-Reverse-linked-list)
     * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
+    * [7. Add two numbers](#7-Add-two-numbers)
+    * [8. Remove duplicates from sorted list](#8-Remove-duplicates-from-sorted-list)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -70,6 +72,68 @@ while slow != fast:
    fast = fast.next
 return slow
 ```
+
+[61. Rotate List (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)\
+**Description:**\
+Given the head of a linked list, rotate the list to the right by k places.\
+Example:\
+Input: head = [1,2,3,4,5], k = 2\
+Output: [4,5,1,2,3]
+
+**Method 1:**\
+Using the similar idea of 189M. Rotate Array\
+First, convert the linked list to an array/a list.
+Rotate this array by k times, elements will be moved to (i + k) % L position.
+Finally, convert the rotated list to a new linked list.
+
+```
+l = []
+while head:
+   l.append(head.val)
+   head = head.next
+
+L = len(l)
+l_new = [0 for _ in range(L)]  # [0] * L
+for i in range(L):
+   l_new[(i + k) % L] = l[i]
+
+cur = ans = ListNode()
+for i in range(L):
+   newNode = ListNode(l_new[i])
+   cur.next = newNode
+   cur = cur.next
+return ans.next
+```
+
+**Method 2:**\
+Create a cycle link by linking the last to node of the list to the first node.
+Move n-k-1 steps to make the pointer points to the last node in the rotated link.
+Fianlly, let the cur2.next = None to terminate the cycle.
+
+```
+if head is None or head.next is None:
+   return head
+
+n = self.getLen(head)
+if k % n == 0:
+   return head
+elif k > n:
+   k = k % n
+
+cur = head
+while cur.next:
+   cur = cur.next
+cur.next = head
+cur2 = head
+
+for _ in range(n - k - 1):
+   cur2 = cur2.next
+head = cur2.next
+cur2.next = None
+
+return head
+```
+                  
 
 ##  2. Determine the intersection of two linked lists
 [160. Intersection of Two Linked Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)\
@@ -391,4 +455,167 @@ def reverseKGroup(self, head, k):
    return head2
 ```
 
+##  7. Add two numbers
+[2. Add Two Numbers (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.py)\
+**Description:**\
+You are given two non-empty linked lists representing two non-negative integers. 
+The digits are stored in reverse order, and each of their nodes contains a single digit. 
+Add the two numbers and return the sum as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.\
+Example:\
+Input: l1 = [2,4,3], l2 = [5,6,4]\
+Output: [7,0,8]\
+Explanation: 342 + 465 = 807.
 
+**Method 1:**\
+Elementary math\
+Create a new list to hold the result of summation.
+Define a new variable carry. If the summation is greater or equal to 10, then carry = 1, otherwise carry = 0.
+The result of summation is equal to the sum of each node val and carry.
+
+```
+carry = 0
+ans = ListNode(None)
+self.l = ans
+while l1 and l2:
+   val = l1.val + l2.val + carry
+   carry = self.addTwo(val)
+   l1 = l1.next
+   l2 = l2.next
+
+if l1:
+   while l1:
+       val = l1.val + carry
+       carry = self.addTwo(val)
+       l1 = l1.next
+elif l2:
+   while l2:
+       val = l2.val + carry
+       carry = self.addTwo(val)
+       l2 = l2.next
+if carry == 1:
+   newNode = ListNode(carry)
+   self.l.next = newNode
+   self.l = self.l.next
+return ans.next
+```
+
+**Method 2:**\
+First, we convert both lists to decimal numbers.
+Then find out the length of this number by using len(str(num)).
+Finally, we save each of the digit to a new list.
+
+
+[445. Add Two Numbers II (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.py)\
+**Description:**\
+Similar to 2M. Add Two Numbers. But this time, two numbers are added from the right.\
+Follow up:\
+What if you cannot modify the input lists? In other words, reversing the lists is not allowed.\
+
+Example:\
+Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)\
+Output: 7 -> 8 -> 0 -> 7
+
+**Method:**\
+Convert two lists to two integers. Then convert the summation of these two integers to a new linked list.
+
+```
+num1 = self.convertToNum(l1)
+num2 = self.convertToNum(l2)
+num = num1 + num2
+ans = ListNode(None)
+cur = ans
+
+nums = str(num)
+L = len(nums)
+for i in range(L):
+   newNode = ListNode(nums[i])
+   cur.next = newNode
+   cur = cur.next
+return ans.next
+```
+
+##  8. Remove duplicates form sorted list
+[83. Remove Duplicates from Sorted List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)\
+**Description:**\
+Given a sorted linked list, delete all duplicates such that each element appear only once.\
+Example:\
+Input: 1->1->2->3->3\
+Output: 1->2->3
+
+**Method:**
+Brute force\
+Create two pointers. We move the first pointer in the main loop.
+If the second pointer points to a duplicate, we then skip that node and keep moving it until we reach to a new node.
+Then we link the first pointer to the second by cur.next = cur2.
+
+```
+if head is None or head.next is None:
+   return head
+
+cur = head
+while cur:
+   cur2 = cur
+
+   while cur2 and cur2.val == cur.val:
+       cur2 = cur2.next
+   cur.next = cur2
+   cur = cur.next
+return head
+```
+
+[82. Remove Duplicates from Sorted List II (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.py)\
+**Description:**\
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.\
+
+Example:\
+Input: 1->2->3->3->4->4->5\
+Output: 1->2->5
+
+**Method 1:**\
+Two pointers\
+Create a dummy head before the linked list to avoid duplicate beginnings.
+The first pointer points to the distinct node. The second pointer swaps through the whole list.
+Let the second pointer start from the original head. Just keep moving the second pointer. When the second pointer reaches the end of the list of duplicates, we move the first pointer.\
+
+```
+if head is None or head.next is None:
+   return head
+head2 = ListNode(None)
+head2.next = head
+cur1, cur2 = head2, head
+while cur2:
+   if cur2.next and cur2.val == cur2.next.val:
+       while cur2.next and cur2.val == cur2.next.val:
+           cur2 = cur2.next
+       cur1.next = cur2.next
+   else:
+       cur1 = cur1.next
+   cur2 = cur2.next
+
+return head2.next
+```
+
+**Method 2:**
+Hash Table\
+Swap through the whole list first, and save the duplicates in a set.
+Then start the beginning of the list again.
+Link the nodes which are not contained in the set.\
+
+```
+curr=head
+dup=set()
+while curr and curr.next:
+   if curr.val==curr.next.val:
+       dup.add(curr.val)
+   curr=curr.next
+dummy=ListNode(0)
+dummy.next=head
+curr=dummy
+while curr and curr.next:
+   if curr.next.val in dup:
+       curr.next=curr.next.next
+   else:
+       curr=curr.next
+return dummy.next
+```
