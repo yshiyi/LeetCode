@@ -36,7 +36,7 @@ class Solution(object):
         Method 1: Two Pointers
                   Create a variable to count the position.
                   When the fast pointer reaches the even position, take out the next odd node.
-                  Then incert this odd node to the next position to where the slow pointer points.
+                  Then insert this odd node to the next position to where the slow pointer points.
         """
         if head is None:
             return head
@@ -62,7 +62,7 @@ class Solution(object):
         
         """
         Method 2: Create two list
-                  Incert the odd nodes to the odd list and incert the even nodes to the even list.
+                  Insert the odd nodes to the odd list and incert the even nodes to the even list.
                   Finally, link two list together.
         """
         if head is None:
