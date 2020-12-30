@@ -2,7 +2,7 @@
 <!-- GFM-TOC -->
 * [Leetcode Linded List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
-    * [2. Determine the intersection of two linked lists](#1-Determine-the-intersection-of-two-linked-lists)
+    * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -68,7 +68,7 @@ return slow
 ```
 
 ##  2. Determine the intersection of two linked lists
-[160. Intersection of Two Linked Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)
+[160. Intersection of Two Linked Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)\
 **Description:**\
 Write a program to find the node at which the intersection of two singly linked lists begins.
 ```html
