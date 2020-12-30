@@ -40,7 +40,7 @@ Two Pointers\
           v         v\
 |<-  a  ->|<-  b  ->|<-  ---  ->|\
           |<-       c         ->|\
-<\pre>
+</pre>
                   a: No. of steps from beginning to the connection point\
                   b: No. of steps from connection point to the meeting point\
                   c: length of a full cycle\
