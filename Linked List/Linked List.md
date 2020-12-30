@@ -19,13 +19,13 @@ Check if head.next and head.next.next exist.
 While fast and fast.next exist, we keep moving two pointers and check they are equal.
 ```
 if not head:
-    return False
+   return False
 fast, slow = head, head
 while fast and fast.next:
-         fast = fast.next.next
-         slow = slow.next
-         if fast == slow:
-             return True
+   fast = fast.next.next
+   slow = slow.next
+   if fast == slow:
+       return True
 return False
 ```
 
@@ -50,7 +50,7 @@ Notice that a + b is equal to the length of cycle times an integer.
 It means if we start move from p2 by a steps, we will reach to p1.\
 Therefore, we use two pointers to check if there is a cycle.
 If there is one, we then reset pointer 1 back to the starting point and let pointer 2 stay at p2.
-And move both pointers together. When they meet again, the meeting node will be the connection node.\
+And move both pointers together. When they meet again, the meeting node will be the connection node.
 ```
 fast, slow = head, head
 while fast and fast.next:
@@ -66,3 +66,4 @@ while slow != fast:
    fast = fast.next
 return slow
 ```
+
