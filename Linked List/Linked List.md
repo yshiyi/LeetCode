@@ -192,8 +192,33 @@ Example:\
 Input: l1 = [1,2,4], l2 = [1,3,4]\
 Output: [1,1,2,3,4,4]\
 
+**Method:**\
+Using the similar idea with merge sorted array.
+Create a new list to hold the nodes and two pointers to traverse l1 and l2.
+Compare each node from l1 and l2, and save the smaller one to the new list.
+When reach the end of one of the list, we add the rest of nodes of the other list to the end of the new list.
 
+```
+ans = ListNode(None)
+l = ans
+while l1 and l2:
+   if l1.val <= l2.val:
+       l.next = l1
+       l1 = l1.next  # temp
+   else:
+       l.next = l2
+       l2 = l2.next  # temp
+   l = l.next
 
+if l1 is None and l2:
+   l.next = l2
+   return ans.next
+elif l1 and l2 is None:
+   l.next = l1
+   return ans.next
+else:
+   return ans.next
+```
 
 
 
