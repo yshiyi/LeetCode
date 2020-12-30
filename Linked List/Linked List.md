@@ -9,6 +9,8 @@
     * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
     * [7. Add two numbers](#7-Add-two-numbers)
     * [8. Remove duplicates from sorted list](#8-Remove-duplicates-from-sorted-list)
+    * [9. Copy list with random pointer](#9-Copy-list-with-random-pointer)
+    * [10. Odd even linked list](#10-Odd-even-linked-list)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -535,7 +537,7 @@ for i in range(L):
 return ans.next
 ```
 
-##  8. Remove duplicates form sorted list
+##  8. Remove duplicates from sorted list
 [83. Remove Duplicates from Sorted List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)\
 **Description:**\
 Given a sorted linked list, delete all duplicates such that each element appear only once.\
@@ -619,3 +621,43 @@ while curr and curr.next:
        curr=curr.next
 return dummy.next
 ```
+
+##  9. Copy list with random pointer
+[138. Copy List with Random Pointer (medium)](https://github.com/yshiyi/LeetCode/blob/157d4db3d488a7496f1fd273dc5528a4c058b197/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.py)\
+**Description:**
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+Return a deep copy of the list.
+The Linked List is represented in the input/output as a list of n nodes. 
+Each node is represented as a pair of [val, random_index] where:\
+    * val: an integer representing Node.val
+    * random_index: the index of the node (range from 0 to n-1) where random pointer points to, 
+                  or null if it does not point to any node.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
