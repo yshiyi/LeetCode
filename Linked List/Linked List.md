@@ -6,6 +6,7 @@
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
     * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
     * [5. Reverse linked list](#5-Reverse-linked-list)
+    * [6. Reverse nodes in k-groups](#6-Reverse-nodes-in-k---groups)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -261,25 +262,133 @@ def CreateRev(self, head):
    return self.head2
 ```
 
+[234. Palindrome Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
+**Description:**
+Given a singly linked list, determine if it is a palindrome (e.g., 1-2-1, 1-2-2-1).\
+Follow up: Could you do it in O(n) time and O(1) space?\
 
+**Method 1: Two Pointers**\
+Create two pointers.
+One moves two steps and the other moves one step per iteration. So, we can determine the middle point.
+Then, we reverse the second part of the list and compare it with the first half.
 
+```
+fast, slow = head, head
+while fast and fast.next:
+   fast = fast.next.next
+   slow = slow.next
 
+head2 = None
+while slow:
+   temp = slow.next
+   slow.next = head2
+   head2 = slow
+   slow = temp
 
+while head and head2:
+   if head.val != head2.val:
+       return False
+   head = head.next
+   head2 = head2.next
+return True
+```
 
+**Method 2:**\
+Create a list to hold the values of the list.
+Then use nodes[::-1] == nodes to compare values from beginning and end.
 
+```
+nodes=[]
+while head:
+   nodes.append(head.val)
+   head=head.next
+return nodes[::-1]==nodes
+```
 
+##  6. Reverse nodes in k-groups
+[24. Swap Nodes in Pairs (Medium)] (https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
+**Description:**
+Given a linked list, swap every two adjacent nodes and return its head.
+You may not modify the values in the list's nodes. Only nodes itself may be changed.\
+Example:\
+Input: head = [1,2,3,4]\
+Output: [2,1,4,3]
 
+**Method 1:**
+Using only one pointer and create a new list. Check cur and cur.next, and save nodes to the new list.
 
+```
+cur2 = head2
+cur1 = head
+while cur1 and cur1.next:
+   temp = cur1.next.next
+   cur2.next = cur1.next
+   cur2 = cur2.next
+   cur2.next = cur1
+   cur2 = cur2.next
+   cur2.next = temp
+   cur1 = temp
+        
+return head2.next
+```
 
+**Method 2:**
+Recursive method
 
+```
+def swapPairs(self, head):
+   if not head or not head.next: 
+      return head
 
+   nextTemp = head.next
+   nextnextTemp = head.next.next
 
+   nextTemp.next = head
+   head.next = self.swapPairs(nextnextTemp)
 
+   return nextTemp
+```
 
+[25. Reverse Nodes in k-Group (hard)] (https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
+**Description:**
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+k is a positive integer and is less than or equal to the length of the linked list. 
+If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\
+Follow up:\
+Could you solve the problem in O(1) extra memory space?
+You may not alter the values in the list's nodes, only nodes itself may be changed.\
+Example:\
+Input: head = [1,2,3,4,5], k = 2\
+Output: [2,1,4,3,5]
 
+**Method:**
+Using the similar idea of recursive method in 24M. Swap Nodes in Pairs\
+We first reverse the first k nodes and save them to a new list.
+Then send the rest of the list back to the recursive function.
+Note, we can't use global self.head2. It will save the nodes in front of it rather than in the end.
 
+```
+def reverseKGroup(self, head, k):
+   L = self.getLen(head)
 
+   if L < k:
+      return head
 
+   head2 = None
+   count = k
+   while head and count:
+      temp = head.next
+      head.next = head2
+      head2 = head
+      head = temp
+      count -= 1
 
+   cur = head2
+   while cur.next:
+      cur = cur.next
+
+   cur.next = self.reverseKGroup(head, k)
+   return head2
+```
 
 
