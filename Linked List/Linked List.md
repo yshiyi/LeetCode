@@ -224,7 +224,7 @@ else:
 
 ##  5. Reverse linked list
 [206. Reverse Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
-**Description:**
+**Description:**\
 Reverse a singly linked list.\
 Example:\
 Input: 1->2->3->4->5->NULL\
@@ -263,7 +263,7 @@ def CreateRev(self, head):
 ```
 
 [234. Palindrome Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
-**Description:**
+**Description:**\
 Given a singly linked list, determine if it is a palindrome (e.g., 1-2-1, 1-2-2-1).\
 Follow up: Could you do it in O(n) time and O(1) space?\
 
@@ -306,9 +306,9 @@ return nodes[::-1]==nodes
 ```
 
 ##  6. Reverse nodes in pairs or groups
-[24. Swap Nodes in Pairs (Medium)] (https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
+[24. Swap Nodes in Pairs (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
 [234. Palindrome Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
-**Description:**
+**Description:**\
 Given a linked list, swap every two adjacent nodes and return its head.
 You may not modify the values in the list's nodes. Only nodes itself may be changed.\
 Example:\
