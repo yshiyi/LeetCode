@@ -3,6 +3,7 @@
 * [Leetcode Linded List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
+    * [3. Remove element from linked lists](#3-Remove-element-from-linked-list)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -94,6 +95,7 @@ From the figure, we can see that the only way that two pointers can meet togethe
 Specifically, when p1 reaches the end of list A, it goes back to the head of list B. Do the same to p2.
 Eventually, p1 will travel through a + b + c + b, and p2 will travel through b + c + a + b.
 We need to recorde the end of each list. If the end is not the same, then there is no intersection.
+
 ```
 if not headA or not headB:
    return None
@@ -117,3 +119,74 @@ while pA != pB:
            return None
 return pA
 ```
+
+##  3. Remove element from linked list
+[203. Remove Linked List Elements (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)\
+**Description:**\
+Remove all elements from a linked list of integers that have value val.\
+Example:\
+Input:  1->2->6->3->4->5->6, val = 6\
+Output: 1->2->3->4->5\
+
+**Method:**
+To remove a node from linked list, we need to implement current.next = current.next.next.
+The condition is to check if current.next has a value and that value is equal to val.
+The second step, we need to consider the first node of the list.
+So, we create a while loop to check the head.val.
+
+```
+if head is None:
+   return head
+while head and head.val == val:
+   head = head.next
+curr = head
+while curr:
+   if curr.next and curr.next.val == val:
+       curr.next = curr.next.next
+   else:
+       curr = curr.next
+return head
+```
+
+[19. Remove Nth Node From End of List (Medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)\
+**Description:**
+Given the head of a linked list, remove the nth node from the end of the list and return its head.\
+Follow up: Could you do this in one pass?\
+Example:\
+Input: head = [1,2,3,4,5], n = 2\
+Output: [1,2,3,5]\
+
+**Method 1: Two passes**\
+In the first pass, we obtain the length of the list, Len.\
+In the second pass, we remove the number at Len - n. We need to move to one before the target number, at Len - n - 1.\
+Then node.next = node.next.next.\
+Note, if Len - n == 0, means remove the head, then return head.next.\
+
+**Method 2: Two pointers**\
+Move the first pointer n steps ahead.
+Then move both pointers together and remain the gap n.
+When the first pointer reaches the last node, then p2.next = p2.next.next.
+Note, when p1 finishes moving n steps, we need to check if p1 is none.
+If it is, then it means to remove the head.
+
+```
+p1, p2 = head, head
+for _ in range(n):
+   p1 = p1.next
+if p1 is None:
+   return head.next
+while p1.next:
+   p1 = p1.next
+   p2 = p2.next
+p2.next = p2.next.next
+return head
+```
+
+
+
+
+
+
+
+
+
