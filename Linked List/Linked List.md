@@ -41,12 +41,11 @@ Two Pointers\
 |<-  a  ->|<-  b  ->|<-  ---  ->|\
           |<-       c         ->|\
 </pre>
-                  a: No. of steps from beginning to the connection point\
-                  b: No. of steps from connection point to the meeting point\
-                  c: length of a full cycle\
-                  The travelled steps of pointer 1 is N = a + b (or + n1*c)\
-                  The travelled steps of pointer 2 is 2*N = a + b + n2*c = 2*a + 2*b (or + 2n1*c)
-                  ==> a + b = (n2 - 2*n1) * c\
+a: No. of steps from beginning to the connection point\
+b: No. of steps from connection point to the meeting point\
+c: length of a full cycle\
+The travelled steps of pointer 1 is N = a + b (or + n1*c)\
+The travelled steps of pointer 2 is 2*N = a + b + n2*c = 2*a + 2*b (or + 2n1*c) ==> a + b = (n2 - 2*n1) * c\
 Notice that a + b is equal to the length of cycle times an integer.
 It means if we start move from p2 by a steps, we will reach to p1.\
 Therefore, we use two pointers to check if there is a cycle.
