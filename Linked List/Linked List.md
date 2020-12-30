@@ -6,7 +6,7 @@
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
     * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
     * [5. Reverse linked list](#5-Reverse-linked-list)
-    * [6. Reverse nodes in groups](#6-Reverse-nodes-in-groups)
+    * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -305,8 +305,9 @@ while head:
 return nodes[::-1]==nodes
 ```
 
-##  6. Reverse nodes in groups
+##  6. Reverse nodes in pairs or groups
 [24. Swap Nodes in Pairs (Medium)] (https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
+[234. Palindrome Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
 **Description:**
 Given a linked list, swap every two adjacent nodes and return its head.
 You may not modify the values in the list's nodes. Only nodes itself may be changed.\
