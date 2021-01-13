@@ -1,20 +1,4 @@
 # Array
-Skip to content
-yshiyi
-/
-LeetCode
-Code
-Issues
-Pull requests
-Actions
-More
-LeetCode/Array/Summary
-@yshiyi
-yshiyi Rename Easy/Array/Summary to Array/Summary
- History
- 1 contributor
-171 lines (147 sloc)  6.91 KB
-  
 This is a brief summary of all the problems in this folder.
 There are a number of typical methods to solve particular problems:
 A. Search for a particular number,Check duplicates 
@@ -153,14 +137,16 @@ At first, we walk up from left to right, and save the index when we reach the pe
 If the peak is at the start or at the end, it is not a mountain.
 After we reach the peak, we keep walking down to the right.
 If we stop at the end, then it is a mountain.
+```
 # walk up
 while i < len(A) - 1 and A[i] < A[i+1]:
     i += 1
 # walk down
 while i < len(A) - 1 and A[i] > A[i+1]:
     i += 1
+```
 
-977. Squares of a Sorted Array(https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
+[977. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
 Array, Two Pointers
 a. use the default function sort() and simplified loop
    return sorted(x*x for x in A)
