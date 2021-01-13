@@ -146,17 +146,26 @@ while i < len(A) - 1 and A[i] > A[i+1]:
     i += 1
 ```
 
-[977. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
-Array, Two Pointers
-a. use the default function sort() and simplified loop
+[977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)\
+Array, Two Pointers\
+**Description:**\
+Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.\
+**Method:**\
+1. use the default function sort() and simplified loop\
+   ```
    return sorted(x*x for x in A)
-b. Create two pointers: i and j.
-   j: counts the number of negative elements, points to the first non-negative element.
-   i: points to the largest negative element.
-   Then we start to compare elements from j to N and from i to 0.
-   When j reaches to N or i reaches to 0, we stop the loop. 
-   Then add the rest of array (i.e., A[:i] or A[j:]) to the end of answer.
-```    
+   ```
+2. Create two pointers: i and j.
+   j: counts the number of negative elements, points to the first non-negative element.\
+   i: points to the largest negative element.\
+   Then we start to compare elements from j to N and from i to 0.\
+   When j reaches to N or i reaches to 0, we stop the loop. \
+   Then add the rest of array (i.e., A[:i] or A[j:]) to the end of answer.\
+```
+while j < len(A) and A[j] < 0:
+    j += 1
+i = j - 1
+ans = []
 while 0 <= i and j < N:
     if A[i]**2 < A[j]**2:
         ans.append(A[i]**2)
