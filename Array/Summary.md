@@ -2,7 +2,7 @@
 This is a brief summary of all the problems in this folder.
 There are a number of typical methods to solve particular problems:\
 A. Search for a particular number,Check duplicates\
-   Hash Table. ex.: easy - 01, 136, 217, 350; medium - 36\
+   Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36\
 B. Peak and Valley\
    Use the template to find out the peak. ex.: 122, 941\
 C. Require in-place operation, remove duplicates/a particular element (26, 27), move elements within array (283),
@@ -14,7 +14,7 @@ D. Use some particular functions:\
    A.difference(B): for A - B, elements in A but not in B - 448\
    B.difference(A): for B - A, elements in B but not in A - 448\
 
-1. Two Sum (Search for a certain number)
+## 1. Two Sum (Search for a certain number)
 Hash Table
 Create a dictionary. 
 
