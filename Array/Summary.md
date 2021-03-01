@@ -15,25 +15,25 @@ D. Use some particular functions:\
    B.difference(A): for B - A, elements in B but not in A - 448\
 
 ## 1. Two Sum (Search for a certain number)
-Hash Table
-Create a dictionary. 
+Hash Table\
+Create a dictionary. \
 
-1051.Height checker:
-Array
-Check the difference between two arrays
+## 1051.Height checker:
+Array\
+Check the difference between two arrays\
 
-1089. Duplicate zeros:
-Array
-Shift array by one
+## 1089. Duplicate zeros:
+Array\
+Shift array by one\
 
-122. Best time to Buy and Sell Stock II
-Array, Greedy
-a. Sum up all difference between peaks and vallies
-b. Sum up all increasement if the value is increasing
+## 122. Best time to Buy and Sell Stock II
+Array, Greedy\
+a. Sum up all difference between peaks and vallies\
+b. Sum up all increasement if the value is increasing\
 
-1295. Find Numbers with Even Number of Digits
-Array
-Convert int to str and check the length of each string
+## 1295. Find Numbers with Even Number of Digits
+Array\
+Convert int to str and check the length of each string\
 
 1299. Replace Elements with Greatest Element on Right Side
 Array
@@ -146,7 +146,7 @@ while i < len(A) - 1 and A[i] > A[i+1]:
     i += 1
 ```
 
-[977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)\
+## [977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)\
 Array, Two Pointers\
 **Description:**\
 Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.\
