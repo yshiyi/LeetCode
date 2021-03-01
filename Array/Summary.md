@@ -15,9 +15,44 @@ D. Use some particular functions:\
    B.difference(A): for B - A, elements in B but not in A - 448\
 
 ## 1. Two Sum (Search for a certain number)
-[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp), [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)\
 Hash Table\
-Create a dictionary. \
+Create a dictionary.\
+[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)\
+```
+h = {}
+for i, num in enumerate(nums):
+    \\ Method 1:
+    n = target - num
+    if n not in h:
+        h[num] = i
+    else:
+        return [h[n], i]
+
+    \\ Method 2:
+    if n in nums:
+        index = [i, nums.index(n)]
+    break
+```
+[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp), \
+```
+map<int, int> m;
+int l = nums.size();
+map<int, int>::iterator it;
+vector<int> result;
+for (int i=0; i<l; i++) {
+   cout << i << endl;
+   it = m.find(target - nums[i]);
+   if(it==m.end()) {
+       m.insert(make_pair(nums[i], i));
+   }else {
+       result.push_back(i);
+       // result.push_back(m[target-nums[i]]);
+       result.push_back((*it).second);
+       break;
+   }
+}
+return result;
+```
 
 ## 1051.Height checker:
 Array\
