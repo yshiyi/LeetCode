@@ -15,6 +15,7 @@ D. Use some particular functions:\
    B.difference(A): for B - A, elements in B but not in A - 448\
 
 ## 1. Two Sum (Search for a certain number)
+[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp), [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)\
 Hash Table\
 Create a dictionary. \
 
@@ -146,7 +147,7 @@ while i < len(A) - 1 and A[i] > A[i+1]:
     i += 1
 ```
 
-## [977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)\
+## [977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
 Array, Two Pointers\
 **Description:**\
 Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.\
