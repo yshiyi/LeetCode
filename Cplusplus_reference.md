@@ -4,7 +4,7 @@
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
 A variable defined as unsigned int can only be non-negative.\
-When comparing signed with unsigned, the compiler converts the signed value to unsigned.
+When comparing signed with unsigned, the compiler converts the signed value to unsigned.\
 For example,
 ```
 /* This works fine. 
