@@ -4,7 +4,7 @@ There are a number of typical methods to solve particular problems:\
 1. Search for a particular number, or check duplicates\
 Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36
 **2.** Peak and Valley\
-   Use the template to find out the peak. ex.: [122](#122-Best-time-to-Buy-and-Sell-Stock-II), 941\
+   Use the template to find out the peak. ex.: [122](#122-Best-time-to-Buy-and-Sell-Stock-II), 941
    ```
    for (int i = 0; i<.size()-1; i++) {
       while (i < .size()-1 && prices[i] > prices[i+1]) {
