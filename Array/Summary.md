@@ -2,7 +2,7 @@
 This is a brief summary of all the problems in this folder.
 There are a number of typical methods to solve particular problems:\
 1. Search for a particular number, or check duplicates\
-Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36
+Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36\
 **2.** Peak and Valley\
    Use the template to find out the peak. ex.: [122](#122-Best-time-to-Buy-and-Sell-Stock-II), 941
    ```
