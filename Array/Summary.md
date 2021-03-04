@@ -26,6 +26,26 @@ Create a dictionary.\
 ## 1051.Height checker:
 Array, sorted array\
 Check the difference between two arrays\
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.py)|
+|:-- |:-- |
+|<pre>def heightChecker(self, heights):<br>
+     count = 0<br>
+     h = heights<br>
+     h_sorted = sorted(h)<br>
+     for i in range(len(h_sorted)):<br>
+         if h_sorted[i] != h[i]:<br>
+             count += 1<br>
+     return count </pre> | <pre> int heightChecker(vector<int>& heights) {<br>
+     vector<int> heights_org = heights;<br>
+     sort(heights.begin(), heights.end());<br>
+     int result = 0;<br>
+     for (unsigned int i=0; i < heights.size(); i++) {<br>
+         if (heights_org[i] != heights[i]) {<br>
+             result++;<br>
+         }<br>
+     }<br>
+     return result;<br>
+}</pre> |
 [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.py)
 ```
 def heightChecker(self, heights):
