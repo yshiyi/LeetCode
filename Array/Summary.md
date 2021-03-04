@@ -24,6 +24,10 @@ Create a dictionary.\
 
 
 ## 1051.Height checker:
+**Description:**\
+Students are asked to stand in non-decreasing order of heights for an annual photo.
+Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
+Notice that when a group of students is selected they can reorder in any possible way between themselves and the non selected students remain on their seats.\
 Array, sorted array\
 Check the difference between two arrays\
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.py)|
@@ -34,6 +38,9 @@ Check the difference between two arrays\
 ## 1089. Duplicate zeros:
 Array\
 Shift array by one\
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1089.%20Duplicate%20Zeros.cpp) | [.py]() |
+|:-- | :-- |
+| | |
 
 ## 122. Best time to Buy and Sell Stock II
 Array, Greedy\
