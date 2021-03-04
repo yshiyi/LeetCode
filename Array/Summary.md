@@ -21,12 +21,12 @@ for (int i = 0; i<.size()-1; i++) {
 3. Require in-place operation: \
 remove duplicates/a particular element (26, 27), move elements within array (283),\
 merge two arrays (88, 905, 977)\
-Two pointers\
+Two pointers
 4. Use some particular functions:\
    set() - 217\
    set(A).intersection(B) - 350\
    A.difference(B): for A - B, elements in A but not in B - 448\
-   B.difference(A): for B - A, elements in B but not in A - 448\
+   B.difference(A): for B - A, elements in B but not in A - 448
 
 
 
