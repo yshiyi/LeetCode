@@ -28,6 +28,7 @@ Create a dictionary.\
 Students are asked to stand in non-decreasing order of heights for an annual photo.
 Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
 Notice that when a group of students is selected they can reorder in any possible way between themselves and the non selected students remain on their seats.\
+**Method:** \
 Array, sorted array\
 Check the difference between two arrays\
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.py)|
@@ -36,11 +37,17 @@ Check the difference between two arrays\
 
 
 ## 1089. Duplicate zeros:
+**Description:**\
+Given a fixed length array arr of integers, duplicate each occurrence of zero, 
+shifting the remaining elements to the right.
+Note that elements beyond the length of the original array are not written.
+Do the above modifications to the input array in place, do not return anything from your function.
+**Method:**\
 Array\
 Shift array by one\
-|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1089.%20Duplicate%20Zeros.cpp) | [.py]() |
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1089.%20Duplicate%20Zeros.cpp) | [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1089.%20Duplicate%20Zeros.py) |
 |:-- | :-- |
-| | |
+|<pre>void duplicateZeros(vector<int>& arr) {<br>        int nums_zeros = 0;<br>        int l = arr.size();<br>        for (int i=0; i<l; i++) {<br>            if (i > l - nums_zeros - 1) {<br>                break;<br>            }<br>            if (arr[i] == 0) {<br>                if (i == l - nums_zeros - 1) {<br>                    arr[l-1]=0;<br>                    l--;<br>                    break;<br>                }<br>                nums_zeros++;<br>            }<br>        }<br>        int j = l - nums_zeros - 1;<br>        for (j; j>-1; j--) {<br>            if (arr[j] == 0) {<br>                arr[j + nums_zeros] = 0;<br>                nums_zeros--;<br>                arr[j + nums_zeros] = 0;<br>            }else {<br>                arr[j + nums_zeros] = arr[j];<br>            }<br>        }<br>    } </pre> |<pre>possible_dups = 0<br>        length_ = len(arr) - 1<br>        # Find the number of zeros to be duplicated<br>        for left in range(length_ + 1):<br>            # Stop when left points beyond the last element in the original list<br>            # which would be part of the modified list<br>            if left > length_ - possible_dups:<br>                break<br            # Count the zeros<br>            if arr[left] == 0:<br>                # Edge case: This zero can't be duplicated. We have no more space,<br>                # as left is pointing to the last element which could be included<br>                if left == length_ - possible_dups:<br>                    arr[length_] = 0 # For this zero we just copy it without duplication.<br>                    length_ -= 1<br>                    break<br>                possible_dups += 1<br>        # Start backwards from the last element which would be part of new list.<br>        last = length_ - possible_dups<br>        # Copy zero twice, and non zero once.<br>        for i in range(last, -1, -1):<br>            if arr[i] == 0:<br>                arr[i + possible_dups] = 0<br>                possible_dups -= 1<br>                arr[i + possible_dups] = 0<br>            else:<br>                arr[i + possible_dups] = arr[i]<br> </pre>|
 
 ## 122. Best time to Buy and Sell Stock II
 Array, Greedy\
