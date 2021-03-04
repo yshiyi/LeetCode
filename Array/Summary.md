@@ -17,46 +17,79 @@ D. Use some particular functions:\
 ## 1. Two Sum (Search for a certain number)
 Hash Table\
 Create a dictionary.\
-[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)\
-```
-h = {}
-for i, num in enumerate(nums):
-    \\ Method 1:
-    n = target - num
-    if n not in h:
-        h[num] = i
-    else:
-        return [h[n], i]
+|.cpp|.py|
+| ---      | ---       |
+|   |   |
 
-    \\ Method 2:
-    if n in nums:
-        index = [i, nums.index(n)]
-    break
+[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)
 ```
-[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp), \
+def twoSum(self, nums, target):
+      h = {}
+      for i, num in enumerate(nums):
+          \\ Method 1:
+          n = target - num
+          if n not in h:
+              h[num] = i
+          else:
+              return [h[n], i]
+
+          \\ Method 2:
+          if n in nums:
+              index = [i, nums.index(n)]
+          break
 ```
-map<int, int> m;
-int l = nums.size();
-map<int, int>::iterator it;
-vector<int> result;
-for (int i=0; i<l; i++) {
-   cout << i << endl;
-   it = m.find(target - nums[i]);
-   if(it==m.end()) {
-       m.insert(make_pair(nums[i], i));
-   }else {
-       result.push_back(i);
-       // result.push_back(m[target-nums[i]]);
-       result.push_back((*it).second);
-       break;
-   }
+[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp)
+```
+vector<int> twoSum(vector<int>& nums, int target) {
+  map<int, int> m;
+  int l = nums.size();
+  map<int, int>::iterator it;
+  vector<int> result;
+  for (int i=0; i<l; i++) {
+      cout << i << endl;
+      it = m.find(target - nums[i]);
+      if(it==m.end()) {
+          m.insert(make_pair(nums[i], i));
+      }else {
+          result.push_back(i);
+          // result.push_back(m[target-nums[i]]);
+          result.push_back((*it).second);
+          break;
+      }
+  }
+  return result;
 }
-return result;
 ```
 
 ## 1051.Height checker:
-Array\
+Array, sorted array\
 Check the difference between two arrays\
+[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.py)
+```
+def heightChecker(self, heights):
+     count = 0
+     h = heights
+     h_sorted = sorted(h)
+     for i in range(len(h_sorted)):
+         if h_sorted[i] != h[i]:
+             count += 1
+
+     return count
+```
+[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1051.%20Height%20Checker.cpp)
+```
+int heightChecker(vector<int>& heights) {
+     vector<int> heights_org = heights;
+     sort(heights.begin(), heights.end());
+     int result = 0;
+     for (unsigned int i=0; i < heights.size(); i++) {
+         if (heights_org[i] != heights[i]) {
+             result++;
+         }
+     }
+     return result;
+}
+```
 
 ## 1089. Duplicate zeros:
 Array\
