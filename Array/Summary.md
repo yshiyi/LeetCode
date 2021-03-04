@@ -1,9 +1,9 @@
 # Array
 This is a brief summary of all the problems in this folder.
 There are a number of typical methods to solve particular problems:\
-**A.** Search for a particular number, or check duplicates\
+**1.** Search for a particular number, or check duplicates\
    Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36\
-**B.** Peak and Valley\
+**2.** Peak and Valley\
    Use the template to find out the peak. ex.: [122](#122-Best-time-to-Buy-and-Sell-Stock-II), 941\
    ```
    for (int i = 0; i<.size()-1; i++) {
@@ -18,10 +18,10 @@ There are a number of typical methods to solve particular problems:\
       increasement += peak - valley;
    }
    ```
-**C.** Require in-place operation, remove duplicates/a particular element (26, 27), move elements within array (283),
+**3.** Require in-place operation, remove duplicates/a particular element (26, 27), move elements within array (283),
    merge two arrays (88, 905, 977)\
    Two pointers\
-**D.** Use some particular functions:\
+**4.** Use some particular functions:\
    set() - 217\
    set(A).intersection(B) - 350\
    A.difference(B): for A - B, elements in A but not in B - 448\
