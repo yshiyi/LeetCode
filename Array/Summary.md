@@ -134,22 +134,37 @@ Sort the array first. The first pointer starts from the next number, and the sec
 **Description:**\
 Given an array, rotate the array to the right by k steps, where k is non-negative.
 **Method:**\
-a. Create an extra array/vector to hold the result.
+a. Create an extra array/vector to hold the result.\
 b. Reverse array/vector three times. The 1st time, reverse the whole array/vector. The 2nd time, reverse the first k elements. The 3rd time, reverse the rest of elements.
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/189M.%20Rotate%20Array.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/189M.%20Rotate%20Array.py)|
 |:-- |:-- |
 |<pre>void rotate(vector<int>& nums, int k) {<br>        // Method 1: using reverse(nums.begin(), nums.end())<br>        k %= nums.size();<br>        vector<int>::iterator it = nums.begin();<br>        for (int i=0; i<k; i++) {<br>            it++;<br>        }<br>        reverse(nums.begin(), nums.end());<br>        reverse(nums.begin(), it);<br>        reverse(it, nums.end());<br>        // Method 2: Create an extra vector<br>        //           Elements will be moved to (i+k)%nums.size() position.<br>        k %= nums.size();<br>        vector<int> nums2;<br>        int l = nums.size();<br>        nums2.resize(l);<br>        for (int i=0; i<l; i++) {<br>            nums2[(i+k)%l] = nums[i];<br>        }<br>        nums.clear();<br>        for (auto v:nums2) {<br>            nums.push_back(v);<br>        }<br>    } </pre>|<pre>def rotate(self, nums, k):<br>        '''<br>        Method 1: Create an extra array<br>                  Elements will be moved to (i+k)%len(nums) position.<br>                  Runtime: 36 ms; Memory: 14.8 MB<br>        '''<br>        n = len(nums)<br>        a = [0] * n<br>        for i in range(n):<br>            a[(i + k) % n] = nums[i]<br>        nums[:] = a<br>        '''<br>        Method 2: Using reverse<br>                  At first, we reverse the entire array.<br>                  Second, we reverse the first k elements.<br>                  Third, we reverse the rest of n-k elements.<br>                  Runtime: 68 -76 ms; Memory: 13.7 - 13.8 MB<br>        '''<br>        n = len(nums)<br>        k %= n<br>        self.reverse(nums, 0, n - 1)<br>        print(nums)<br>        self.reverse(nums, 0, k - 1)<br>        print(nums)<br>        self.reverse(nums, k, n - 1)<br>        print(nums)<br>    def reverse(self, nums, start, end):<br>        while start < end:<br>            nums[start], nums[end] = nums[end], nums[start]<br>            start += 1<br>            end -= 1 </pre>|
 
-217. Contains Duplicate
+## 217. Contains Duplicate
+**Description:**\
+Given an array of integers, find if the array contains any duplicates.
+Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
 Array, Hash table
-a. Create a hash table (i.e., dictionary). 
-   Check if the element of nums is in dic. If not, add it to dic and remain dup = False.
-   If it is in dic, let dup = True and return dup
-b. Use set(), which only contains distinct elements
+a. Create a hash table (i.e., set). \
+   Check if the element of nums is in the set.\
+b. Convert array/vector to a set then compare the length. For python, use set(nums).
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/217.%20Contains%20Duplicate.cpp)|[.py]()|
+|:-- |:-- |
+|<pre>bool containsDuplicate(vector<int>& nums) {<br>        // Method 1: Using a set and check if the element is in the set<br>        set\<int\> s;<br>        int l = nums.size();<br>        for (auto val:nums) {<br>            if (s.find(val) != s.end()) {<br>                return true;<br>            }else {<br>                s.insert(val);<br>            }<br>        }<br>        return false;<br>        // Method 2: using a set. Save all the elements form nums to s, and compare the size.<br>        for (auto val:nums) {<br>            s.insert(val);<br>        }<br>        return !(s.size()==l);<br>    } </pre>|<pre> def containsDuplicate(self, nums):<br>        '''<br>        Method 1: Create a hash table (i.e., set)<br>                  Check if the element of nums is in the set.<br>        '''<br>        dic = set()<br>        for i in range(len(nums)):<br>            if nums[i] not in dic:<br>                dis.add(nums[i])<br>            else:<br>                return true<br>        return false<br>        '''<br>        Method 2: Use set()!!!<br>                  Note the elements contained in a set are distinct!!<br>                  Compare len(set(nums)) and len(nums)<br>        '''<br>        return True if len(set(nums)) < len(nums) else False</pre>|
 
-26. Remove Duplicates from Sorted Array
-Array, Two pointer
-Create two pointers. One sweeps the whole array, the other pointer stops at the duplicate element position
+
+## 26. Remove Duplicates from Sorted Array
+**Description:**\
+Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+**Method:**\
+Array, Two pointers\
+Create two pointers. One sweeps the whole array, the other pointer stops at the duplicate element position.\
+For c++, we can also use erase() function
+|[.cpp]()|[.py]()|
+|:-- |:-- |
+|<pre>int removeDuplicates(vector<int>& nums) {<br>        // Method 1: two pointers, erase duplicates<br>        if (nums.size()<1) {<br>            return nums.size();<br>        }<br>        vector\<int\>::iterator it = nums.begin()+1;<br>        int i = 1, l = nums.size();<br>        while (i < l) {<br>            if (nums[i] == nums[i-1]) {<br>                nums.erase(it);<br>                l--;<br>            }else {<br>                i++;<br>                it++;<br>            }<br>        }<br>        return nums.size();<br>        // Method 2: two pointers, move the distinct element front<br>        if(nums.size()<=1) return nums.size();<br>        int j = 1;<br>        for(int i=1;i<nums.size();i++){<br>            if(nums[i]!=nums[i-1]) {<br>                nums[j] = nums[i];<br>                j++;<br>            }<br>        }<br>        return j;<br>    } </pre>|<pre> </pre>|
+
 
 27. Remove Element (remove a particular element from an array)
 Array, Two Pointers
