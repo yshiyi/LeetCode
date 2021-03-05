@@ -36,31 +36,19 @@ class Solution(object):
         """
         
         '''
-        Method: There are three scenarios we need to consider.
-                The first one: there is only one element. We return the only one element.
-                The second one: there are two elements. We return the maximum one.
-                The third one: more than two elements. We sort the array reversely and use a counter to count the number
-                of maximum element. When we find the third maximum number, we return that number. If we can't find the 
-                third maximum until the end of array, we then return the first element (i.e., the largest) element.
+        Method: Use a counter to search for the third maximum number, if len(nums)>2.
+                If there is no such number, return max(nums).
         '''
         
         nums_sorted = sorted(nums, reverse=True)
         count = 0
-        if len(nums) == 1:
-            return nums
-        if len(nums) == 2:
-            if nums[0] >= nums[1]:
-                return nums[0]
-            else:
-                return nums[1]
-        
-        for i in range(1, len(nums_sorted)):
-            if nums_sorted[i] < nums_sorted[i-1]:
-                count += 1
-            if count == 2:
-                return nums_sorted[i]
-            elif i == len(nums)-1 and count != 2:
-                return nums_sorted[0]
+        if len(nums) > 2:
+            for i in range(1, len(nums_sorted)):
+                if nums_sorted[i] < nums_sorted[i-1]:
+                    count += 1
+                if count == 2:
+                    return nums_sorted[i]
+        return max(nums)
             
 
 
