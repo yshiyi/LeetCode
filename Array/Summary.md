@@ -100,7 +100,7 @@ Save the current element to t, and find out the maximum between t and current ma
 ## 1346. Check If N and Its Double Exist
 **Description:**\
 Given an array arr of integers, check if there exists two integers N and M 
-such that N is the double of M ( i.e. N = 2 * M).
+such that N is the double of M ( i.e. N = 2 * M).\
 **Method:**\
 For python, use "if ... in arr" to improve speed. For c++, beware of the conversion between int and double. In addition, we can also use count(v.begin(), v.end(), val).
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1346.%20Check%20If%20N%20and%20Its%20Double%20Exist.cpp) | [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1346.%20Check%20If%20N%20and%20Its%20Double%20Exist.py)|
@@ -110,7 +110,7 @@ For python, use "if ... in arr" to improve speed. For c++, beware of the convers
 ## 136. Single Number (Find the single number)
 **Description:**\
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
-Follow up: Could you implement a solution with a linear runtime complexity and without using extra memory?
+Follow up: Could you implement a solution with a linear runtime complexity and without using extra memory?\
 **Method:**\
 Hash table, Bit manipulation\
 For python, create a set to search for the duplicated element. For c++, use count() which is slow or use XOR (i.e., a^0=a; a^a=0).
@@ -122,7 +122,7 @@ For python, create a set to search for the duplicated element. For c++, use coun
 **Description:**\
 Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? 
 Find all unique triplets in the array which gives the sum of zero.
-Notice that the solution set must not contain duplicate triplets.
+Notice that the solution set must not contain duplicate triplets.\
 **Method:**\
 Use two pointers.\
 Sort the array first. The first pointer starts from the next number, and the second pointer starts from the end of array. If the summation is greater than zero, the second pointer moves backward. If the summation is less than zero, the first pointer moves forward. If the summation is equal to zero, we save the triplets and move to next element. If next number is the same, then we skip this number and move to next one.
@@ -132,7 +132,7 @@ Sort the array first. The first pointer starts from the next number, and the sec
 
 ## 189M. Rotate Array
 **Description:**\
-Given an array, rotate the array to the right by k steps, where k is non-negative.
+Given an array, rotate the array to the right by k steps, where k is non-negative.\
 **Method:**\
 a. Create an extra array/vector to hold the result.\
 b. Reverse array/vector three times. The 1st time, reverse the whole array/vector. The 2nd time, reverse the first k elements. The 3rd time, reverse the rest of elements.
@@ -143,8 +143,9 @@ b. Reverse array/vector three times. The 1st time, reverse the whole array/vecto
 ## 217. Contains Duplicate
 **Description:**\
 Given an array of integers, find if the array contains any duplicates.
-Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
-Array, Hash table
+Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.\
+**Method:**\
+Array, Hash table\
 a. Create a hash table (i.e., set). \
    Check if the element of nums is in the set.\
 b. Convert array/vector to a set then compare the length. For python, use set(nums).
@@ -156,7 +157,7 @@ b. Convert array/vector to a set then compare the length. For python, use set(nu
 ## 26. Remove Duplicates from Sorted Array
 **Description:**\
 Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
-Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.\
 **Method:**\
 Array, Two pointers\
 Create two pointers. One sweeps the whole array, the other pointer stops at the duplicate element position.\
@@ -170,9 +171,9 @@ For c++, we can also use erase() function
 **Description:**\
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
-The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.\
 **Method:**\
-Array, Two Pointers
+Array, Two Pointers\
 Move the last element to front (the position (=val)) and remove the last element
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/27.%20Remove%20Element.cpp)|[.py]()|
 |:-- |:-- |
@@ -181,7 +182,7 @@ Move the last element to front (the position (=val)) and remove the last element
 ## 283. Move Zeroes
 **Description:**\
 Given an array nums, write a function to move all 0's to the end of it 
-while maintaining the relative order of the non-zero elements.
+while maintaining the relative order of the non-zero elements.\
 **Method:**\
 Array, Two Pointers\
 Similar to 26. Create two pointer. The first one sweeps the whole array, the second one only moves when encounters a nonzero element.
@@ -190,15 +191,19 @@ Similar to 26. Create two pointer. The first one sweeps the whole array, the sec
 |<pre> void moveZeroes(vector\<int\>& nums) {<br>        if (nums.size() < 1) {return;}<br>        int i = 0, j = 0, temp;<br>        for (i; i<nums.size(); i++) {<br>            if (nums[i] != 0) {<br>                temp = nums[j];<br>                nums[j] = nums[i];<br>                nums[i] = temp;<br>                j++;<br>            }<br>        }<br>    }</pre>|<pre>def moveZeroes(self, nums):<br>        '''<br>        Method: Create two pointers.<br>                Pointer i sweeps the entire array. Pointer count points to the zero position.<br>                Starting from the first element, when there is a zero, we stop count and keep increasing i.<br>                When there is nonzero element, we move this element to the position where count is pointing to.<br>                This operation only excutes when i != count (i.e., there is a zero element in front).<br>        '''<br>        i = 0<br>        count = 0<br>        if len(nums) < 2:<br>            return nums<br>        for i in range(len(nums)):<br>            if nums[i] != 0:<br>                if i != count:<br>                    nums[count] = nums[i]<br>                    nums[i] = 0<br>                count += 1<br>        return nums </pre>|
 
 ## 350. Intersection of Two Arrays II
-Hash Table, Two Pointers, Binary Search, Sort
-a. Use set(A).intersection(B) to extract the common elements in both A and B.
-   Convert the intersection into a list.
-   For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.
-   result.extend([x]*min(nums1.count(x),nums2.count(x)))
-b. Using a hash table (i.e., a dictionary) to contain the distinct elements we have visit in nums1
-   For each distinct element, we find the minimum number of that element contained in both nums1 and nums2.
-c. Sort both nums1 and nums2 at first.
-   Count the minimum number of shared elements.
+**Description:**\
+Given two arrays, write a function to compute their intersection.\
+**Method:**\
+Hash Table, Two Pointers, Binary Search, Sort\
+a. Use set(A).intersection(B) to extract the common elements in both A and B.\
+   Convert the intersection into a list.\
+   For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.\
+   result.extend([x]\*min(nums1.count(x),nums2.count(x)))\
+c. Sort both nums1 and nums2 at first.\
+   Count the minimum number of shared elements.\
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/350.%20Intersection%20of%20Two%20Arrays%20II.cpp)|[.py]()|
+|:-- |:-- |
+|<pre>vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {<br>        vector\<int\> result;<br>        result.resize(min(nums1.size(), nums2.size()));<br>        sort(nums1.begin(), nums1.end());<br>        sort(nums2.begin(), nums2.end());<br>        vector<int>::iterator it = set_intersection(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), result.begin());<br>        // Note: it points to the position next to the last intersected element.<br>        //       If it is pointing to result.end(), there must be zeros. We need to remove those zeros.<br>        if (it != result.end()) {<br>            while(it!= result.end()) {<br>                result.erase(it);<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def intersect(self, nums1, nums2):<br>        '''<br>        Method 1: Using set(A).intersection() to extract the common elements in both nums1 and nums2<br>                  Convert the intersection into a list.<br>                  For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.<br>                  Extend the result list by that number of that element.<br>        '''<br>        common=list(set(nums1).intersection(nums2))<br>        result = []<br>        for x in common:<br>            result.extend([x]*min(nums1.count(x),nums2.count(x)))<br>        return result<br>        '''<br>        Method 2: Sort both nums1 and nums2 at first.<br>                  Count the minimum number of shared elements.<br>        '''<br>        nums1 = sorted(nums1)<br>        nums2 = sorted(nums2)<br>        result = []<br>        i = 0<br>        while i < len(nums1):<br>            if nums1[i] in nums2:<br>                result.extend([nums1[i]]*min(nums1.count(nums1[i]), nums2.count(nums1[i])))<br>                i += nums1.count(nums1[i])<br>            else:<br>                i += 1<br>        return result </pre>|
 
 ## 414. Third Maximum Number
 Array
