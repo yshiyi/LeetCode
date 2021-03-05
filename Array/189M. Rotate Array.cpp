@@ -10,7 +10,7 @@ public:
         }
         reverse(nums.begin(), nums.end());
         reverse(nums.begin(), it);
-        reverse(it--, nums.end());
+        reverse(it, nums.end());
         
         
         /* Method 2: Create an extra vector
