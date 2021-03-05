@@ -178,11 +178,18 @@ Move the last element to front (the position (=val)) and remove the last element
 |:-- |:-- |
 |<pre>int removeElement(vector<int>& nums, int val) {<br>        if (nums.size() < 1) {return nums.size();}<br>        // Method: move the last element to front and remove the last element.<br>        int i=0, l=nums.size();<br>        vector\<int\>::iterator it = nums.end();<br>        while (i<l) {<br>            if (nums[i] == val) {<br>                nums[i] = nums[l-1];<br>                nums.erase(it-1);<br>                it--;<br>                l--;<br>            }else{<br>                i++;<br>            }<br>        }<br>        return l;<br>    } </pre>|<pre>def removeElement(self, nums, val):<br>       '''<br>       Method : This is an in-place operation method.<br>                When nums[i] = val, we move the last element in the array to position i, remove the last element <br>                from the array and reduce the length of array by 1.<br>       '''<br>        i = 0<br>        L = len(nums)<br>        while i < L:<br>            if nums[i] == val:<br>                nums[i] = nums[-1]<br>                del nums[-1]<br>                L -= 1<br>            else:<br>                i += 1<br>        return L </pre>|
 
-283. Move Zeroes
-Array, Two Pointers
-Create two pointer. The first one sweeps the whole array, the second one only moves when encounters a nonzero element.
+## 283. Move Zeroes
+**Description:**\
+Given an array nums, write a function to move all 0's to the end of it 
+while maintaining the relative order of the non-zero elements.
+**Method:**\
+Array, Two Pointers\
+Similar to 26. Create two pointer. The first one sweeps the whole array, the second one only moves when encounters a nonzero element.
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/283.%20Move%20Zeros.cpp)|[.py]()|
+|:-- |:-- |
+|<pre> void moveZeroes(vector\<int\>& nums) {<br>        if (nums.size() < 1) {return;}<br>        int i = 0, j = 0, temp;<br>        for (i; i<nums.size(); i++) {<br>            if (nums[i] != 0) {<br>                temp = nums[j];<br>                nums[j] = nums[i];<br>                nums[i] = temp;<br>                j++;<br>            }<br>        }<br>    }</pre>|<pre>def moveZeroes(self, nums):<br>        '''<br>        Method: Create two pointers.<br>                Pointer i sweeps the entire array. Pointer count points to the zero position.<br>                Starting from the first element, when there is a zero, we stop count and keep increasing i.<br>                When there is nonzero element, we move this element to the position where count is pointing to.<br>                This operation only excutes when i != count (i.e., there is a zero element in front).<br>        '''<br>        i = 0<br>        count = 0<br>        if len(nums) < 2:<br>            return nums<br>        for i in range(len(nums)):<br>            if nums[i] != 0:<br>                if i != count:<br>                    nums[count] = nums[i]<br>                    nums[i] = 0<br>                count += 1<br>        return nums </pre>|
 
-350. Intersection of Two Arrays II
+## 350. Intersection of Two Arrays II
 Hash Table, Two Pointers, Binary Search, Sort
 a. Use set(A).intersection(B) to extract the common elements in both A and B.
    Convert the intersection into a list.
@@ -193,7 +200,7 @@ b. Using a hash table (i.e., a dictionary) to contain the distinct elements we h
 c. Sort both nums1 and nums2 at first.
    Count the minimum number of shared elements.
 
-414. Third Maximum Number
+## 414. Third Maximum Number
 Array
 There are three scenarios we need to consider.
 The first one: there is only one element. We return the only one element.
@@ -202,7 +209,7 @@ The third one: more than two elements. We sort the array reversely and use a cou
 of maximum element. When we find the third maximum number, we return that number. If we can't find the 
 third maximum until the end of array, we then return the first element (i.e., the largest) element.
 
-448. Find All Numbers Disappeared in an Array
+## 448. Find All Numbers Disappeared in an Array
 Array
 a. Create nums_disappear to hold the missing numbers.
    At first, we need to check if the first number in nums is 1. If not, we add 1 to (1st number - 1) to nums_disappear.
@@ -215,21 +222,21 @@ b. Use set() to compare.
    A.difference(B): for A - B, elements in A but not in B
    B.difference(A): for B - A, elements in B but not in A
 
-485. Max Consecutive Ones
+## 485. Max Consecutive Ones
 Array
 The basic idea is to loop the array from the beginning and count the number of 1s.
 When the element is equal to 1, we increase the value of count and compare it to the value of count_max. 
 Update the value of max_count, if the current count is greater than the recorded maximum count.
 When the element is equal to 0, we reset the value of count by making it equal to 0.
 
-66. Plus One
+## 66. Plus One
 Array
 We simply check the value of each digit from the end.
 If it is equal to 9, we let it be 0.
 If it is not equal to 9, the operation should end and return the result.
 If all digits are 9, we then insert 1 at the first position and return the result. return [1] + result
 
-88. Merge Sorted Array
+## 88. Merge Sorted Array
 Array, Two Pointers
 Create a new array to hold all elements and put them back to nums at the end.
 We create two pointers. 
@@ -239,13 +246,13 @@ If this element comes from nums2, we then increase the counter index.
 In the second loop, I put any left elements in nums2 (they are greater then all elements in nums1) to the new array.
 At the end, we transfer all elements from the new array to nums1.
 
-905. Sort Array By Parity (even numbers go first and followed by odd numbers)
+## 905. Sort Array By Parity (even numbers go first and followed by odd numbers)
 Array, Two Pointers
 Create two pointers.
 The first pointer sweeps the entire array and searches for the even elements.
 The second pointer counts the number of even numbers. It stops at the odd element positions.
 
-941. Valid Mountain Array
+## 941. Valid Mountain Array
 Array
 At first, we walk up from left to right, and save the index when we reach the peak.
 If the peak is at the start or at the end, it is not a mountain.
