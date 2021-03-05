@@ -220,13 +220,53 @@ The basic idea is to look for the duplicates in each row, each column and each b
 |<pre> bool isValidSudoku(vector<vector<char>>& board) {<br>        // Create 3 vectors of sets and each vector contains 9 sets.<br>        vector\<set\<int\>\> v_row, v_col, v_box;<br>        v_row.resize(9);<br>        v_col.resize(9);<br>        v_box.resize(9);<br>        for (int i=0; i<board.size(); i++) {<br>            for (int j=0; j<board[i].size(); j++) {<br>                if (board[i][j] != '.') {<br>                    // For char variable, <br>                    // 1. char - '0' can convert '0' -> 0, '1' -> 1.<br>                    // 2. char c = 'a'; int ic = (int)c; value of ic is 97<br>                    int num = board[i][j]-'0';<br>                    int box_index = i/3 * 3 + j/3;<br>                    if (v_row[i].find(num)!=v_row[i].end() \|\| v_col[j].find(num) != v_col[j].end() \|\| v_box[box_index].find(num) != v_box[box_index].end()) {<br>                        return false;<br>                    }else {<br>                        v_row[i].insert(num);<br>                        v_col[j].insert(num);<br>                        v_box[box_index].insert(num);<br>                    }<br>                }<br>            }<br>        }<br>        return true;<br>    }</pre>|<pre>def isValidSudoku(self, board):<br>        # Initiate 3 lists, each list contains 9 dictionaries<br>        rows = [{} for i in range(9)]<br>        columns = [{} for i in range(9)]<br>        boxes = [{} for i in range(9)]<br>        # validate a board<br>        # Starting from each row<br>        for i in range(9):<br>            # Sweep each column<br>            for j in range(9):<br>                num = board[i][j]<br>                if num != '.':<br>                    num = int(num)<br>                    box_index = (i \/\/ 3 ) * 3 + j \/\/ 3<br>                    if num not in rows[i] and num not in columns[j] and num not in boxes[box_index]:<br>                        rows[i][num] = i<br>                        columns[j][num] = j<br>                        boxes[box_index][num] = box_index<br>                    else:<br>                        return False<br>        return True<br> </pre>|
 
 ## 414. Third Maximum Number
-Array
-There are three scenarios we need to consider.
-The first one: there is only one element. We return the only one element.
-The second one: there are two elements. We return the maximum one.
-The third one: more than two elements. We sort the array reversely and use a counter to count the number
-of maximum element. When we find the third maximum number, we return that number. If we can't find the 
-third maximum until the end of array, we then return the first element (i.e., the largest) element.
+**Description:**\
+Given a non-empty array of integers, return the third maximum number in this array. 
+If it does not exist, return the maximum number. 
+The time complexity must be in O(n).
+**Method:**\
+Array\
+Use a counter to search for the third maximum number, if len(nums)>2. If there is no such number, return max(nums).
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/414.%20Third%20Maximum%20Number.cpp)
+```
+int thirdMax(vector<int>& nums) {       
+     /* Method: using vector<int>::reverse_iterator rit = nums.rbegin(), rit++ goes from right to left
+                Note: 1. We can't access to nums.rend(), so we terminate the loop at the second element
+                      2. Using *(it+1) to access next element. Using *(it++), iterator will automatically increase by 1.
+                      3. Return next element when count == 2
+     */
+     if (nums.size() > 2) {
+         sort(nums.begin(), nums.end());
+         int count = 0;
+         for (vector<int>::reverse_iterator it=nums.rbegin(); it!=nums.rend()-1; ++it) {
+             if (*it > *(it+1)) {
+                 count++;
+             }
+             if (count == 2) {
+                 return *(it+1);
+             }
+         }
+     }
+     return *max_element(nums.begin(), nums.end());
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/edit/main/Array/414.%20Third%20Maximum%20Number.py)
+```
+def thirdMax(self, nums):
+'''
+Method: Use a counter to search for the third maximum number, if len(nums)>2.
+       If there is no such number, return max(nums).
+'''
+nums_sorted = sorted(nums, reverse=True)
+count = 0
+if len(nums) > 2:
+   for i in range(1, len(nums_sorted)):
+       if nums_sorted[i] < nums_sorted[i-1]:
+           count += 1
+       if count == 2:
+           return nums_sorted[i]
+return max(nums)
+```
 
 ## 448. Find All Numbers Disappeared in an Array
 Array
