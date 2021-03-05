@@ -1,6 +1,7 @@
 # Linked List
 <!-- GFM-TOC -->
 * [Leetcode Linked List](#Leetcode-Linded-List)
+    * [Summary of Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/Summary%20of%20Linked%20List.md)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
