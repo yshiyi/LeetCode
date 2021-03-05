@@ -4,14 +4,29 @@ This is a brief summary of all the problems in this folder.\
 * [Leetcode Array](#Leetcode-Array)
     * [1. Two Sum](#1-Two-Sum)
     * [1051. Height checker](#1051-Height-checker)
-    * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
-    * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
-    * [5. Reverse linked list](#5-Reverse-linked-list)
-    * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
-    * [7. Add two numbers](#7-Add-two-numbers)
-    * [8. Remove duplicates from sorted list](#8-Remove-duplicates-from-sorted-list)
-    * [9. Copy list with random pointer](#9-Copy-list-with-random-pointer)
-    * [10. Odd even linked list](#10-Odd-even-linked-list)
+    * [1089. Duplicate zeros](#1089-Duplicate-zeros)
+    * [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
+    * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
+    * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
+    * [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
+    * [136. Single Number](#136-Single-Number)
+    * [15M. 3Sum](#15M-3Sum)
+    * [189M. Rotate Array](#189M-Rotate-Array)
+    * [217. Contains Duplicate](#217-Contains-Duplicate)
+    * [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
+    * [27. Remove Element](#27-Remove-Element)
+    * [283. Move Zeroes](#283-Move-Zeroes)
+    * [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
+    * [36M. Valid Sudoku](#36M-Valid-Sudoku)
+    * [414. Third Maximum Number](#414-Third-Maximum-Number)
+    * [448. Find All Numbers Disappeared in an Array](#448-Find-All-Numbers-Disappeared-in-an-Array)
+    * [485. Max Consecutive Ones](#485-Max-Consecutive-Ones)
+    * [48M. Rotate Image](#48M-Rotate-Image)
+    * [66. Plus One](#66-Plus-One)
+    * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
+    * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
+    * [941. Valid Mountain Array](#941-Valid-Mountain-Array)
+    * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 <!-- GFM-TOC -->
 There are a number of typical methods to solve particular problems:\
 1. Search for a particular number, or check duplicates\
@@ -66,7 +81,7 @@ Check the difference between two arrays\
 |<pre> int heightChecker(vector<int>& heights) {<br>     vector<int> heights_org = heights;<br>     sort(heights.begin(), heights.end());<br>     int result = 0;<br>     for (unsigned int i=0; i < heights.size(); i++) {<br>         if (heights_org[i] != heights[i]) {<br>             result++;<br>         }<br>     }<br>     return result;<br>}</pre>  |<pre>def heightChecker(self, heights):<br>     count = 0<br>     h = heights<br>     h_sorted = sorted(h)<br>     for i in range(len(h_sorted)):<br>         if h_sorted[i] != h[i]:<br>             count += 1<br>     return count </pre> |
 
 
-## 1089. Duplicate zeros:
+## 1089. Duplicate zeros
 **Description:**\
 Given a fixed length array arr of integers, duplicate each occurrence of zero, 
 shifting the remaining elements to the right.
@@ -121,7 +136,7 @@ For python, use "if ... in arr" to improve speed. For c++, beware of the convers
 |:-- |:-- |
 |<pre> bool checkIfExist(vector<int>& arr) {<br>        // Method 1:<br>        bool result = false;<br>        set\<double\> s; <br>        for (int i=0; i<arr.size(); i++) {<br>            if (s.find((double)arr[i]/2) != s.end() \|\| s.find((double)arr[i]\*2) != s.end()) {<br>                return result = true;<br>            }else {<br>                s.insert((double)arr[i]);<br>            }<br>        }<br>        return result;<br>        // Method 2: using count(v.begin(), v.end(), value)<br>        for(auto i: arr){<br>            // just take care of exeptions and use count all over :)<br>            if (i == 0){<br>                if (count(arr.begin(), arr.end(), i) > 1) <br>                    return true;<br>                else<br>                    continue;<br>            }<br>            if (count(arr.begin(), arr.end(), i\*2))<br>                return true;<br>        }<br>        return false;<br>    }</pre>|<pre>def checkIfExist(self, arr):<br>        if arr is None or len(arr) <= 1: return False<br>        for i in range(len(arr)):<br>            if arr[i] != 0: # check if the current is not 0<br>                if arr[i]*2 in arr: <br>                    return True<br>                if arr[i]%2 == 0 and arr[i] / 2 in arr:<br>                    return True<br>            else: # if 0, we have to look for a zero at a different index<br>                if 0 in arr[:i] or 0 in arr[i+1:]: return True<br>        return False<br> </pre>|
 
-## 136. Single Number (Find the single number)
+## 136. Single Number 
 **Description:**\
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 Follow up: Could you implement a solution with a linear runtime complexity and without using extra memory?\
@@ -181,7 +196,7 @@ For c++, we can also use erase() function
 |<pre>int removeDuplicates(vector<int>& nums) {<br>        // Method 1: two pointers, erase duplicates<br>        if (nums.size()<1) {<br>            return nums.size();<br>        }<br>        vector\<int\>::iterator it = nums.begin()+1;<br>        int i = 1, l = nums.size();<br>        while (i < l) {<br>            if (nums[i] == nums[i-1]) {<br>                nums.erase(it);<br>                l--;<br>            }else {<br>                i++;<br>                it++;<br>            }<br>        }<br>        return nums.size();<br>        // Method 2: two pointers, move the distinct element front<br>        if(nums.size()<=1) return nums.size();<br>        int j = 1;<br>        for(int i=1;i<nums.size();i++){<br>            if(nums[i]!=nums[i-1]) {<br>                nums[j] = nums[i];<br>                j++;<br>            }<br>        }<br>        return j;<br>    } </pre>|<pre>def removeDuplicates(self, nums):<br>        '''<br>        Method 1: The problem is to return the first n elements where n is the number of distinguish elements.<br>                  Hence, we only need to compare elements one by one. If we encounter a different element, we put it in front.<br>                  This is a kind of two pointer method.<br>                  The first pointer sweeps the entire array. <br>                  The second pointer counts the number of distinct elements.<br>                  When the first pointer points to a distinct element (different from the previous one).<br>                  We move this element to the position where the second pointer is pointing to.<br>                  This method takes about 12 ms.<br>        '''<br>        len_ = 1<br>        if len(nums)==0:<br>            return 0<br>        for i in range(1,len(nums)):<br>            if nums[i] != nums[i-1]:<br>                nums[len_] = nums[i]<br>                len_ +=1<br>        return len_ </pre>|
 
 
-## 27. Remove Element (remove a particular element from an array)
+## 27. Remove Element
 **Description:**\
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
@@ -220,7 +235,7 @@ Hash Table, Two Pointers, Binary Search, Sort\
 |:-- |:-- |
 |<pre>vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {<br>        vector\<int\> result;<br>        result.resize(min(nums1.size(), nums2.size()));<br>        sort(nums1.begin(), nums1.end());<br>        sort(nums2.begin(), nums2.end());<br>        vector<int>::iterator it = set_intersection(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), result.begin());<br>        // Note: it points to the position next to the last intersected element.<br>        //       If it is pointing to result.end(), there must be zeros. We need to remove those zeros.<br>        if (it != result.end()) {<br>            while(it!= result.end()) {<br>                result.erase(it);<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def intersect(self, nums1, nums2):<br>        '''<br>        Method 1: Using set(A).intersection() to extract the common elements in both nums1 and nums2<br>                  Convert the intersection into a list.<br>                  For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.<br>                  Extend the result list by that number of that element.<br>        '''<br>        common=list(set(nums1).intersection(nums2))<br>        result = []<br>        for x in common:<br>            result.extend([x]*min(nums1.count(x),nums2.count(x)))<br>        return result<br>        '''<br>        Method 2: Sort both nums1 and nums2 at first.<br>                  Count the minimum number of shared elements.<br>        '''<br>        nums1 = sorted(nums1)<br>        nums2 = sorted(nums2)<br>        result = []<br>        i = 0<br>        while i < len(nums1):<br>            if nums1[i] in nums2:<br>                result.extend([nums1[i]]*min(nums1.count(nums1[i]), nums2.count(nums1[i])))<br>                i += nums1.count(nums1[i])<br>            else:<br>                i += 1<br>        return result </pre>|
 
-## 36M.Valid Sudoku
+## 36M. Valid Sudoku
 **Description:**\
 Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
 * Each row must contain the digits 1-9 without repetition.
@@ -359,7 +374,7 @@ def findMaxConsecutiveOnes(self, nums):
      return count_max
 ```
 
-** 48M.Rotate Image
+## 48M. Rotate Image
 **Description:**\
 You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
 You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
@@ -504,7 +519,7 @@ def merge(self, nums1, m, nums2, n):
      return nums1
 ```
 
-## 905. Sort Array By Parity (even numbers go first and followed by odd numbers)
+## 905. Sort Array By Parity
 **Description:**\
 Given an array A of non-negative integers, return an array consisting of all the even elements of A, 
 followed by all the odd elements of A.
