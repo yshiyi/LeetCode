@@ -107,9 +107,16 @@ For python, use "if ... in arr" to improve speed. For c++, beware of the convers
 |:-- |:-- |
 |<pre> bool checkIfExist(vector<int>& arr) {<br>        // Method 1:<br>        bool result = false;<br>        set\<double\> s; <br>        for (int i=0; i<arr.size(); i++) {<br>            if (s.find((double)arr[i]/2) != s.end() \|\| s.find((double)arr[i]\*2) != s.end()) {<br>                return result = true;<br>            }else {<br>                s.insert((double)arr[i]);<br>            }<br>        }<br>        return result;<br>        // Method 2: using count(v.begin(), v.end(), value)<br>        for(auto i: arr){<br>            // just take care of exeptions and use count all over :)<br>            if (i == 0){<br>                if (count(arr.begin(), arr.end(), i) > 1) <br>                    return true;<br>                else<br>                    continue;<br>            }<br>            if (count(arr.begin(), arr.end(), i\*2))<br>                return true;<br>        }<br>        return false;<br>    }</pre>|<pre>def checkIfExist(self, arr):<br>        if arr is None or len(arr) <= 1: return False<br>        for i in range(len(arr)):<br>            if arr[i] != 0: # check if the current is not 0<br>                if arr[i]*2 in arr: <br>                    return True<br>                if arr[i]%2 == 0 and arr[i] / 2 in arr:<br>                    return True<br>            else: # if 0, we have to look for a zero at a different index<br>                if 0 in arr[:i] or 0 in arr[i+1:]: return True<br>        return False<br> </pre>|
 
-136. Single Number (Find the single number)
-Hash table, Bit manipulation
-Create a dictionary. Sweep the array and check which element has been seen before
+## 136. Single Number (Find the single number)
+**Description:**\
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+Follow up: Could you implement a solution with a linear runtime complexity and without using extra memory?
+**Method:**\
+Hash table, Bit manipulation\
+For python, create a set to search for the duplicated element. For c++, use count() which is slow or use XOR (i.e., a^0=a; a^a=0).
+|[,cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/136.%20Single%20Number.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/136.%20Single%20Number.py)|
+|:-- |:-- |
+|<pre>int singleNumber(vector<int>& nums) {<br>        /* Method 1: using count(v.begin(), v.end(), value)<br>                     This method takes about 952 ms.<br>        */<br>        int single_num;<br>        for (auto i:nums) {<br>            if (count(nums.begin(), nums.end(), i) == 1) {<br>                return single_num = i;<br>            }<br>        }<br>        return single_num;<br>        /* Method 2: using XOR<br>                     In c++, XOR is ^;<br>                     a ^ 0 = a; a ^ a = 0;<br>                     This method takes only 16 ms.<br>        */<br>        int result = 0;<br>        for (auto i:nums) {<br>            result = result ^ i;<br>        }<br>        return result;<br>    } </pref>|<pre>def singleNumber(self, nums):<br>        '''<br>        Method 1: create a set instead of a dictionary<br>        '''<br>        single = set()<br>        for i in range(len(nums)):<br>            if nums[i] not in single:<br>                single.add(nums[i])<br>            else:<br>                single.remove(nums[i])<br>        return list(single)[0]<br>        '''<br>        Method 2: Apply Math, 2 * (a+b+c) - (a+a+b+b+c) = c<br>                  Use set, note: the keys contained in a set are distinct.<br>        '''<br>        return 2 * sum(set(nums)) - sum(nums) </pref>|
 
 217. Contains Duplicate
 Array, Hash table
