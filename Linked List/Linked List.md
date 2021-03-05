@@ -1,6 +1,6 @@
 # Linked List
 <!-- GFM-TOC -->
-* [Leetcode Linded List](#Leetcode-Linded-List)
+* [Leetcode Linked List](#Leetcode-Linded-List)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
