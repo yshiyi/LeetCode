@@ -166,10 +166,17 @@ For c++, we can also use erase() function
 |<pre>int removeDuplicates(vector<int>& nums) {<br>        // Method 1: two pointers, erase duplicates<br>        if (nums.size()<1) {<br>            return nums.size();<br>        }<br>        vector\<int\>::iterator it = nums.begin()+1;<br>        int i = 1, l = nums.size();<br>        while (i < l) {<br>            if (nums[i] == nums[i-1]) {<br>                nums.erase(it);<br>                l--;<br>            }else {<br>                i++;<br>                it++;<br>            }<br>        }<br>        return nums.size();<br>        // Method 2: two pointers, move the distinct element front<br>        if(nums.size()<=1) return nums.size();<br>        int j = 1;<br>        for(int i=1;i<nums.size();i++){<br>            if(nums[i]!=nums[i-1]) {<br>                nums[j] = nums[i];<br>                j++;<br>            }<br>        }<br>        return j;<br>    } </pre>|<pre>def removeDuplicates(self, nums):<br>        '''<br>        Method 1: The problem is to return the first n elements where n is the number of distinguish elements.<br>                  Hence, we only need to compare elements one by one. If we encounter a different element, we put it in front.<br>                  This is a kind of two pointer method.<br>                  The first pointer sweeps the entire array. <br>                  The second pointer counts the number of distinct elements.<br>                  When the first pointer points to a distinct element (different from the previous one).<br>                  We move this element to the position where the second pointer is pointing to.<br>                  This method takes about 12 ms.<br>        '''<br>        len_ = 1<br>        if len(nums)==0:<br>            return 0<br>        for i in range(1,len(nums)):<br>            if nums[i] != nums[i-1]:<br>                nums[len_] = nums[i]<br>                len_ +=1<br>        return len_ </pre>|
 
 
-27. Remove Element (remove a particular element from an array)
+## 27. Remove Element (remove a particular element from an array)
+**Description:**\
+Given an array nums and a value val, remove all instances of that value in-place and return the new length.
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+**Method:**\
 Array, Two Pointers
-a. Similar to 26. Create two pointers.
-b. Move the last element to the position (=val) and remove the last element
+Move the last element to front (the position (=val)) and remove the last element
+|[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/27.%20Remove%20Element.cpp)|[.py]()|
+|:-- |:-- |
+|<pre>int removeElement(vector<int>& nums, int val) {<br>        if (nums.size() < 1) {return nums.size();}<br>        // Method: move the last element to front and remove the last element.<br>        int i=0, l=nums.size();<br>        vector\<int\>::iterator it = nums.end();<br>        while (i<l) {<br>            if (nums[i] == val) {<br>                nums[i] = nums[l-1];<br>                nums.erase(it-1);<br>                it--;<br>                l--;<br>            }else{<br>                i++;<br>            }<br>        }<br>        return l;<br>    } </pre>|<pre>def removeElement(self, nums, val):<br>       '''<br>       Method : This is an in-place operation method.<br>                When nums[i] = val, we move the last element in the array to position i, remove the last element <br>                from the array and reduce the length of array by 1.<br>       '''<br>        i = 0<br>        L = len(nums)<br>        while i < L:<br>            if nums[i] == val:<br>                nums[i] = nums[-1]<br>                del nums[-1]<br>                L -= 1<br>            else:<br>                i += 1<br>        return L </pre>|
 
 283. Move Zeroes
 Array, Two Pointers
