@@ -234,6 +234,7 @@ int thirdMax(vector<int>& nums) {
                 Note: 1. We can't access to nums.rend(), so we terminate the loop at the second element
                       2. Using *(it+1) to access next element. Using *(it++), iterator will automatically increase by 1.
                       3. Return next element when count == 2
+                      4. max_element(v.begin(), v.end()) returns an iterator, we need to add * to dereference.
      */
      if (nums.size() > 2) {
          sort(nums.begin(), nums.end());
@@ -269,96 +270,382 @@ return max(nums)
 ```
 
 ## 448. Find All Numbers Disappeared in an Array
-Array
-a. Create nums_disappear to hold the missing numbers.
-   At first, we need to check if the first number in nums is 1. If not, we add 1 to (1st number - 1) to nums_disappear.
-   If the 1st number = 1, we check the rest of numbers. 
-   If there is a number greater than its previous number + 1, we add the numbers between them to nums_disappear.
-   When we reach to the end of nums and the last number != len(nums)+1, we add the last number to len(nums)+1 to nums_disappear.
-b. Use set() to compare.
-   The first set contains the numbers from 1 to len(nums)+1.
-   The second set contains the numbers in nums.
-   A.difference(B): for A - B, elements in A but not in B
-   B.difference(A): for B - A, elements in B but not in A
+**Description:**\
+Given an array of integers where 1 ≤ a\[i\] ≤ n (n = size of array), some elements appear twice and others appear once.
+Find all the elements of \[1, n\] inclusive that do not appear in this array.\
+**Method:**\
+Array\
+a. For c++, use elements in nums as index indicator, and then increase the corresponding elements in res, e.g. \[4,3,2,7,8,2,3,1\] -> res = \[0 1 2 2 1 0 0 1 1\]. Finally, save the index numbers which contain zero
+a. For python, use set() to compare. The first set contains the numbers from 1 to len(nums)+1. The second set contains the numbers in nums.\
+   A.difference(B): for A - B, elements in A but not in B\
+   B.difference(A): for B - A, elements in B but not in A\
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/448.%20Find%20All%20Numbers%20Disappeared%20in%20an%20Array.cpp)
+```
+vector<int> findDisappearedNumbers(vector<int>& nums) {
+     vector <int> res;
+     res.assign(nums.size()+1,0);
+     for (int i = 0; i < nums.size();i++){
+         res[nums[i]]++;
+     }        
+     nums.erase(nums.begin(),nums.end());        
+     for (int i = 1; i < res.size();i++){
+         if (res[i] == 0){
+             nums.push_back(i);
+         }
+     }
+     return nums;
+   }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/448.%20Find%20All%20Numbers%20Disappeared%20in%20an%20Array.py)
+```
+def findDisappearedNumbers(self, nums):
+     standard = set(range(1,len(nums)+1))
+     nums = set(nums)
+     missing = list(standard.difference(nums)) # for standard - nums, numbers in standard but not in nums
+     return missing
+```
 
 ## 485. Max Consecutive Ones
-Array
-The basic idea is to loop the array from the beginning and count the number of 1s.
-When the element is equal to 1, we increase the value of count and compare it to the value of count_max. 
-Update the value of max_count, if the current count is greater than the recorded maximum count.
-When the element is equal to 0, we reset the value of count by making it equal to 0.
+**Description:**\
+Given a binary array, find the maximum number of consecutive 1s in this array.\
+**Method:**\
+Array\
+a. The basic idea is to loop the array from the beginning and count the number of 1s. When the element is equal to 1, we increase the value of count and compare it to the value of count_max. Update the value of max_count, if the current count is greater than the recorded maximum count. When the element is equal to 0, we reset the value of count by making it equal to 0.\
+b. Or we can compare count with count_max when the element is not equal to 1. But in this case, we need to return max(count, count_max) at the end.
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/485.%20Max%20Consecutive%20Ones.cpp)
+```
+int findMaxConsecutiveOnes(vector<int>& nums) {
+     int counter = 0, max_ones = 0;
+     for (int i=0; i<nums.size(); i++) {
+         if (nums[i]==1) {
+             counter++;
+         }else {
+             if (counter > max_ones){
+                 max_ones = counter;
+             }
+             counter = 0;
+         }
+     }
+     return max(max_ones, counter);
+}
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/485.%20Max%20Consecutive%20Ones.py)
+```
+def findMaxConsecutiveOnes(self, nums):
+     count = 0  # Record the number of 1s
+     count_max = 0  # Record the maximum number of 1s has been counted
+     for i in range(len(nums)):
+         if nums[i] == 1:
+             count += 1
+             if count > count_max:
+                 count_max = count
+         else:
+             count = 0
+     return count_max
+```
+
+** 48M.Rotate Image
+**Description:**\
+You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+**Method:**\
+Rotate Four rectangles
+For a 3\*3 matrix, observe that (0,0) -> (2,0) -> (2,2) -> (0,2).
+We only need to do this rotation for half of the matrix (i.e., len(matrix)//2). 
+If the size of the matrix is an odd number, we only need to do the rotation for less than half of the matrix.
+As moving down the matrix, we can gradually consider two less element (i.e., one at the beginning and one at the end).\
+Time complexity: O(N^2); Space complexity: O(1)
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/48M.%20Rotate%20Image.cpp)
+```
+void rotate(vector<vector<int>>& matrix) {
+     int l = matrix.size(), temp;
+     for (int i=0; i<l/2; i++) {
+         for (int j=0+i; j<l-i-1; j++) {
+             temp = matrix[i][j];
+             matrix[i][j] = matrix[l-j-1][i];
+             matrix[l-j-1][i] = matrix[l-i-1][l-j-1];
+             matrix[l-i-1][l-j-1] = matrix[j][l-i-1];
+             matrix[j][l-i-1] = temp;
+         }
+     }
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/48M.%20Rotate%20Image.py)
+```
+def rotate(self, matrix):
+     l = len(matrix)
+     for i in range(l // 2):
+         for j in range(0 + i, l - i - 1, 1):
+             tmp = matrix[i][j]
+             matrix[i][j] = matrix[l-j-1][i]
+             matrix[l-j-1][i] = matrix[l-i-1][l-j-1]
+             matrix[l-i-1][l-j-1] = matrix[j][l-i-1]
+             matrix[j][l-i-1] = tmp
+```
+
 
 ## 66. Plus One
-Array
-We simply check the value of each digit from the end.
-If it is equal to 9, we let it be 0.
-If it is not equal to 9, the operation should end and return the result.
-If all digits are 9, we then insert 1 at the first position and return the result. return [1] + result
+**Description:**\
+Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
+You may assume the integer does not contain any leading zero, except the number 0 itself.\
+**Method:**\
+Array\
+We simply check the value of each digit from the end. If it is equal to 9, we let it be 0. If it is not equal to 9, the operation should end and return the result. If all digits are 9, we then insert 1 at the first position and return the result. return \[1\] + result
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/66.%20Plus%20One.cpp)
+```
+vector<int> plusOne(vector<int>& digits) {
+     // Method: using reverse_iterator
+     vector<int>::reverse_iterator rit = digits.rbegin();
+     for (rit; rit!=digits.rend(); rit++) {
+         if (*rit != 9) {
+             ++(*rit);
+             return digits;
+         }else {
+             *rit = 0;
+         }
+     }
+     vector<int> res;
+     res.resize(digits.size()+1);
+     res[0] = 1;
+     for (int i=1; i<res.size(); i++) {
+         res[i] = digits[i-1];
+     }
+     return res;
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/66.%20Plus%20One.py)
+```
+def plusOne(self, digits):
+     for i in range(len(digits)-1, -1, -1):
+         if digits[i] == 9:
+             digits[i] = 0
+         else:
+             digits[i] += 1
+             return digits
+     # digits.insert(0, 1)
+     return [1] + digits
+```
 
 ## 88. Merge Sorted Array
-Array, Two Pointers
-Create a new array to hold all elements and put them back to nums at the end.
-We create two pointers. 
-In the main loop, we sweep the array nums1 and compare each element in nums1 to nums2.
-We save the smaller element to the new array. 
-If this element comes from nums2, we then increase the counter index.
-In the second loop, I put any left elements in nums2 (they are greater then all elements in nums1) to the new array.
-At the end, we transfer all elements from the new array to nums1.
+**Description:**\
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.\
+**Method:**\
+Array, Two Pointers\
+Create a new array to hold all elements and put them back to nums at the end.\
+We create two pointers. \
+In the main loop, we sweep the array nums1 and compare each element in nums1 to nums2.\
+We save the smaller element to the new array. \
+If this element comes from nums2, we then increase the counter index.\
+In the second loop, I put any left elements in nums2 (they are greater then all elements in nums1) to the new array.\
+At the end, we transfer all elements from the new array to nums1.\
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/88.%20Merge%20Sorted%20Array.cpp)
+```
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+     // Method: put all elements to a new vector first, and then sort nums3.
+     vector<int> nums3;
+     int i = 0;
+
+     // Check if nums1 is empty
+     if (nums1.size()>0) {
+         while (i < m) {
+             nums3.push_back(nums1[i]);
+             i++;
+         }
+     }
+
+     // Check if nums2 is empty
+     if (n>0) {
+         for (int j = 0; j<n; j++) {
+             nums3.push_back(nums2[j]);
+         }
+     }
+
+     // Check if nums3 is empty
+     if (nums3.size()>0) {
+         sort(nums3.begin(), nums3.end());
+         nums1 = nums3;
+     }
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/88.%20Merge%20Sorted%20Array.py)
+```
+def merge(self, nums1, m, nums2, n):
+     arr= []
+     index=0
+     for i in range(m):
+         if index < n and nums1[i] < nums2[index]:
+             arr.append(nums1[i])
+         else:
+             while index < n and nums2[index] < nums1[i]:
+                 arr.append(nums2[index])
+                 index += 1
+             arr.append(nums1[i])
+
+     for i in range(index,n):
+         arr.append(nums2[i])
+     for j in range(len(arr)):
+         nums1[j] = arr[j]
+     return nums1
+```
 
 ## 905. Sort Array By Parity (even numbers go first and followed by odd numbers)
-Array, Two Pointers
-Create two pointers.
-The first pointer sweeps the entire array and searches for the even elements.
-The second pointer counts the number of even numbers. It stops at the odd element positions.
+**Description:**\
+Given an array A of non-negative integers, return an array consisting of all the even elements of A, 
+followed by all the odd elements of A.
+You may return any answer array that satisfies this condition.
+**Method:**\
+Array, Two Pointers\
+The first pointer sweeps the entire array and searches for the even elements. The second pointer counts the number of even numbers. It stops at the odd element positions.
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/905.%20Sort%20Array%20By%20Parity.cpp)
+```
+vector<int> sortArrayByParity(vector<int>& A) {
+     int j=0, tmp;
+     for (int i=0; i<A.size(); i++) {
+         if (A[i]%2==0) {
+             swap(A[j], A[i]);
+             j++;
+         }
+     }
+     return A;
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/905.%20Sort%20Array%20By%20Parity.py)
+```
+def sortArrayByParity(self, A):
+     count = 0
+     for i in range(len(A)):
+         if A[i] % 2 == 0:
+             A[count], A[i] = A[i], A[count]
+             count += 1
+     return A
+```
 
 ## 941. Valid Mountain Array
-Array
-At first, we walk up from left to right, and save the index when we reach the peak.
-If the peak is at the start or at the end, it is not a mountain.
-After we reach the peak, we keep walking down to the right.
-If we stop at the end, then it is a mountain.
+**Description:**\
+Given an array A of integers, return true if and only if it is a valid mountain array.
+Recall that A is a mountain array if and only if:
+* A.length >= 3
+* There exists some i with 0 < i < A.length - 1 such that:\
+      A[0] < A[1] < ... A[i-1] < A[i]\
+      A[i] > A[i+1] > ... > A[A.length - 1]\
+**Method:**\
+Array\
+At first, we walk up from left to right, and save the index when we reach the peak. If the peak is at the start or at the end, it is not a mountain. After we reach the peak, we keep walking down to the right. If we stop at the end, then it is a mountain.
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/941.%20Valid%20Mountain%20Array.cpp)
 ```
-# walk up
-while i < len(A) - 1 and A[i] < A[i+1]:
-    i += 1
-# walk down
-while i < len(A) - 1 and A[i] > A[i+1]:
-    i += 1
+bool validMountainArray(vector<int>& arr) {
+     /* Method: There are some things need to notice
+                If start from i=1, need to check i<arr.size() in the while loops, 
+                check (i==1||i==arr.size()) in if, and return i==arr.size();
+     */
+     if (arr.size()<3) {
+         return false;
+     }
+     int i=0;
+     while (i < arr.size()-1 && arr[i] < arr[i+1]) {
+         i++;
+     }
+     if (i==0 || i==arr.size()-1) {
+         return false;
+     }
+     while (i < arr.size()-1 && arr[i] > arr[i+1]) {
+         i++;
+     }
+     return i==arr.size()-1;
+    }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/941.%20Valid%20Mountain%20Array.py)
+```
+def validMountainArray(self, A):
+     i = 0
+     # walk up
+     while i < len(A) - 1 and A[i] < A[i+1]:
+         i += 1
+     # peak can't be first or last
+     if i == 0 or i == len(A) - 1:
+         return False
+     # walk down
+     while i < len(A) - 1 and A[i] > A[i+1]:
+         i += 1
+     return i == len(A)-1
 ```
 
-## [977\. Squares of a Sorted Array](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
-Array, Two Pointers\
+
+## 977. Squares of a Sorted Array
 **Description:**\
 Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.\
 **Method:**\
-1. use the default function sort() and simplified loop\
-   ```
-   return sorted(x*x for x in A)
-   ```
-2. Create two pointers: i and j.
-   j: counts the number of negative elements, points to the first non-negative element.\
-   i: points to the largest negative element.\
-   Then we start to compare elements from j to N and from i to 0.\
-   When j reaches to N or i reaches to 0, we stop the loop. \
-   Then add the rest of array (i.e., A[:i] or A[j:]) to the end of answer.\
+Array, Two Pointers\
+* use the default function sort() and simplified loop\
+* Create two pointers: i and j.\
+  j: counts the number of negative elements, points to the first non-negative element.\
+  i: points to the largest negative element.\
+  Then we start to compare elements from j to N and from i to 0.\
+  When j reaches to N or i reaches to 0, we stop the loop. \
+  Then add the rest of array (i.e., A\[:i\] or A\[j:\]) to the end of answer.\
+[c++](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.cpp)
 ```
-while j < len(A) and A[j] < 0:
-    j += 1
-i = j - 1
-ans = []
-while 0 <= i and j < N:
-    if A[i]**2 < A[j]**2:
-        ans.append(A[i]**2)
-        i -= 1
-    else:
-        ans.append(A[j]**2)
-        j += 1
+vector<int> sortedSquares(vector<int>& nums) {
+     for (unsigned int i=0; i<nums.size(); i++) {
+         nums[i] = pow(nums[i], 2);
+     }
+     sort(nums.begin(), nums.end());
+     return nums;
+ }
+```
+[python](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.py)
+```
+def sortedSquares(self, A):
+     # Method 1: use the default function sort() and simplified loop
+     return sorted(x*x for x in A)
 
-while i >= 0:
-    ans.append(A[i]**2)
-    i -= 1
-while j < N:
-    ans.append(A[j]**2)
-    j += 1
+
+     # Method 2: square every element in the array and write a function to implement quicksort algorithm.
+     A_square = [x * x for x in A]
+     return self.quickSort(A_square)
+
+ def quickSort(self, nums):
+     if len(nums) < 2:
+         return nums
+     else:
+         pivot = nums[0]
+         less = [i for i in nums[1:] if i <= pivot]
+         greater = [i for i in nums[1:] if i > pivot]
+         return self.quickSort(less) + [pivot] + self.quickSort(greater)
+
+
+     '''
+     Method 3: Create two pointers: i and j.
+               j: counts the number of negative elements, points to the first non-negative element.
+               i: points to the largest negative element.
+               Then we start to compare elements from j to N and from i to 0.
+               When j reaches to N or i reaches to 0, we stop the loop. 
+               Then add the rest of array (i.e., A[:i] or A[j:]) to the end of answer.
+     '''
+     N = len(A)
+     # i, j: negative, positive parts
+     j = 0
+     while j < N and A[j] < 0:
+         j += 1
+     i = j - 1
+
+     ans = []
+     while 0 <= i and j < N:
+         if A[i]**2 < A[j]**2:
+             ans.append(A[i]**2)
+             i -= 1
+         else:
+             ans.append(A[j]**2)
+             j += 1
+
+     while i >= 0:
+         ans.append(A[i]**2)
+         i -= 1
+     while j < N:
+         ans.append(A[j]**2)
+         j += 1
+
+     return ans
 ```
 
