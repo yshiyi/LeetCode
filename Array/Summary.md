@@ -1,40 +1,36 @@
 # Array
-This is a brief summary of all the problems in this folder.\
 <!-- GFM-TOC -->
-* [Leetcode Array](#Leetcode-Array)
-    * [1. Two Sum](#1-Two-Sum)
-    * [1051. Height checker](#1051-Height-checker)
-    * [1089. Duplicate zeros](#1089-Duplicate-zeros)
-    * [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
-    * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
-    * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
-    * [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
-    * [136. Single Number](#136-Single-Number)
-    * [15M. 3Sum](#15M-3Sum)
-    * [189M. Rotate Array](#189M-Rotate-Array)
-    * [217. Contains Duplicate](#217-Contains-Duplicate)
-    * [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
-    * [27. Remove Element](#27-Remove-Element)
-    * [283. Move Zeroes](#283-Move-Zeroes)
-    * [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
-    * [36M. Valid Sudoku](#36M-Valid-Sudoku)
-    * [414. Third Maximum Number](#414-Third-Maximum-Number)
-    * [448. Find All Numbers Disappeared in an Array](#448-Find-All-Numbers-Disappeared-in-an-Array)
-    * [485. Max Consecutive Ones](#485-Max-Consecutive-Ones)
-    * [48M. Rotate Image](#48M-Rotate-Image)
-    * [66. Plus One](#66-Plus-One)
-    * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
-    * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
-    * [941. Valid Mountain Array](#941-Valid-Mountain-Array)
-    * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
+* [Leetcode Array](#Array)
+    * [1. Search for a particular number or check duplicates](#1-earch-or--articular-umber-r-heck-uplicates)
+    * [2. Remove or remove elements within array](#2-Remove-or-remove-elements-within-array)
+    * [3. Two pointers](#3-Two-pointers)
+    * [4. Peak and valley](#4-Peak-and-valley)
 <!-- GFM-TOC -->
 
-There are a number of typical methods to solve particular problems:\
-1. Search for a particular number, or check duplicates\
-   Hash Table:\ 
-      easy - [01](#1-Two-Sum), [1346](#1346-Check-If-N-and-Its-Double-Exist), [136](#136-Single-Number), 217(#217-Contains-Duplicate), 350; medium - 36 
-2. Peak and Valley\
-   Use the template to find out the peak and valley. ex.: [122](#122-Best-time-to-Buy-and-Sell-Stock-II), 941
+## 1. Search for a particular number or check duplicates
+* [1. Two Sum](#1-Two-Sum)
+* [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
+* [136. Single Number](#136-Single-Number)
+* [217. Contains Duplicate](#217-Contains-Duplicate)
+* [414. Third Maximum Number](#414-Third-Maximum-Number)
+* [448. Find All Numbers Disappeared in an Array](#448-Find-All-Numbers-Disappeared-in-an-Array)
+
+## 2. Remove or remove elements within array
+* [1089. Duplicate zeros](#1089-Duplicate-zeros)
+* [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
+* [27. Remove Element](#27-Remove-Element)
+* [283. Move Zeroes](#283-Move-Zeroes)
+
+## 3. Two pointers
+* [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
+* [15M. 3Sum](#15M-3Sum)
+* [88. Merge Sorted Array](#88-Merge-Sorted-Array)
+* [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
+
+## 4. Peak and valley
+* [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
+* [941. Valid Mountain Array](#941-Valid-Mountain-Array)
+Use the template to find out the peak and valley.
 ```
 for (int i = 0; i<.size()-1; i++) {
    // walk up
@@ -50,22 +46,20 @@ for (int i = 0; i<.size()-1; i++) {
 
 }
 ```
-3. Require in-place operation: \
-   remove duplicates/a particular element: (26, 27) \
-   move elements within array: [1089](#1089-Duplicate-zeros)\
-   merge two arrays: (88, 905, 977)\
-   Two pointers: [1299](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side), [15M](#15M-3Sum)
-4. Use some particular functions:\
-   set() - 217\
-   set(A).intersection(B) - 350\
-   A.difference(B): for A - B, elements in A but not in B - 448\
-   B.difference(A): for B - A, elements in B but not in A - 448\
-5. Specific functiona:\
-   from int to string: str() for python, to_string(int) for c++
+
+## 6. Use some particular functions
+* [1051. Height checker](#1051-Height-checker)
+* [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
+* [189M. Rotate Array](#189M-Rotate-Array)
+* [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
+* [36M. Valid Sudoku](#36M-Valid-Sudoku)
+* [485. Max Consecutive Ones](#485-Max-Consecutive-Ones)
+* [48M. Rotate Image](#48M-Rotate-Image)
+* [66. Plus One](#66-Plus-One)
+* [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 
 
-
-## 1. Two Sum 
+### 1. Two Sum 
 Search for a certain number\
 Hash Table\
 Create a dictionary.\
