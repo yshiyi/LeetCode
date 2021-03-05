@@ -195,12 +195,12 @@ Similar to 26. Create two pointer. The first one sweeps the whole array, the sec
 Given two arrays, write a function to compute their intersection.\
 **Method:**\
 Hash Table, Two Pointers, Binary Search, Sort\
-- Use set(A).intersection(B) to extract the common elements in both A and B.\
+* Use set(A).intersection(B) to extract the common elements in both A and B.\
   Convert the intersection into a list.\
   For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.\
   result.extend([x]\*min(nums1.count(x),nums2.count(x)))\
-- Sort both nums1 and nums2 at first.\
-  Count the minimum number of shared elements.
+* Sort both nums1 and nums2 at first.\
+  Count the minimum number of shared elements.\
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/350.%20Intersection%20of%20Two%20Arrays%20II.cpp)|[.py]()|
 |:-- |:-- |
 |<pre>vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {<br>        vector\<int\> result;<br>        result.resize(min(nums1.size(), nums2.size()));<br>        sort(nums1.begin(), nums1.end());<br>        sort(nums2.begin(), nums2.end());<br>        vector<int>::iterator it = set_intersection(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), result.begin());<br>        // Note: it points to the position next to the last intersected element.<br>        //       If it is pointing to result.end(), there must be zeros. We need to remove those zeros.<br>        if (it != result.end()) {<br>            while(it!= result.end()) {<br>                result.erase(it);<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def intersect(self, nums1, nums2):<br>        '''<br>        Method 1: Using set(A).intersection() to extract the common elements in both nums1 and nums2<br>                  Convert the intersection into a list.<br>                  For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.<br>                  Extend the result list by that number of that element.<br>        '''<br>        common=list(set(nums1).intersection(nums2))<br>        result = []<br>        for x in common:<br>            result.extend([x]*min(nums1.count(x),nums2.count(x)))<br>        return result<br>        '''<br>        Method 2: Sort both nums1 and nums2 at first.<br>                  Count the minimum number of shared elements.<br>        '''<br>        nums1 = sorted(nums1)<br>        nums2 = sorted(nums2)<br>        result = []<br>        i = 0<br>        while i < len(nums1):<br>            if nums1[i] in nums2:<br>                result.extend([nums1[i]]*min(nums1.count(nums1[i]), nums2.count(nums1[i])))<br>                i += nums1.count(nums1[i])<br>            else:<br>                i += 1<br>        return result </pre>|
