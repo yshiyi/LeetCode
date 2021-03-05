@@ -1,5 +1,18 @@
 # Array
-This is a brief summary of all the problems in this folder.
+This is a brief summary of all the problems in this folder.\
+<!-- GFM-TOC -->
+* [Leetcode Array](#Leetcode-Array)
+    * [1. Two Sum](#1-Two-Sum)
+    * [1051. Height checker](#1051-Height-checker)
+    * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
+    * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
+    * [5. Reverse linked list](#5-Reverse-linked-list)
+    * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
+    * [7. Add two numbers](#7-Add-two-numbers)
+    * [8. Remove duplicates from sorted list](#8-Remove-duplicates-from-sorted-list)
+    * [9. Copy list with random pointer](#9-Copy-list-with-random-pointer)
+    * [10. Odd even linked list](#10-Odd-even-linked-list)
+<!-- GFM-TOC -->
 There are a number of typical methods to solve particular problems:\
 1. Search for a particular number, or check duplicates\
 Hash Table. ex.: easy - [01](#1-Two-Sum-(-Search-for-a-certain-number-)), 136, 217, 350; medium - 36 
@@ -30,7 +43,8 @@ Two pointers
 
 
 
-## 1. Two Sum (Search for a certain number)
+## 1. Two Sum 
+Search for a certain number\
 Hash Table\
 Create a dictionary.\
 |                                                                                                                                                                                                                  [.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.cpp)                                                                                                                                                                                                                 |                                                                                                                                      [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/01.%20Two%20Sum.py)                                                                                                                                     |
@@ -223,10 +237,10 @@ The basic idea is to look for the duplicates in each row, each column and each b
 **Description:**\
 Given a non-empty array of integers, return the third maximum number in this array. 
 If it does not exist, return the maximum number. 
-The time complexity must be in O(n).
+The time complexity must be in O(n).\
 **Method:**\
 Array\
-Use a counter to search for the third maximum number, if len(nums)>2. If there is no such number, return max(nums).
+Use a counter to search for the third maximum number, if len(nums)>2. If there is no such number, return max(nums).\
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/414.%20Third%20Maximum%20Number.cpp)
 ```
 int thirdMax(vector<int>& nums) {       
@@ -275,10 +289,11 @@ Given an array of integers where 1 ≤ a\[i\] ≤ n (n = size of array), some el
 Find all the elements of \[1, n\] inclusive that do not appear in this array.\
 **Method:**\
 Array\
-a. For c++, use elements in nums as index indicator, and then increase the corresponding elements in res, e.g. \[4,3,2,7,8,2,3,1\] -> res = \[0 1 2 2 1 0 0 1 1\]. Finally, save the index numbers which contain zero
-a. For python, use set() to compare. The first set contains the numbers from 1 to len(nums)+1. The second set contains the numbers in nums.\
+* For c++, use elements in nums as index indicator, and then increase the corresponding elements in res, e.g. \[4,3,2,7,8,2,3,1\] -> res = \[0 1 2 2 1 0 0 1 1\]. Finally, save the index numbers which contain zero
+* For python, use set() to compare. The first set contains the numbers from 1 to len(nums)+1. The second set contains the numbers in nums.\
    A.difference(B): for A - B, elements in A but not in B\
    B.difference(A): for B - A, elements in B but not in A\
+
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/448.%20Find%20All%20Numbers%20Disappeared%20in%20an%20Array.cpp)
 ```
 vector<int> findDisappearedNumbers(vector<int>& nums) {
@@ -311,7 +326,7 @@ Given a binary array, find the maximum number of consecutive 1s in this array.\
 **Method:**\
 Array\
 a. The basic idea is to loop the array from the beginning and count the number of 1s. When the element is equal to 1, we increase the value of count and compare it to the value of count_max. Update the value of max_count, if the current count is greater than the recorded maximum count. When the element is equal to 0, we reset the value of count by making it equal to 0.\
-b. Or we can compare count with count_max when the element is not equal to 1. But in this case, we need to return max(count, count_max) at the end.
+b. Or we can compare count with count_max when the element is not equal to 1. But in this case, we need to return max(count, count_max) at the end.\
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/485.%20Max%20Consecutive%20Ones.cpp)
 ```
 int findMaxConsecutiveOnes(vector<int>& nums) {
@@ -354,7 +369,7 @@ For a 3\*3 matrix, observe that (0,0) -> (2,0) -> (2,2) -> (0,2).
 We only need to do this rotation for half of the matrix (i.e., len(matrix)//2). 
 If the size of the matrix is an odd number, we only need to do the rotation for less than half of the matrix.
 As moving down the matrix, we can gradually consider two less element (i.e., one at the beginning and one at the end).\
-Time complexity: O(N^2); Space complexity: O(1)
+Time complexity: O(N^2); Space complexity: O(1)\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Array/48M.%20Rotate%20Image.cpp)
 ```
 void rotate(vector<vector<int>>& matrix) {
@@ -391,7 +406,7 @@ The digits are stored such that the most significant digit is at the head of the
 You may assume the integer does not contain any leading zero, except the number 0 itself.\
 **Method:**\
 Array\
-We simply check the value of each digit from the end. If it is equal to 9, we let it be 0. If it is not equal to 9, the operation should end and return the result. If all digits are 9, we then insert 1 at the first position and return the result. return \[1\] + result
+We simply check the value of each digit from the end. If it is equal to 9, we let it be 0. If it is not equal to 9, the operation should end and return the result. If all digits are 9, we then insert 1 at the first position and return the result. return \[1\] + result\
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/66.%20Plus%20One.cpp)
 ```
 vector<int> plusOne(vector<int>& digits) {
@@ -496,7 +511,7 @@ followed by all the odd elements of A.
 You may return any answer array that satisfies this condition.
 **Method:**\
 Array, Two Pointers\
-The first pointer sweeps the entire array and searches for the even elements. The second pointer counts the number of even numbers. It stops at the odd element positions.
+The first pointer sweeps the entire array and searches for the even elements. The second pointer counts the number of even numbers. It stops at the odd element positions.\
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/905.%20Sort%20Array%20By%20Parity.cpp)
 ```
 vector<int> sortArrayByParity(vector<int>& A) {
@@ -531,7 +546,7 @@ Recall that A is a mountain array if and only if:
       A[i] > A[i+1] > ... > A[A.length - 1]\
 **Method:**\
 Array\
-At first, we walk up from left to right, and save the index when we reach the peak. If the peak is at the start or at the end, it is not a mountain. After we reach the peak, we keep walking down to the right. If we stop at the end, then it is a mountain.
+At first, we walk up from left to right, and save the index when we reach the peak. If the peak is at the start or at the end, it is not a mountain. After we reach the peak, we keep walking down to the right. If we stop at the end, then it is a mountain.\
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/941.%20Valid%20Mountain%20Array.cpp)
 ```
 bool validMountainArray(vector<int>& arr) {
@@ -584,6 +599,7 @@ Array, Two Pointers\
   Then we start to compare elements from j to N and from i to 0.\
   When j reaches to N or i reaches to 0, we stop the loop. \
   Then add the rest of array (i.e., A\[:i\] or A\[j:\]) to the end of answer.\
+
 [c++](https://github.com/yshiyi/LeetCode/blob/main/Array/977.%20Squares%20of%20a%20Sorted%20Array.cpp)
 ```
 vector<int> sortedSquares(vector<int>& nums) {
