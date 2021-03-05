@@ -81,15 +81,21 @@ b. Sum up all increasement if the value is increasing\
 
 ## 1295. Find Numbers with Even Number of Digits
 **Description:**\
-Given an array nums of integers, return how many of them contain an even number of digits.
+Given an array nums of integers, return how many of them contain an even number of digits.\
 **Method:**\
 Array, Convert int to str and check the length of each string\
 For python, using str(). For c++, using to_string(int).
 
 1299. Replace Elements with Greatest Element on Right Side
-Array
-Sweep the array from the back.
+**Description:**\
+Given an array arr, replace every element in that array with the greatest element among the elements to its right, 
+and replace the last element with -1.\
+**Method:**\
+Array, sweep through the array from the back.
 Save the current element to t, and find out the maximum between t and current max temp.
+| [.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/1299.%20Replace%20Elements%20with%20Greatest%20Element%20on%20Right%20Side.cpp) | [.py](https://github.com/yshiyi/LeetCode/blob/main/Array/1299.%20Replace%20Elements%20with%20Greatest%20Element%20on%20Right%20Side.py)|
+|:-- |:-- |
+|<pre>vector<int> replaceElements(vector<int>& arr) {<br>        int l = arr.size();<br>        int max = arr[l-1], temp = -1, t;<br>        for (int i=l-1; i>-1; i--) {<br>            t = arr[i];<br>            arr[i] = temp;<br>            temp = std::max(temp, t);<br>        }<br>        return arr;<br>    }  </pre>|<pre>def replaceElements(self, arr):<br>        temp = -1<br>        for i in range(len(arr)-1, -1, -1):<br>            t = arr[i]<br>            arr[i] = temp<br>            temp = max(temp, t)<br>        return arr</pre>|
 
 1346. Check If N and Its Double Exist
 Array
