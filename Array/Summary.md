@@ -5,6 +5,7 @@
     * [2. Remove or remove elements within array](#2-Remove-or-remove-elements-within-array)
     * [3. Two pointers](#3-Two-pointers)
     * [4. Peak and valley](#4-Peak-and-valley)
+    * [5. Use some particular functions](#5-Use-some-particular-functions)
 <!-- GFM-TOC -->
 
 ## 1. Search for a particular number or check duplicates
@@ -411,7 +412,7 @@ def validMountainArray(self, A):
 ```
 
 
-## 6. Use some particular functions
+## 5. Use some particular functions
 * [1051. Height checker](#1051-Height-checker)
 * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
 * [189M. Rotate Array](#189M-Rotate-Array)
