@@ -56,6 +56,12 @@ public:
         string res;
         int l = word.size();
         res = word[0] + to_string(l) + word[l-1];
+        /*
+        res.resize(3);
+        res.insert(0, string(1, word[0]));
+        res.insert(1, to_string(l));
+        res.insert(2, string(1, word[l-1]));
+        */
         return res;
     }
 
