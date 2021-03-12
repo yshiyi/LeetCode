@@ -68,3 +68,47 @@ public:
         
     }
 };
+
+
+
+
+/* Method 3: Using inheritance and predicate to sort the vector.
+
+*/
+class myCompare {
+public:
+    bool operator()(pair<int, int>& p1, pair<int, int>& p2) {
+        return p1.second > p2.second;
+    }
+};
+
+class Solution : public myCompare {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> mapValues;
+        vector<pair<int, int>> vecValues;
+        vector<int> vecAnswer;
+        
+        for(auto& val:nums)
+        {
+            if(mapValues.find(val) != mapValues.end())
+            {
+                vecValues[mapValues[val]].second++;
+            }
+            else
+            {
+                mapValues[val] = vecValues.size();
+                vecValues.emplace_back(pair<int,int>{val, 1});
+            }
+        }
+        
+        sort(vecValues.begin(), vecValues.end(), myCompare());
+        for(int nIndex = 0; nIndex < k; nIndex++)
+        {
+            vecAnswer.push_back(vecValues[nIndex].first);
+        }
+        return vecAnswer;
+        
+        
+    }
+};
