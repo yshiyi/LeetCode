@@ -1,5 +1,13 @@
 class Solution {
 public:
+    
+    /* myCompare is declared as a member function of class Solution, 
+       and hence requires this pointer for calling it. 
+       The complete tag for functions like bool cmp is:
+       bool myCompare(Solution* this, pair<int, int>& p1, pair<int, int>& p2)
+       We can declare it as a static funtion, since static functions do not require this pointer for calling.
+    
+    */
     static bool myCompare(pair<int, int>& p1, pair<int, int>& p2) {
         return p1.second > p2.second;
     }
@@ -37,7 +45,8 @@ public:
         /* Method 2: First, create a map. 
                      The kay is the unique elements, the value is the currect size of vecValues.
                      Create a vector of pairs of integers. The index of the vector is the value of the map.
-                     The first value of the pair is the unique element, and the second value of the pair is the number of appearances.
+                     The first value of the pair is the unique element, 
+                     and the second value of the pair is the number of appearances.
                      Then sort this vector using self-defined functional object (it must be static).
                      Finally, save the first k elements to vecAnswer.
         */
