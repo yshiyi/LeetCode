@@ -26,7 +26,7 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 ```
 
 # Sorting Algorithm
-## Bubble Sort
+## 1. Bubble Sort
 Bubble sort is the simplest technique in which we compare every element with its adjacent element and swap the elements if they are in wrong order (i.e., arr\[i\] > arr\[i+1\]). This way at the end of every iteration (called a pass), the heaviest element gets bubbled up at the end of the list.
 ```
 void bubbleSort(int * arr, int len) {
@@ -42,9 +42,9 @@ void bubbleSort(int * arr, int len) {
 }
 ```
 **Recursive Bubble Sort**\
-1. Base Case: If array size is 1, return.\
-2. Do One Pass of normal Bubble Sort. This pass fixes last element of current subarray.\
-3. Recur for all elements except last of current subarray.\
+1. Base Case: If array size is 1, return.
+2. Do One Pass of normal Bubble Sort. This pass fixes last element of current subarray.
+3. Recur for all elements except last of current subarray.
 ```
 void bubbleSort(int * arr, int len) {
     if (len == 1) {return;}
@@ -58,3 +58,5 @@ void bubbleSort(int * arr, int len) {
      bubbleSort(arr, len - 1);
 }
 ```
+
+**Recursive Bubble Sort**\
