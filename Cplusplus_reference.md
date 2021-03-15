@@ -1,6 +1,6 @@
 ## C++ Reference
-* [int vs unsigned int](#-int-vs-unsigned-int)
-* [Sorting Algorithm](#-Sorting-Algorithm)
+* [int vs unsigned int](#int-vs-unsigned-int)
+* [Sorting Algorithm](#Sorting-Algorithm)
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
