@@ -59,6 +59,6 @@ void bubbleSort(int * arr, int len) {
 }
 ```
 
-**Recursive Bubble Sort**
-fdsgdfsgsfdg
-fgsdg
+## 2. Quick Sort
+
+### Quickselect Algorithm
