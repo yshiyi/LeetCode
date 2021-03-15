@@ -41,7 +41,7 @@ void bubbleSort(int * arr, int len) {
     }
 }
 ```
-**Recursive Bubble Sort**\
+**Recursive Bubble Sort**
 1. Base Case: If array size is 1, return.
 2. Do One Pass of normal Bubble Sort. This pass fixes last element of current subarray.
 3. Recur for all elements except last of current subarray.
@@ -59,4 +59,6 @@ void bubbleSort(int * arr, int len) {
 }
 ```
 
-**Recursive Bubble Sort**\
+**Recursive Bubble Sort**
+fdsgdfsgsfdg
+fgsdg
