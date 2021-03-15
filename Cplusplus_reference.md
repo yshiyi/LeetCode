@@ -1,5 +1,6 @@
 ## C++ Reference
 * [int vs unsigned int](#-int-vs-unsigned-int)
+* [Sorting Algorithm](#-Sorting-Algorithm)
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
@@ -23,3 +24,7 @@ for (unsigned int j = v.size()-1; j < (unsigned)-1; --j)
 */
 for (unsigned int i = v.size()-1; i > -1; --i) 
 ```
+
+# Sorting Algorithm
+## Bubble Sort
+
