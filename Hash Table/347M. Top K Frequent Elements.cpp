@@ -121,3 +121,56 @@ public:
         
     }
 };
+
+/* Method 4: Using QuickSelect approach.
+*/
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        map<int, int> m;
+        vector<int> dis_nums;
+        for (auto& val:nums) {
+            if (m.find(val) != m.end()) {
+                ++m[val];
+            }else{
+                m.insert(make_pair(val, 1));
+                dis_nums.push_back(val);
+            }
+        }
+        quickSelect(m, dis_nums, 0, m.size()-1, k);
+        vector<int> res(&dis_nums[0], &dis_nums[k]);
+        return res;
+        
+    }
+    
+    void quickSelect(map<int, int>& m, vector<int>& unique_nums, int left, int right, int k) {
+        if (k>0 && k<=right-left+1) {
+            int index = partition(m, unique_nums, left, right);
+            if (index - left == k - 1) {
+                return;
+            }
+            if (index - left > k - 1) {
+                quickSelect(m, unique_nums, 0, index-1, k);
+            }
+            if (index - left < k - 1) {
+                quickSelect(m, unique_nums, index+1, right, k-(index-left+1));
+            }
+        }
+        return;
+    }
+    
+    int partition(map<int, int>& m, vector<int>& unique_nums, int left, int right) {
+        int pivot = unique_nums[right];
+        int pivot_freq = m[pivot];
+        int pivot_index = left;
+        for (int i=left; i<right; ++i) {
+            if (m[unique_nums[i]] > pivot_freq) {
+                swap(unique_nums[i], unique_nums[pivot_index]);
+                ++pivot_index;
+            }
+        }
+        swap(unique_nums[pivot_index], unique_nums[right]);
+        return pivot_index;
+    }
+    
+};
