@@ -83,6 +83,7 @@ def RecurBubbleSort(nums, l):
 ## 2. Quick Sort
 
 ### Quickselect Algorithm
+**[347M.Top K Frequent Elements](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/347M.%20Top%20K%20Frequent%20Elements.cpp)**
 Quickselect is a selection algorithm and is typically used to solve the problems "find kth something": kth smallest, kth largest, kth most frequent, kth less frequent, etc. It is related to the quick sort sorting algorithm.\
 The logic is simple, if index of partitioned element is more than k, then we recur for left part. If index is same as k, we have found the k-th smallest element and we return. If index is less than k, then we recur for right part.\
 It has O(N) average time complexity and widely used in practice. It worth to note that its worth case time complexity is O(N^2), although the probability of this worst-case is negligible.
