@@ -147,12 +147,12 @@ class Solution(object):
                 print(index)
             return
          
-        n = len(unique) 
+        n = len(dis_nums) 
         # kth top frequent element is (n - k)th less frequent.
         # Do a partial sort: from less frequent to the most frequent, till
         # (n - k)th less frequent element takes its place (n - k) in a sorted array. 
         # All element on the left are less frequent.
         # All the elements on the right are more frequent.  
-        quickselect(0, n - 1, n - k)
+        quickSelect(0, n - 1, n - k)
         # Return top k frequent elements
-        return unique[n - k:]
+        return dis_nums[n - k:]
