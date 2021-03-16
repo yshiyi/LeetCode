@@ -45,6 +45,7 @@ void bubbleSort(int * arr, int len) {
 1. Base Case: If array size is 1, return.
 2. Do One Pass of normal Bubble Sort. This pass fixes last element of current subarray.
 3. Recur for all elements except last of current subarray.
+**c++**\
 ```
 void bubbleSort(int * arr, int len) {
     if (len == 1) {return;}
@@ -63,4 +64,4 @@ void bubbleSort(int * arr, int len) {
 
 ### Quickselect Algorithm
 Quickselect is a selection algorithm and is typically used to solve the problems "find kth something": kth smallest, kth largest, kth most frequent, kth less frequent, etc. It is related to the quick sort sorting algorithm.\
-It has \mathcal{O}(N) average time complexity and widely used in practice. It worth to note that its worth case time complexity is \mathcal{O}(N^2), although the probability of this worst-case is negligible.
+It has O(N) average time complexity and widely used in practice. It worth to note that its worth case time complexity is O(N^2), although the probability of this worst-case is negligible.
