@@ -94,3 +94,24 @@ class Solution(object):
         
         return max_len
 
+        # Another way using sliding window
+        if len(s)==0:
+            return 0
+        elif len(s)==1:
+            return 1
+        window = {}
+        right, left = 0, 0
+        res = 0
+        while (right < len(s)):
+            c = s[right]
+            if c not in window:
+                window[c] = 1
+            else:
+                window[c] += 1
+            right += 1
+            while (window[c]>1):
+                d = s[left]
+                window[d] -= 1
+                left += 1
+            res = max(res, right-left)
+        return res
