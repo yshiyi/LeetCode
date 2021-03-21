@@ -1,6 +1,7 @@
-## C++ Reference
+## C++ Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
 * [Sorting Algorithm](#Sorting-Algorithm)
+* [Sliding Window](#Sliding-Window)
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
@@ -142,6 +143,85 @@ def quickSelect(arr, l, r, k):
         return quickSelect(arr, index+1, r, k-(index-l+1))
     return -1
 ```
+
+# Sliding Window
+Sliding window is a special method of two pointers. The basic idea is to use two different pointers to create a kind of window. Then, move this window by increasing the pointers individually. The time complexity is O(N). The basic logic is:
+```
+int left = 0, right = 0;
+while (right < s.size()){
+   window[s[right]]++;
+   right++;
+   
+   while(window needs to shrink){
+      window[s[left]]--;
+      left--;
+   }
+}
+```
+**[76H. Minimum Window Substring](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/76H.%20Minimum%20Window%20Substring.cpp)**\
+Description:\
+Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is no such window in s that covers all characters in t, return the empty string "". Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.\
+Example 1:\
+Input: s = "ADOBECODEBANC", t = "ABC"\
+Output: "BANC"\
+```
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> window, need;
+        for (auto& c:t) {
+            need[c]++;
+        }
+
+        int left = 0, right = 0, match = 0;
+        int start = 0, len = INT_MAX;
+        while(right < s.size()) {
+            char c = s[right];
+            if (need.find(c)!=need.end()){
+                window[c]++;
+                // if (window[c]==1){ This doesn't work, if there are duplicate char in target string.
+                if (window[c]==need[c]){
+                    match++;
+                }
+            }
+            while (match == need.size()) {
+                if (right - left < len) {
+                    start = left;
+                    len = right - left;
+                }
+                char d = s[left];
+                if (need.find(d)!=need.end()){
+                    if (window[d]==need[d]){
+                        match--;
+                    }
+                    window[d]--;
+                }                
+                left++;
+            }
+            right++;
+        }
+        
+        if (len!=INT_MAX){
+            string res = s.substr(start, len+1);
+            return res;
+        }else{
+            return "";
+        }
+        
+    }
+};
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
