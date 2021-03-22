@@ -89,11 +89,12 @@ m.count(key);     // Count the appearances of key, useful for multimap.
 ### 219. Contains Duplicate II
 Array, Hash Table, Sliding Window\
 **Description:**\
-Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums\[i\] = nums\[j\] and the absolute difference between i and j is at most k.
-**Method:**\
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums\[i\] = nums\[j\] and the absolute difference between i and j is at most k.\
+**Method:**
 1. Using hash table
    The key is the element in nums, and the value is the index of the element in nums. We find out the minimum distance between two duplicate elements. In the end, we check if the minimum distance is less than k.
 2. Sliding Window
+
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/219.%20Contains%20Duplicate%20II.cpp)
 ```
 class Solution {
