@@ -301,7 +301,7 @@ class Solution(object):
 Two pointers, Sliding window\
 **Description:**\
 Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.\
-**Method:**
+**Method:**\
 Similar to [76H.Minimum Window Substring](#76H-Minimum-Window-Substring).\
 Only differece is we need to check the length of the substring which contains the target characters. If the length is equal to that of the target string, then return true.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/567M.%20Permutation%20in%20String.cpp)
@@ -391,7 +391,7 @@ class Solution(object):
 Hash Table, Two Pointers, String, Sliding Window\
 **Description:**\
 Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is no such window in s that covers all characters in t, return the empty string "". Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.\
-**Method:**\
+**Method:**
 1. Create two unordered_map: need and window. 
    need contains the target string and the number of each characters.
    window contains the target characters and the corresponding number of appearances in the window.
