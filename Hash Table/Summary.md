@@ -64,7 +64,7 @@ m.count(key);     // Count the appearances of key, useful for multimap.
 1. When the order of each element in the string/array doesn't matter, you can use the sorted string/array as the key.
    Keep in mind that a list can't be used as a key of a dictionary. We need to convert it to a string
 2. If you only care about the offset of each value, usually the offset from the first value, you can use the offset as the key.\
-   e.g., (x0, x1, x2) --> (x0-x0, x1-x0, x2-x0)
+   e.g., (x0, x1, x2) --> (x0-x0, x1-x0, x2-x0), [249M.Group Shifted Strings (Python)](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/249M.%20Group%20Shifted%20Strings.py), [249M.Group Shifted Strings (C++)](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/249M.%20Group%20Shifted%20Strings.cpp)
 3. In a tree, you might want to directly use the TreeNode as key sometimes. But in most cases, the serialization of the subtree might be a better idea.
 4. In a matrix, you might want to use the row index or the column index as key.
 5. In a Sudoku, you can combine the row index and the column index to identify which block this element belongs to.\
