@@ -6,7 +6,7 @@
     * [3. Hash Map](#3-Hash-Map)
     * [4. Design the key](#4-Design-the-key)
     * [5. Sliding Window](#5-Sliding-Window)
-          * [219. Contains Duplicate II](#-219-Contains-Duplicate-II)
+           * [219. Contains Duplicate II](#-219-Contains-Duplicate-II)
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
