@@ -1,11 +1,12 @@
 # Hash Table
 <!-- GFM-TOC -->
 * [Leetcode Hash Table](#Hash-Table)
-    * [1. The Principle of Builtin Hash Table](#1-The-Principle-of-Builtin-Hash-Table)
+    * [1. The Principle of Builtin Hash Table](#1-The-Principle-of-Builtin-Hash-Table)   
     * [2. Hash Set](#2-Hash-Set)
     * [3. Hash Map](#3-Hash-Map)
     * [4. Design the key](#4-Design-the-key)
     * [5. Sliding Window](#5-Sliding-Window)
+          * [219. Contains Duplicate II](#-219-Contains-Duplicate-II)
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -137,3 +138,98 @@ class Solution(object):
                 
         return False
 ```
+
+### 3M. Longest Substring Without Repeating Characters
+Hash Table, Two Pointers, String, Sliding Window\
+**Description:**\
+Given a string s, find the length of the longest substring without repeating characters.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/3M.%20Longest%20Substring%20Without%20Repeating%20Characters.cpp)
+```
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if (s.size()==0){return 0;}
+        if (s.size()==1){return 1;}
+        int res = 0;
+        int right = 0, left = 0, match = 0;
+        unordered_map<char, int> window;
+        while (right < s.size()){
+            char c = s[right];
+            window[c]++;
+            
+            while(window[c] > 1) {
+                char d = s[left];
+                window[d]--;
+                left++;
+            }
+            
+            right++;
+            res = max(right-left, res);
+        }
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/3M.%20Longest%20Substring%20Without%20Repeating%20Characters.py)
+```
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        p1 = 0
+        max_len = 0
+        Dic = {}
+        
+        for p2 in range(len(s)):
+            if s[p2] in Dic:
+                p1  = max(Dic[s[p2]], p1)
+            Dic[s[p2]] = p2 + 1
+            max_len = max(max_len, p2 - p1 + 1)
+        
+        return max_len
+
+        # Another way using sliding window
+        if len(s)==0:
+            return 0
+        elif len(s)==1:
+            return 1
+        window = {}
+        right, left = 0, 0
+        res = 0
+        while (right < len(s)):
+            c = s[right]
+            if c not in window:
+                window[c] = 1
+            else:
+                window[c] += 1
+            right += 1
+            while (window[c]>1):
+                d = s[left]
+                window[d] -= 1
+                left += 1
+            res = max(res, right-left)
+        return res
+```
+
+### 438M. Find All Anagrams in a String
+Hash Table, Sliding Window\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
