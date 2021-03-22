@@ -68,7 +68,7 @@ m.count(key);     // Count the appearances of key, useful for multimap.
 3. In a tree, you might want to directly use the TreeNode as key sometimes. But in most cases, the serialization of the subtree might be a better idea.
 4. In a matrix, you might want to use the row index or the column index as key.
 5. In a Sudoku, you can combine the row index and the column index to identify which block this element belongs to.\
-   e.g., create a list contains 9 dictionaries
+   e.g., create a list contains 9 dictionaries, [36M.Valid Sudoku (Python)](https://github.com/yshiyi/LeetCode/blob/main/Array/36M.%20Valid%20Sudoku.py), [36M.Valid Sudoku (C++)](https://github.com/yshiyi/LeetCode/blob/main/Array/36M.%20Valid%20Sudoku.cpp)
    ```
    Python
    rows = [{} for i in range(9)]
