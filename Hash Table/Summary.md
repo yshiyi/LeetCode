@@ -39,7 +39,7 @@ s.clear();      // Clear the hash set
 ## 3. Hash Map
 The hash map is one of the implementations of a map which is used to store (key, value) pairs.\
 Scenario I: When we need more information rather than only the key. Then we can build a mapping relationship between key and information by hash map.\
-Scenario II: To aggregate all the information by key.\
+Scenario II: To aggregate all the information by key.
 ```
 Python
 hashmap = {}  # Initialize a hash map
@@ -68,9 +68,19 @@ m.count(key);     // Count the appearances of key, useful for multimap.
 3. In a tree, you might want to directly use the TreeNode as key sometimes. But in most cases, the serialization of the subtree might be a better idea.
 4. In a matrix, you might want to use the row index or the column index as key.
 5. In a Sudoku, you can combine the row index and the column index to identify which block this element belongs to.\
-   e.g., create a list contains 9 dictionaries\
+   e.g., create a list contains 9 dictionaries
+   ```
+   Python
    rows = \[{} for i in range(9)\]\
    columns = \[{} for i in range(9)\]\
    boxes = \[{} for i in range(9)\]\
+   ```
+   ```
+   C++
+   vector<set<int>> v_row, v_col, v_box;
+   v_row.resize(9);
+   v_col.resize(9);
+   v_box.resize(9);
+   ```
 6. Sometimes, in a matrix, you might want to aggregate the values in the same diagonal line.
 
