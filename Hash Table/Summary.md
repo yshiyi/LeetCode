@@ -7,6 +7,9 @@
    * [4. Design the key](#4-Design-the-key)
    * [5. Sliding Window](#5-Sliding-Window)
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
+       * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
+       * [438M. Find All Anagrams in a String](#438M-Find-All-Anagrams-in-a-String)
+       * 
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -211,7 +214,8 @@ class Solution(object):
 
 ### 438M. Find All Anagrams in a String
 Hash Table, Sliding Window\
-
+**Dscription:**\
+Given a string s and a non-empty string p, find all the start indices of p's anagrams in s. Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100. The order of output does not matter.
 
 
 
