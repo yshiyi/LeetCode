@@ -71,9 +71,9 @@ m.count(key);     // Count the appearances of key, useful for multimap.
    e.g., create a list contains 9 dictionaries
    ```
    Python
-   rows = \[{} for i in range(9)\]\
-   columns = \[{} for i in range(9)\]\
-   boxes = \[{} for i in range(9)\]\
+   rows = [{} for i in range(9)]
+   columns = [{} for i in range(9)]
+   boxes = [{} for i in range(9)]
    ```
    ```
    C++
