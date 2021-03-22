@@ -9,7 +9,8 @@
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
        * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
        * [438M. Find All Anagrams in a String](#438M-Find-All-Anagrams-in-a-String)
-       * 
+       * [567M. Permutation in String](#567M-Permutation-in-String)
+       * [76H.Minimum Window Substring](#76H-Minimum-Window-Substring)
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -216,17 +217,294 @@ class Solution(object):
 Hash Table, Sliding Window\
 **Dscription:**\
 Given a string s and a non-empty string p, find all the start indices of p's anagrams in s. Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100. The order of output does not matter.
+**Method:**\
+Similar to [567M. Permutation in String](#567M-Permutation-in-String)\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/438M.%20Find%20All%20Anagrams%20in%20a%20String.cpp)
+```
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        unordered_map<char, int> window, need;
+        int left = 0, right = 0, match = 0;
+        int target_len = p.size();
+        vector<int> res;
+        for (auto& c:p){
+            need[c]++;
+        }
+        while (right < s.size()){
+            char c = s[right];
+            if (need.find(c)!=need.end()){
+                window[c]++;
+                if(window[c]==need[c]){
+                    match++;
+                }
+            }
+            right++;
+            while (match==need.size()){
+                char d = s[left];
+                if (need.find(d)!=need.end()){
+                    if(window[d]==need[d]){
+                        match--;
+                    }
+                    window[d]--;
+                }
+                if (right - left == target_len){
+                    res.push_back(left);
+                }
+                left++;
+            }
+        }
+        return res;
+    }
+};
 
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/438M.%20Find%20All%20Anagrams%20in%20a%20String.py)
+```
+class Solution(object):
+    def findAnagrams(self, s, p):
+        window, need = {}, {}
+        right, left, match = 0, 0, 0
+        target_len = len(p)
+        res = []
+        for c in p:
+            if c not in need:
+                need[c] = 1
+            else:
+                need[c] += 1
+        
+        while (right < len(s)):
+            c = s[right]
+            if c in need:
+                if c not in window:
+                    window[c] = 1
+                else:
+                    window[c] += 1
+                if window[c]==need[c]:
+                    match += 1
+            right += 1
+            
+            while (match == len(need)):
+                d = s[left]
+                if d in need:
+                    if window[d]==need[d]:
+                        match -= 1
+                    window[d] -= 1
+                if right - left == target_len:
+                    res.append(left)
+                left += 1
+        
+        return res
+```
 
+### 567M. Permutation in String
+Two pointers, Sliding window\
+**Description:**\
+Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.\
+**Method:**\
+Similar to [76H.Minimum Window Substring](#76H-Minimum-Window-Substring).\
+Only differece is we need to check the length of the substring which contains the target characters. If the length is equal to that of the target string, then return true.
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/567M.%20Permutation%20in%20String.cpp)
+```
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        unordered_map<char, int> window, need;
+        int left = 0, right = 0, match = 0;
+        int len = s1.size(), window_size = 0;
+        for (auto& c:s1) {
+            need[c]++;
+        }
+        while (right < s2.size()){
+            char c = s2[right];
+            if (need.find(c)!=need.end()){
+                window[c]++;
+                if (window[c]==need[c]){
+                    match++;
+                }
+            }
+            right++;
+            
+            while (match==need.size()){
+                char d = s2[left];
+                if(need.find(d)!=need.end()){
+                    if(window[d]==need[d]) {
+                        match--;
+                    }
+                    window[d]--;
+                }
+                window_size = right - left;
+                if (window_size==len){
+                    return true;
+                }
+                left++;
+            }
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/567M.%20Permutation%20in%20String.py)
+```
+class Solution(object):
+    def checkInclusion(self, s1, s2):
+        """
+        :type s1: str
+        :type s2: str
+        :rtype: bool
+        """
+        window, need = {}, {}
+        left, right, match = 0, 0, 0
+        target_len = len(s1)
+        window_size = 0
+        for c in s1:
+            if c not in need:
+                need[c] = 1
+            else:
+                need[c] += 1
+                
+        while (right < len(s2)):
+            c = s2[right]
+            if c in need:
+                if c not in window:
+                    window[c] = 1
+                else:
+                    window[c] += 1
+                
+                if window[c]==need[c]:
+                    match += 1
+            right += 1
+            
+            while (match==len(need)):
+                d = s2[left]
+                if d in need:
+                    if window[d]==need[d]:
+                        match -= 1
+                    window[d] -= 1
+                if right - left == target_len:
+                    return True
+                left += 1
+        return False
+```
 
+### 76H.Minimum Window Substring
+Hash Table, Two Pointers, String, Sliding Window\
+**Description:**\
+Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is no such window in s that covers all characters in t, return the empty string "". Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.\
+**Method:**\
+1. Create two unordered_map: need and window. 
+   need contains the target string and the number of each characters.
+   window contains the target characters and the corresponding number of appearances in the window.
+   Note: use \[key\]++. In doing so, the map automatically assigns 0 to key, if key doesn't exist.
+2. Define some necessary variables
+   two pointers: left and right
+   number of matching characters: match
+   starting position of the shortest substring: start
+   length of the shortest substring: len
+3. Move the pointer right first until the window contains all the target characters
+   Check if char c is in need, if so, window\[c\]++.
+   When the number of c in window is equal to that in need, we increase match by 1.
+4. When match == need.size(), i.e., current window contains all target characters.
+   We start to move the point left
+   If char d is in need and if window\[d\]==need\[d\], then reduce match by 1.
+   Otherwise, just reduce window\[d\] by 1;
+5. Finally, check the value of len.
+   If it doesn't change, it means there is no such short string and return "".
+   Otherwise, return s.substr(start, len+1).
+   Note: the length of the shorstest substring is len+1. 
+         Because the pointer right points to the position of the last character.
 
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/76H.%20Minimum%20Window%20Substring.cpp)
+```
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> window, need;
+        for (auto& c:t) {
+            need[c]++;
+        }
 
-
-
-
-
-
-
+        int left = 0, right = 0, match = 0;
+        int start = 0, len = INT_MAX;
+        while(right < s.size()) {
+            char c = s[right];
+            if (need.find(c)!=need.end()){
+                window[c]++;
+                // if (window[c]==1){ This doesn't work, if there are duplicate char in target string.
+                if (window[c]==need[c]){
+                    match++;
+                }
+            }
+            while (match == need.size()) {
+                if (right - left < len) {
+                    start = left;
+                    len = right - left;
+                }
+                char d = s[left];
+                if (need.find(d)!=need.end()){
+                    if (window[d]==need[d]){
+                        match--;
+                    }
+                    window[d]--;
+                }                
+                left++;
+            }
+            right++;
+        }
+        
+        if (len!=INT_MAX){
+            string res = s.substr(start, len+1);
+            return res;
+        }else{
+            return "";
+        }
+        
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/76H.%20Minimum%20Window%20Substring.py)
+```
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        window = {}
+        need = {}
+        left, right, match = 0, 0, 0
+        start, min_len = 0, float('Inf')
+        for i in range(len(t)):
+            if t[i] not in need:
+                need[t[i]] = 1
+            else:
+                need[t[i]] += 1
+                
+        while right < len(s):
+            if s[right] in need:
+                if s[right] not in window:
+                    window[s[right]] = 1
+                else:
+                    window[s[right]] += 1
+                if window[s[right]] == need[s[right]]:
+                    match += 1
+            while match == len(need):
+                if right - left < min_len:
+                    start = left
+                    min_len = right - left
+                if s[left] in need:
+                    if window[s[left]]==need[s[left]]:
+                        match -= 1
+                    window[s[left]] -= 1
+                left += 1
+            right += 1
+            
+        if min_len != float('Inf'):
+            return s[start:start+min_len+1]
+        else:
+            return ""
+```
 
 
 
