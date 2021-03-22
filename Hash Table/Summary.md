@@ -5,7 +5,7 @@
     * [2. Hash Set](#2-Hash-Set)
     * [3. Hash Map](#3-Hash-Map)
     * [4. Design the key](#4-Design-the-key)
-    * [5. Use some particular functions](#5-Use-some-particular-functions)
+    * [5. Sliding Window](#5-Sliding-Window)
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -84,3 +84,55 @@ m.count(key);     // Count the appearances of key, useful for multimap.
    ```
 6. Sometimes, in a matrix, you might want to aggregate the values in the same diagonal line.
 
+
+## 5. Sliding Window
+### 219. Contains Duplicate II
+Array, Hash Table, Sliding Window\
+**Description:**\
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums\[i\] = nums\[j\] and the absolute difference between i and j is at most k.
+**Method:**\
+1. Using hash table
+   The key is the element in nums, and the value is the index of the element in nums. We find out the minimum distance between two duplicate elements. In the end, we check if the minimum distance is less than k.
+2. Sliding Window
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/219.%20Contains%20Duplicate%20II.cpp)
+```
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        map<int, int> m;
+        int right = 0, left = 0;
+        while(right < nums.size()){
+            int val = nums[right];
+            if(m.find(val)==m.end()){
+                m[val] = right;
+            }else if(right - m[val] <= k){
+                return true;
+            }
+            right++;
+            
+            if(right - left > k){
+                m.erase(nums[left]);
+                left++;
+            }
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/219.%20Contains%20Duplicate%20II.py)
+```
+class Solution(object):
+    def containsNearbyDuplicate(self, nums, k):
+        Set = set()  # Create a sliding window
+        
+        for i,num in enumerate(nums):
+            if num in Set: # if already seen in last k items, then return True
+                return True
+            else: # otherwise, add that num to the set
+                Set.add(num)
+            
+            if len(Set) > k: # there should be AT MOST k items in this set
+                Set.remove(nums[i-k]) # if more than k items, remove the last-added item
+                
+        return False
+```
