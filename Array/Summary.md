@@ -1,7 +1,7 @@
 # Array
 <!-- GFM-TOC -->
 * [Leetcode Array](#Array)
-    * [1. Search for a particular number or check duplicates](#1-earch-or--articular-umber-r-heck-uplicates)
+    * [1. Search for a particular number or check duplicates](#1-Search-for-particular-number-or-check-duplicates)
     * [2. Remove or remove elements within array](#2-Remove-or-remove-elements-within-array)
     * [3. Two pointers](#3-Two-pointers)
     * [4. Peak and valley](#4-Peak-and-valley)
@@ -25,7 +25,7 @@ Hash Table, Create a dictionary.\
 |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |  <pre> vector<int> twoSum(vector<int>& nums, int target) { <br>   map<int, int> m;<br>   int l = nums.size();<br>   map<int, int>::iterator it;<br>   vector<int> result;<br>   for (int i=0; i<l; i++) {<br>       it = m.find(target - nums[i]);<br>       if(it==m.end()) {<br>           m.insert(make_pair(nums[i], i));<br>       }else {<br>           result.push_back(i);<br>           // result.push_back(m[target-nums[i]]);<br>           result.push_back((*it).second);<br>           break;<br>       }<br>   }<br>   return result;<br> }  </pre>|  <pre>def twoSum(self, nums, target):<br>       h = {}<br>       for i, num in enumerate(nums):<br>           \\ Method 1:<br>           n = target - num<br>           if n not in h:<br>               h[num] = i<br>           else:<br>               return [h[n], i]<br>            \\ Method 2:<br>           if n in nums:<br>               index = [i, nums.index(n)]<br>           break </pre> |
 
-## 1346. Check If N and Its Double Exist
+### 1346. Check If N and Its Double Exist
 **Description:**\
 Given an array arr of integers, check if there exists two integers N and M 
 such that N is the double of M ( i.e. N = 2 * M).\
@@ -35,7 +35,7 @@ For python, use "if ... in arr" to improve speed. For c++, beware of the convers
 |:-- |:-- |
 |<pre> bool checkIfExist(vector<int>& arr) {<br>        // Method 1:<br>        bool result = false;<br>        set\<double\> s; <br>        for (int i=0; i<arr.size(); i++) {<br>            if (s.find((double)arr[i]/2) != s.end() \|\| s.find((double)arr[i]\*2) != s.end()) {<br>                return result = true;<br>            }else {<br>                s.insert((double)arr[i]);<br>            }<br>        }<br>        return result;<br>        // Method 2: using count(v.begin(), v.end(), value)<br>        for(auto i: arr){<br>            // just take care of exeptions and use count all over :)<br>            if (i == 0){<br>                if (count(arr.begin(), arr.end(), i) > 1) <br>                    return true;<br>                else<br>                    continue;<br>            }<br>            if (count(arr.begin(), arr.end(), i\*2))<br>                return true;<br>        }<br>        return false;<br>    }</pre>|<pre>def checkIfExist(self, arr):<br>        if arr is None or len(arr) <= 1: return False<br>        for i in range(len(arr)):<br>            if arr[i] != 0: # check if the current is not 0<br>                if arr[i]*2 in arr: <br>                    return True<br>                if arr[i]%2 == 0 and arr[i] / 2 in arr:<br>                    return True<br>            else: # if 0, we have to look for a zero at a different index<br>                if 0 in arr[:i] or 0 in arr[i+1:]: return True<br>        return False<br> </pre>|
 
-## 136. Single Number 
+### 136. Single Number 
 **Description:**\
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 Follow up: Could you implement a solution with a linear runtime complexity and without using extra memory?\
@@ -46,7 +46,7 @@ For python, create a set to search for the duplicated element. For c++, use coun
 |:-- |:-- |
 |<pre>int singleNumber(vector<int>& nums) {<br>        /* Method 1: using count(v.begin(), v.end(), value)<br>                     This method takes about 952 ms.<br>        */<br>        int single_num;<br>        for (auto i:nums) {<br>            if (count(nums.begin(), nums.end(), i) == 1) {<br>                return single_num = i;<br>            }<br>        }<br>        return single_num;<br>        /* Method 2: using XOR<br>                     In c++, XOR is ^;<br>                     a ^ 0 = a; a ^ a = 0;<br>                     This method takes only 16 ms.<br>        */<br>        int result = 0;<br>        for (auto i:nums) {<br>            result = result ^ i;<br>        }<br>        return result;<br>    } </pre>|<pre>def singleNumber(self, nums):<br>        '''<br>        Method 1: create a set instead of a dictionary<br>        '''<br>        single = set()<br>        for i in range(len(nums)):<br>            if nums[i] not in single:<br>                single.add(nums[i])<br>            else:<br>                single.remove(nums[i])<br>        return list(single)[0]<br>        '''<br>        Method 2: Apply Math, 2 * (a+b+c) - (a+a+b+b+c) = c<br>                  Use set, note: the keys contained in a set are distinct.<br>        '''<br>        return 2 * sum(set(nums)) - sum(nums) </pre>|
 
-## 217. Contains Duplicate
+### 217. Contains Duplicate
 **Description:**\
 Given an array of integers, find if the array contains any duplicates.
 Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.\
@@ -59,7 +59,7 @@ b. Convert array/vector to a set then compare the length. For python, use set(nu
 |:-- |:-- |
 |<pre>bool containsDuplicate(vector<int>& nums) {<br>        // Method 1: Using a set and check if the element is in the set<br>        set\<int\> s;<br>        int l = nums.size();<br>        for (auto val:nums) {<br>            if (s.find(val) != s.end()) {<br>                return true;<br>            }else {<br>                s.insert(val);<br>            }<br>        }<br>        return false;<br>        // Method 2: using a set. Save all the elements form nums to s, and compare the size.<br>        for (auto val:nums) {<br>            s.insert(val);<br>        }<br>        return !(s.size()==l);<br>    } </pre>|<pre> def containsDuplicate(self, nums):<br>        '''<br>        Method 1: Create a hash table (i.e., set)<br>                  Check if the element of nums is in the set.<br>        '''<br>        dic = set()<br>        for i in range(len(nums)):<br>            if nums[i] not in dic:<br>                dis.add(nums[i])<br>            else:<br>                return true<br>        return false<br>        '''<br>        Method 2: Use set()!!!<br>                  Note the elements contained in a set are distinct!!<br>                  Compare len(set(nums)) and len(nums)<br>        '''<br>        return True if len(set(nums)) < len(nums) else False</pre>|
 
-## 414. Third Maximum Number
+### 414. Third Maximum Number
 **Description:**\
 Given a non-empty array of integers, return the third maximum number in this array. 
 If it does not exist, return the maximum number. 
@@ -109,7 +109,7 @@ if len(nums) > 2:
 return max(nums)
 ```
 
-## 448. Find All Numbers Disappeared in an Array
+### 448. Find All Numbers Disappeared in an Array
 **Description:**\
 Given an array of integers where 1 ≤ a\[i\] ≤ n (n = size of array), some elements appear twice and others appear once.
 Find all the elements of \[1, n\] inclusive that do not appear in this array.\
@@ -154,7 +154,7 @@ def findDisappearedNumbers(self, nums):
 * [27. Remove Element](#27-Remove-Element)
 * [283. Move Zeroes](#283-Move-Zeroes)
 
-## 1089. Duplicate zeros
+### 1089. Duplicate zeros
 **Description:**\
 Given a fixed length array arr of integers, duplicate each occurrence of zero, 
 shifting the remaining elements to the right.
@@ -167,7 +167,7 @@ Search for zeros from left and count the number of ones need to be shifted. When
 |:-- | :-- |
 |<pre>void duplicateZeros(vector<int>& arr) {<br>        int nums_zeros = 0;<br>        int l = arr.size();<br>        for (int i=0; i<l; i++) {<br>            if (i > l - nums_zeros - 1) {<br>                break;<br>            }<br>            if (arr[i] == 0) {<br>                if (i == l - nums_zeros - 1) {<br>                    arr[l-1]=0;<br>                    l--;<br>                    break;<br>                }<br>                nums_zeros++;<br>            }<br>        }<br>        int j = l - nums_zeros - 1;<br>        for (j; j>-1; j--) {<br>            if (arr[j] == 0) {<br>                arr[j + nums_zeros] = 0;<br>                nums_zeros--;<br>                arr[j + nums_zeros] = 0;<br>            }else {<br>                arr[j + nums_zeros] = arr[j];<br>            }<br>        }<br>    } </pre> |<pre>possible_dups = 0<br>        length_ = len(arr) - 1<br>        # Find the number of zeros to be duplicated<br>        for left in range(length_ + 1):<br>            # Stop when left points beyond the last element in the original list<br>            # which would be part of the modified list<br>            if left > length_ - possible_dups:<br>                break<br>            # Count the zeros<br>            if arr[left] == 0:<br>                # Edge case: This zero can't be duplicated. We have no more space,<br>                # as left is pointing to the last element which could be included<br>                if left == length_ - possible_dups:<br>                    arr[length_] = 0 # For this zero we just copy it without duplication.<br>                    length_ -= 1<br>                    break<br>                possible_dups += 1<br>        # Start backwards from the last element which would be part of new list.<br>        last = length_ - possible_dups<br>        # Copy zero twice, and non zero once.<br>        for i in range(last, -1, -1):<br>            if arr[i] == 0:<br>                arr[i + possible_dups] = 0<br>                possible_dups -= 1<br>                arr[i + possible_dups] = 0<br>            else:<br>                arr[i + possible_dups] = arr[i]<br> </pre>|
 
-## 26. Remove Duplicates from Sorted Array
+### 26. Remove Duplicates from Sorted Array
 **Description:**\
 Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
 Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.\
@@ -179,7 +179,7 @@ For c++, we can also use erase() function
 |:-- |:-- |
 |<pre>int removeDuplicates(vector<int>& nums) {<br>        // Method 1: two pointers, erase duplicates<br>        if (nums.size()<1) {<br>            return nums.size();<br>        }<br>        vector\<int\>::iterator it = nums.begin()+1;<br>        int i = 1, l = nums.size();<br>        while (i < l) {<br>            if (nums[i] == nums[i-1]) {<br>                nums.erase(it);<br>                l--;<br>            }else {<br>                i++;<br>                it++;<br>            }<br>        }<br>        return nums.size();<br>        // Method 2: two pointers, move the distinct element front<br>        if(nums.size()<=1) return nums.size();<br>        int j = 1;<br>        for(int i=1;i<nums.size();i++){<br>            if(nums[i]!=nums[i-1]) {<br>                nums[j] = nums[i];<br>                j++;<br>            }<br>        }<br>        return j;<br>    } </pre>|<pre>def removeDuplicates(self, nums):<br>        '''<br>        Method 1: The problem is to return the first n elements where n is the number of distinguish elements.<br>                  Hence, we only need to compare elements one by one. If we encounter a different element, we put it in front.<br>                  This is a kind of two pointer method.<br>                  The first pointer sweeps the entire array. <br>                  The second pointer counts the number of distinct elements.<br>                  When the first pointer points to a distinct element (different from the previous one).<br>                  We move this element to the position where the second pointer is pointing to.<br>                  This method takes about 12 ms.<br>        '''<br>        len_ = 1<br>        if len(nums)==0:<br>            return 0<br>        for i in range(1,len(nums)):<br>            if nums[i] != nums[i-1]:<br>                nums[len_] = nums[i]<br>                len_ +=1<br>        return len_ </pre>|
 
-## 27. Remove Element
+### 27. Remove Element
 **Description:**\
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
@@ -191,7 +191,7 @@ Move the last element to front (the position (=val)) and remove the last element
 |:-- |:-- |
 |<pre>int removeElement(vector<int>& nums, int val) {<br>        if (nums.size() < 1) {return nums.size();}<br>        // Method: move the last element to front and remove the last element.<br>        int i=0, l=nums.size();<br>        vector\<int\>::iterator it = nums.end();<br>        while (i<l) {<br>            if (nums[i] == val) {<br>                nums[i] = nums[l-1];<br>                nums.erase(it-1);<br>                it--;<br>                l--;<br>            }else{<br>                i++;<br>            }<br>        }<br>        return l;<br>    } </pre>|<pre>def removeElement(self, nums, val):<br>       '''<br>       Method : This is an in-place operation method.<br>                When nums[i] = val, we move the last element in the array to position i, remove the last element <br>                from the array and reduce the length of array by 1.<br>       '''<br>        i = 0<br>        L = len(nums)<br>        while i < L:<br>            if nums[i] == val:<br>                nums[i] = nums[-1]<br>                del nums[-1]<br>                L -= 1<br>            else:<br>                i += 1<br>        return L </pre>|
 
-## 283. Move Zeroes
+### 283. Move Zeroes
 **Description:**\
 Given an array nums, write a function to move all 0's to the end of it 
 while maintaining the relative order of the non-zero elements.\
@@ -209,7 +209,7 @@ Similar to 26. Create two pointer. The first one sweeps the whole array, the sec
 * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
 * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
 
-## 1299. Replace Elements with Greatest Element on Right Side
+### 1299. Replace Elements with Greatest Element on Right Side
 **Description:**\
 Given an array arr, replace every element in that array with the greatest element among the elements to its right, 
 and replace the last element with -1.\
@@ -220,7 +220,7 @@ Save the current element to t, and find out the maximum between t and current ma
 |:-- |:-- |
 |<pre>vector<int> replaceElements(vector<int>& arr) {<br>        int l = arr.size();<br>        int max = arr[l-1], temp = -1, t;<br>        for (int i=l-1; i>-1; i--) {<br>            t = arr[i];<br>            arr[i] = temp;<br>            temp = std::max(temp, t);<br>        }<br>        return arr;<br>    }  </pre>|<pre>def replaceElements(self, arr):<br>        temp = -1<br>        for i in range(len(arr)-1, -1, -1):<br>            t = arr[i]<br>            arr[i] = temp<br>            temp = max(temp, t)<br>        return arr</pre>|
 
-## 15M. 3Sum
+### 15M. 3Sum
 **Description:**\
 Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? 
 Find all unique triplets in the array which gives the sum of zero.
@@ -232,7 +232,7 @@ Sort the array first. The first pointer starts from the next number, and the sec
 |:-- |:-- |
 |<pre>vector<vector\<int\>> threeSum(vector<int>& nums) {<br>        vector<vector\<int\>> result;<br>        vector\<int\> triplet;<br>        int r, l, sum;<br>        sort(nums.begin(), nums.end());<br>        for (int i=0; i<nums.size(); i++) {<br>            if (i>0 && nums[i]==nums[i-1]) {<br>                continue;<br>            }<br>            r = nums.size() - 1;<br>            l = i + 1;<br>            while (l < r) {<br>                sum = nums[i] + nums[l] + nums[r];<br>                if (sum > 0) {<br>                    r--;<br>                }else if (sum < 0) {<br>                    l++;<br>                }else if (sum == 0) {<br>                    triplet.push_back(nums[i]);<br>                    triplet.push_back(nums[l]);<br>                    triplet.push_back(nums[r]);<br>                    result.push_back(triplet);<br>                    triplet.clear();<br>                    l++;<br>                    while (l<r && nums[l]==nums[l-1]){<br>                        l++;<br>                    }<br>                }<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def threeSum(self, nums):<br>        res = []<br>        nums.sort()<br>        for i, a in enumerate(nums):<br>            if i > 0 and a == nums[i - 1]:<br>                continue<br>            l, r = i + 1, len(nums) - 1<br>            while l < r:<br>                threeSum = a + nums[l] + nums[r]<br>                if threeSum > 0:<br>                    r -= 1<br>                elif threeSum < 0:<br>                    l += 1<br>                else:<br>                    res.append([a, nums[l], nums[r]])<br>                    l += 1<br>                    while nums[l] == nums[l - 1] and l < r:<br>                        l += 1<br>        return res </pre>|
 
-## 88. Merge Sorted Array
+### 88. Merge Sorted Array
 **Description:**\
 Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.\
 **Method:**\
@@ -294,7 +294,7 @@ def merge(self, nums1, m, nums2, n):
      return nums1
 ```
 
-## 905. Sort Array By Parity
+### 905. Sort Array By Parity
 **Description:**\
 Given an array A of non-negative integers, return an array consisting of all the even elements of A, 
 followed by all the odd elements of A.
@@ -348,7 +348,7 @@ for (int i = 0; i<.size()-1; i++) {
 }
 ```
 
-## 122. Best time to Buy and Sell Stock II
+### 122. Best time to Buy and Sell Stock II
 **Description:**\
 Say you have an array prices for which the ith element is the price of a given stock on day i.
 Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
@@ -361,7 +361,7 @@ b. Sum up all increasement if the value is increasing\
 |:-- | :-- |
 | <pre> int maxProfit(vector<int>& prices) {<br>        int profit = 0, buy = 0, sell = 0;<br>        int l = prices.size();<br>        // Method 1:<br>        for (int i=0; i<l-1; i++) {<br>            while (i<l-1 && prices[i] >= prices[i+1]) {<br>                i++;<br>            }<br>            buy = prices[i];<br>            while (i<l-1 && prices[i] <= prices[i+1]) {<br>                i++;<br>            }<br>            sell = prices[i];<br>            profit += sell - buy;<br>        }<br>        // Method 2:<br>        for (int i=0; i<l-1; i++) {<br>            if (prices[i+1]>prices[i]) {<br>                profit += prices[i+1] - prices[i];<br>            }<br>        }<br>        return profit;<br>    } </pre> |<pre> def maxProfit(self, prices):<br>        '''<br>        Method 1: Simply search for buy and sell value (i.e., valley and peak).<br>                  The total profit is the summation of all possible difference between peak and valley.<br>        '''<br>        profit = 0<br>        buy = prices[0]<br>        sell = prices[0]<br>        i = 0<br>        while i < len(prices) - 1:<br>            while i < len(prices) - 1 and prices[i] >= prices[i + 1]:<br>                i += 1<br>            buy = prices[i]<br>            while i < len(prices) - 1 and prices[i] <= prices[i + 1]:<br>                i += 1<br>            sell = prices[i]<br>            profit += sell - buy<br>        return profit<br>        '''<br>        Method 2: Simply add the increasement at each step if the value is increasing.<br>        '''<br>        profit = 0<br>        for i in range(len(prices) - 1):<br>            if prices[i + 1] > prices[i]:<br>                profit += prices[i + 1] - prices[i]<br>        return profit </pre>|
 
-## 941. Valid Mountain Array
+### 941. Valid Mountain Array
 **Description:**\
 Given an array A of integers, return true if and only if it is a valid mountain array.
 Recall that A is a mountain array if and only if:
@@ -423,7 +423,7 @@ def validMountainArray(self, A):
 * [66. Plus One](#66-Plus-One)
 * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 
-## 1051. Height checker
+### 1051. Height checker
 **Description:**\
 Students are asked to stand in non-decreasing order of heights for an annual photo.
 Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
@@ -435,14 +435,14 @@ Check the difference between two arrays\
 |:-- |:-- |
 |<pre> int heightChecker(vector<int>& heights) {<br>     vector<int> heights_org = heights;<br>     sort(heights.begin(), heights.end());<br>     int result = 0;<br>     for (unsigned int i=0; i < heights.size(); i++) {<br>         if (heights_org[i] != heights[i]) {<br>             result++;<br>         }<br>     }<br>     return result;<br>}</pre>  |<pre>def heightChecker(self, heights):<br>     count = 0<br>     h = heights<br>     h_sorted = sorted(h)<br>     for i in range(len(h_sorted)):<br>         if h_sorted[i] != h[i]:<br>             count += 1<br>     return count </pre> |
 
-## 1295. Find Numbers with Even Number of Digits
+### 1295. Find Numbers with Even Number of Digits
 **Description:**\
 Given an array nums of integers, return how many of them contain an even number of digits.\
 **Method:**\
 Array, Convert int to str and check the length of each string\
 For python, using str(). For c++, using to_string(int).
 
-## 189M. Rotate Array
+### 189M. Rotate Array
 **Description:**\
 Given an array, rotate the array to the right by k steps, where k is non-negative.\
 **Method:**\
@@ -452,7 +452,7 @@ b. Reverse array/vector three times. The 1st time, reverse the whole array/vecto
 |:-- |:-- |
 |<pre>void rotate(vector<int>& nums, int k) {<br>        // Method 1: using reverse(nums.begin(), nums.end())<br>        k %= nums.size();<br>        vector<int>::iterator it = nums.begin();<br>        for (int i=0; i<k; i++) {<br>            it++;<br>        }<br>        reverse(nums.begin(), nums.end());<br>        reverse(nums.begin(), it);<br>        reverse(it, nums.end());<br>        // Method 2: Create an extra vector<br>        //           Elements will be moved to (i+k)%nums.size() position.<br>        k %= nums.size();<br>        vector<int> nums2;<br>        int l = nums.size();<br>        nums2.resize(l);<br>        for (int i=0; i<l; i++) {<br>            nums2[(i+k)%l] = nums[i];<br>        }<br>        nums.clear();<br>        for (auto v:nums2) {<br>            nums.push_back(v);<br>        }<br>    } </pre>|<pre>def rotate(self, nums, k):<br>        '''<br>        Method 1: Create an extra array<br>                  Elements will be moved to (i+k)%len(nums) position.<br>                  Runtime: 36 ms; Memory: 14.8 MB<br>        '''<br>        n = len(nums)<br>        a = [0] * n<br>        for i in range(n):<br>            a[(i + k) % n] = nums[i]<br>        nums[:] = a<br>        '''<br>        Method 2: Using reverse<br>                  At first, we reverse the entire array.<br>                  Second, we reverse the first k elements.<br>                  Third, we reverse the rest of n-k elements.<br>                  Runtime: 68 -76 ms; Memory: 13.7 - 13.8 MB<br>        '''<br>        n = len(nums)<br>        k %= n<br>        self.reverse(nums, 0, n - 1)<br>        print(nums)<br>        self.reverse(nums, 0, k - 1)<br>        print(nums)<br>        self.reverse(nums, k, n - 1)<br>        print(nums)<br>    def reverse(self, nums, start, end):<br>        while start < end:<br>            nums[start], nums[end] = nums[end], nums[start]<br>            start += 1<br>            end -= 1 </pre>|
 
-## 350. Intersection of Two Arrays II
+### 350. Intersection of Two Arrays II
 **Description:**\
 Given two arrays, write a function to compute their intersection.\
 **Method:**\
@@ -468,7 +468,7 @@ Hash Table, Two Pointers, Binary Search, Sort\
 |:-- |:-- |
 |<pre>vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {<br>        vector\<int\> result;<br>        result.resize(min(nums1.size(), nums2.size()));<br>        sort(nums1.begin(), nums1.end());<br>        sort(nums2.begin(), nums2.end());<br>        vector<int>::iterator it = set_intersection(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), result.begin());<br>        // Note: it points to the position next to the last intersected element.<br>        //       If it is pointing to result.end(), there must be zeros. We need to remove those zeros.<br>        if (it != result.end()) {<br>            while(it!= result.end()) {<br>                result.erase(it);<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def intersect(self, nums1, nums2):<br>        '''<br>        Method 1: Using set(A).intersection() to extract the common elements in both nums1 and nums2<br>                  Convert the intersection into a list.<br>                  For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.<br>                  Extend the result list by that number of that element.<br>        '''<br>        common=list(set(nums1).intersection(nums2))<br>        result = []<br>        for x in common:<br>            result.extend([x]*min(nums1.count(x),nums2.count(x)))<br>        return result<br>        '''<br>        Method 2: Sort both nums1 and nums2 at first.<br>                  Count the minimum number of shared elements.<br>        '''<br>        nums1 = sorted(nums1)<br>        nums2 = sorted(nums2)<br>        result = []<br>        i = 0<br>        while i < len(nums1):<br>            if nums1[i] in nums2:<br>                result.extend([nums1[i]]*min(nums1.count(nums1[i]), nums2.count(nums1[i])))<br>                i += nums1.count(nums1[i])<br>            else:<br>                i += 1<br>        return result </pre>|
 
-## 36M. Valid Sudoku
+### 36M. Valid Sudoku
 **Description:**\
 Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
 * Each row must contain the digits 1-9 without repetition.
@@ -481,7 +481,7 @@ The basic idea is to look for the duplicates in each row, each column and each b
 |:-- |:-- |
 |<pre> bool isValidSudoku(vector<vector<char>>& board) {<br>        // Create 3 vectors of sets and each vector contains 9 sets.<br>        vector\<set\<int\>\> v_row, v_col, v_box;<br>        v_row.resize(9);<br>        v_col.resize(9);<br>        v_box.resize(9);<br>        for (int i=0; i<board.size(); i++) {<br>            for (int j=0; j<board[i].size(); j++) {<br>                if (board[i][j] != '.') {<br>                    // For char variable, <br>                    // 1. char - '0' can convert '0' -> 0, '1' -> 1.<br>                    // 2. char c = 'a'; int ic = (int)c; value of ic is 97<br>                    int num = board[i][j]-'0';<br>                    int box_index = i/3 * 3 + j/3;<br>                    if (v_row[i].find(num)!=v_row[i].end() \|\| v_col[j].find(num) != v_col[j].end() \|\| v_box[box_index].find(num) != v_box[box_index].end()) {<br>                        return false;<br>                    }else {<br>                        v_row[i].insert(num);<br>                        v_col[j].insert(num);<br>                        v_box[box_index].insert(num);<br>                    }<br>                }<br>            }<br>        }<br>        return true;<br>    }</pre>|<pre>def isValidSudoku(self, board):<br>        # Initiate 3 lists, each list contains 9 dictionaries<br>        rows = [{} for i in range(9)]<br>        columns = [{} for i in range(9)]<br>        boxes = [{} for i in range(9)]<br>        # validate a board<br>        # Starting from each row<br>        for i in range(9):<br>            # Sweep each column<br>            for j in range(9):<br>                num = board[i][j]<br>                if num != '.':<br>                    num = int(num)<br>                    box_index = (i \/\/ 3 ) * 3 + j \/\/ 3<br>                    if num not in rows[i] and num not in columns[j] and num not in boxes[box_index]:<br>                        rows[i][num] = i<br>                        columns[j][num] = j<br>                        boxes[box_index][num] = box_index<br>                    else:<br>                        return False<br>        return True<br> </pre>|
 
-## 485. Max Consecutive Ones
+### 485. Max Consecutive Ones
 **Description:**\
 Given a binary array, find the maximum number of consecutive 1s in this array.\
 **Method:**\
@@ -520,7 +520,7 @@ def findMaxConsecutiveOnes(self, nums):
      return count_max
 ```
 
-## 48M. Rotate Image
+### 48M. Rotate Image
 **Description:**\
 You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
 You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
@@ -559,7 +559,7 @@ def rotate(self, matrix):
              matrix[j][l-i-1] = tmp
 ```
 
-## 66. Plus One
+### 66. Plus One
 **Description:**\
 Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
 The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
@@ -602,7 +602,7 @@ def plusOne(self, digits):
      return [1] + digits
 ```
 
-## 977. Squares of a Sorted Array
+### 977. Squares of a Sorted Array
 **Description:**\
 Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.\
 **Method:**\
