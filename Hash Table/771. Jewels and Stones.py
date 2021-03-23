@@ -27,10 +27,21 @@ class Solution(object):
         """
         
         '''
-        Method: Check each stone, if it is a jewel.
+        Method 1: Check each stone, if it is a jewel.
         '''
         num = 0
         for s in S:
             if s in J:
                 num += 1
         return num
+        
+        
+        '''
+        Method 2: Using collections.Counter()
+        '''
+        stones_dic = Counter(stones);
+        res = 0
+        for key, val in stones_dic.items():
+            if key in jewels:
+                res += val
+        return res
