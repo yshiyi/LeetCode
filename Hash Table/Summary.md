@@ -2,15 +2,31 @@
 <!-- GFM-TOC -->
 * [Leetcode Hash Table](#Hash-Table)
    * [1. The Principle of Builtin Hash Table](#1-The-Principle-of-Builtin-Hash-Table)   
-   * [2. Hash Set](#2-Hash-Set)
-   * [3. Hash Map](#3-Hash-Map)
-   * [4. Design the key](#4-Design-the-key)
-   * [5. Sliding Window](#5-Sliding-Window)
+   * [2. Design the key](#4-Design-the-key)
+   * [3. Hash Set](#2-Hash-Set)
+       * [349. Intersection of Two Arrays] 
+   * [4. Hash Map](#3-Hash-Map)
+       * [359. Logger Rate Limiter]
+       * [387. First Unique Character in a String]
+       * [454M. 4Sum II]
+   * [5. Hash Map with Array](#5-Hash-Map-with-Array)
+       * [380M. Insert Delete GetRandom O(1)]
+   * [6. Sliding Window](#5-Sliding-Window)
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
        * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
        * [438M. Find All Anagrams in a String](#438M-Find-All-Anagrams-in-a-String)
        * [567M. Permutation in String](#567M-Permutation-in-String)
-       * [76H.Minimum Window Substring](#76H-Minimum-Window-Substring)
+       * [76H. Minimum Window Substring](#76H-Minimum-Window-Substring)
+   * [7. Python with Collections](#7-Python-with-Collections)
+       * [a. Dictionary with list](#a-Dictionary-with-list)
+           * [288M. Unique Word Abbreviation]
+           * [49M. Group Anagrams]
+       * [b. Dictionary with int](#b-Dictionary-with-int)
+           * [454M. 4Sum II]
+       * [c. Counter](#c-Counter)
+           * [347M. Top K Frequent Elements]
+           * [387. First Unique Character in a String]
+           * [771. Jewels and Stones]
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -24,48 +40,7 @@ The typical design of built-in hash table is:
 The average time complexity of both insertion and search is still O(1). And the time complexity in the worst case is O(logN) 
 for both insertion and search by using height-balanced BST. It is a trade-off between insertion and search.
 
-## 2. Hash Set
-The hash set is one of the implementations of a set which is a data structure to store no repeated values. 
-Therefore, typically, a hash set is used to check if a value has ever appeared or not.
-```
-Python
-hashset = set() # Initialize a hash set
-hashset.add(1)  # Add a new key
-hashset.remove(1)  # Remove a key
-hashset.clear  # Clear the hash set
-```
-```
-C++
-set<int> s;     // Initialize a hash set
-s.insert(key);  // Insert a new key
-s.erase(key); s.erase(s.begin());  // Remove a key from set
-s.clear();      // Clear the hash set
-```
-## 3. Hash Map
-The hash map is one of the implementations of a map which is used to store (key, value) pairs.\
-Scenario I: When we need more information rather than only the key. Then we can build a mapping relationship between key and information by hash map.\
-Scenario II: To aggregate all the information by key.
-```
-Python
-hashmap = {}  # Initialize a hash map
-hashmap.pop('key', None)  # Return hashmap['key'] if key exists in the dictionary, and None otherwise
-del hashmap['key']  # To delete a key that is guaranteed to exist
-hashmap['pi'] = 3.1415 # Create a new key
-hashmap.clear()  # Clear the hash map
-```
-```
-C++
-map<int, int> m;  // Initialize a hash map, keys are automatically sorted.
-unordered_map<int, int> unordered_m;  // Keys are not sorted.
-m.insert(make_pair(key, val)); m[key] = val; // Create a new key with val;
-m[key]++;         // If key is not in the map before, the corresponding value is initialized as 0;
-m.erase(key); m.erase(m.begin()); // Remove a particular key
-m.clear();        // Clear the hash map
-m.find(key);      // Find a particular key, return an iterator if key exists. Otherwise, return m.end().
-m.count(key);     // Count the appearances of key, useful for multimap.
-```
-
-## 4. Design the key
+## 2. Design the key
 1. When the order of each element in the string/array doesn't matter, you can use the sorted string/array as the key.
    Keep in mind that a list can't be used as a key of a dictionary. We need to convert it to a string
 2. If you only care about the offset of each value, usually the offset from the first value, you can use the offset as the key.\
@@ -90,7 +65,53 @@ m.count(key);     // Count the appearances of key, useful for multimap.
 6. Sometimes, in a matrix, you might want to aggregate the values in the same diagonal line.
 
 
-## 5. Sliding Window
+## 3. Hash Set
+The hash set is one of the implementations of a set which is a data structure to store no repeated values. 
+Therefore, typically, a hash set is used to check if a value has ever appeared or not.
+```
+Python
+hashset = set() # Initialize a hash set
+hashset.add(1)  # Add a new key
+hashset.remove(1)  # Remove a key
+hashset.clear  # Clear the hash set
+```
+```
+C++
+set<int> s;     // Initialize a hash set
+s.insert(key);  // Insert a new key
+s.erase(key); s.erase(s.begin());  // Remove a key from set
+s.clear();      // Clear the hash set
+```
+
+
+## 4. Hash Map
+The hash map is one of the implementations of a map which is used to store (key, value) pairs.\
+Scenario I: When we need more information rather than only the key. Then we can build a mapping relationship between key and information by hash map.\
+Scenario II: To aggregate all the information by key.
+```
+Python
+hashmap = {}  # Initialize a hash map
+hashmap.pop('key', None)  # Return hashmap['key'] if key exists in the dictionary, and None otherwise
+del hashmap['key']  # To delete a key that is guaranteed to exist
+hashmap['pi'] = 3.1415 # Create a new key
+hashmap.clear()  # Clear the hash map
+```
+```
+C++
+map<int, int> m;  // Initialize a hash map, keys are automatically sorted.
+unordered_map<int, int> unordered_m;  // Keys are not sorted.
+m.insert(make_pair(key, val)); m[key] = val; // Create a new key with val;
+m[key]++;         // If key is not in the map before, the corresponding value is initialized as 0;
+m.erase(key); m.erase(m.begin()); // Remove a particular key
+m.clear();        // Clear the hash map
+m.find(key);      // Find a particular key, return an iterator if key exists. Otherwise, return m.end().
+m.count(key);     // Count the appearances of key, useful for multimap.
+```
+
+## 5. Hash Map with Array
+
+
+## 6. Sliding Window
 ### 219. Contains Duplicate II
 Array, Hash Table, Sliding Window\
 **Description:**\
@@ -506,9 +527,10 @@ class Solution(object):
             return ""
 ```
 
-
-
-
+## 7. Python with Collections
+### a. Dictionary with list
+### b. Dictionary with int
+### c. Counter
 
 
 
