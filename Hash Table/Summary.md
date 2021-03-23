@@ -16,7 +16,7 @@
        * [599. Minimum Index Sum of Two Lists](#599-Minimum-Index-Sum-of-Two-Lists)
    * [5. Hash Map with Array](#5-Hash-Map-with-Array)
        * [347M. Top K Frequent Elements](#347M-Top-K-Frequent-Elements)
-       * [380M. Insert Delete GetRandom O(1)](#380M-Insert-Delete-GetRandom-O(1))
+       * [380M. Insert Delete GetRandom O(1)](#380M-Insert-Delete-GetRandom-O-(-1-))
    * [6. Sliding Window](#5-Sliding-Window)
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
        * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
@@ -1288,7 +1288,8 @@ Given a non-empty array of integers, return the k most frequent elements.\
 **Method:**\
 1. Use QuickSelect.
 2. Use dictionary (Python). use Dic.key()\[Dic.values().index(val)\] to retrieve the key from value
-3. Use collection.Counter() (Python)
+3. Use collection.Counter() (Python)]
+
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/347M.%20Top%20K%20Frequent%20Elements.cpp)
 ```
 class Solution {
