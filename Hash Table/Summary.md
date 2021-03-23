@@ -16,7 +16,7 @@
        * [599. Minimum Index Sum of Two Lists](#599-Minimum-Index-Sum-of-Two-Lists)
    * [5. Hash Map with Array](#5-Hash-Map-with-Array)
        * [347M. Top K Frequent Elements](#347M-Top-K-Frequent-Elements)
-       * [380M. Insert Delete GetRandom O(1)](#380M-Insert-Delete-GetRandom-O-(-1-))
+       * [380M. Insert Delete GetRandom O(1)](#380M-Insert-Delete-GetRandom)
    * [6. Sliding Window](#5-Sliding-Window)
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
        * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
@@ -647,7 +647,7 @@ class Solution(object):
 
 
 ## 5. Hash Map with Array
-### 380M. Insert Delete GetRandom O(1)
+### 380M. Insert Delete GetRandom
 Array, Hash Table, Design\
 **Description:**\
 Implement the RandomizedSet class:
