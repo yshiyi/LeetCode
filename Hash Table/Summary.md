@@ -9,6 +9,7 @@
        * [359. Logger Rate Limiter]
        * [387. First Unique Character in a String]
        * [454M. 4Sum II]
+       * [599. Minimum Index Sum of Two Lists]
    * [5. Hash Map with Array](#5-Hash-Map-with-Array)
        * [380M. Insert Delete GetRandom O(1)]
    * [6. Sliding Window](#5-Sliding-Window)
@@ -26,7 +27,7 @@
        * [c. Counter](#c-Counter)
            * [347M. Top K Frequent Elements]
            * [387. First Unique Character in a String]
-           * [771. Jewels and Stones]
+           * [771. Jewels and Stones](#771-Jewels-and-Stones)
 <!-- GFM-TOC -->
 
 ## 1. The Principle of Builtin Hash Table
@@ -531,7 +532,7 @@ class Solution(object):
 ### a. Dictionary with list
 ### b. Dictionary with int
 ### c. Counter
-
+#### 771. Jewels and Stones
 
 
 
