@@ -3,16 +3,32 @@
 * [Leetcode Linked List](#Leetcode-Linded-List)
     * [Summary of Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/Summary%20of%20Linked%20List.md)
     * [1. Determine if the linked list has a cycle in it](#1-Determine-if-the-linked-list-has-a-cycle-in-it)
-       * [141. Linked List Cycle (easy)](#141-Linked-List-Cycle)
+       * [141. Linked List Cycle](#141-Linked-List-Cycle)
+       * [142M. Linked List Cycle](#142M-Linked-List-Cycle)
+       * [61M. Rotate List](#61M-Rotate-List)
     * [2. Determine the intersection of two linked lists](#2-Determine-the-intersection-of-two-linked-lists)
+       * [160. Intersection of Two Linked Lists](#[160-Intersection-of-Two-Linked-Lists])
     * [3. Remove element from linked list](#3-Remove-element-from-linked-list)
+       * [203. Remove Linked List Elements](#203-Remove-Linked-List-Elements)
+       * [19M. Remove Nth Node From End of List](#19M-Remove-Nth-Node-From-End-of-List)
     * [4. Merge two sorted linked lists](#4-Merge-two-sorted-linked-lists)
+       * [21. Merge Two Sorted Lists](#21-Merge-Two-Sorted-Lists)
     * [5. Reverse linked list](#5-Reverse-linked-list)
+       * [206. Reverse Linked List](#206-Reverse-Linked-List)
+       * [234. Palindrome Linked List](#234-Palindrome-Linked-List)
     * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
+       * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
+       * [25H. Reverse Nodes in k-Group](#25H-Reverse-Nodes-in-k---Group)
     * [7. Add two numbers](#7-Add-two-numbers)
+       * [2M. Add Two Numbers](#2M-Add-Two-Numbers)
+       * [445M. Add Two Numbers II](#445M-Add-Two-Numbers-II)
     * [8. Remove duplicates from sorted list](#8-Remove-duplicates-from-sorted-list)
+       * [83. Remove Duplicates from Sorted List](#83-Remove-Duplicates-from-Sorted-List)
+       * [82M. Remove Duplicates from Sorted List II](#82M-Remove-Duplicates-from-Sorted-List-II)
     * [9. Copy list with random pointer](#9-Copy-list-with-random-pointer)
+       * [138M. Copy List with Random Pointer](#138M-Copy-List-with-Random-Pointer)
     * [10. Odd even linked list](#10-Odd-even-linked-list)
+       * [328M. Odd Even Linked List](#328M-Odd-Even-Linked-List)
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
@@ -39,7 +55,7 @@ while fast and fast.next:
 return False
 ```
 
-[142M\. Linked List Cycle (Medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)\
+### [142M. Linked List Cycle](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)\
 **Description:**\
 Similar to 141, but this time we need to find to which the tail connects if there is a cycle in the linked list.\
 **Method:** \
@@ -77,7 +93,7 @@ while slow != fast:
 return slow
 ```
 
-[61. Rotate List (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)\
+### [61M. Rotate List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)\
 **Description:**\
 Given the head of a linked list, rotate the list to the right by k places.\
 Example:\
@@ -140,7 +156,7 @@ return head
                   
 
 ##  2. Determine the intersection of two linked lists
-[160. Intersection of Two Linked Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)\
+### [160. Intersection of Two Linked Lists](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)\
 **Description:**\
 Write a program to find the node at which the intersection of two singly linked lists begins.
 ```html
@@ -192,7 +208,7 @@ return pA
 ```
 
 ##  3. Remove element from linked list
-[203. Remove Linked List Elements (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)\
+### [203. Remove Linked List Elements](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)\
 **Description:**\
 Remove all elements from a linked list of integers that have value val.\
 Example:\
@@ -219,7 +235,7 @@ while curr:
 return head
 ```
 
-[19. Remove Nth Node From End of List (Medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)\
+### [19M. Remove Nth Node From End of List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)\
 **Description:**
 Given the head of a linked list, remove the nth node from the end of the list and return its head.\
 Follow up: Could you do this in one pass?\
@@ -254,7 +270,7 @@ return head
 ```
 
 ##  4. Merge two sorted linked lists
-[21. Merge Two Sorted Lists (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.py)\
+### [21. Merge Two Sorted Lists](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.py)\
 **Description:**\
 Merge two sorted linked lists and return it as a new sorted list. 
 The new list should be made by splicing together the nodes of the first two lists.\
@@ -291,7 +307,7 @@ else:
 ```
 
 ##  5. Reverse linked list
-[206. Reverse Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
+### [206. Reverse Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
 **Description:**\
 Reverse a singly linked list.\
 Example:\
@@ -330,7 +346,7 @@ def CreateRev(self, head):
    return self.head2
 ```
 
-[234. Palindrome Linked List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
+### [234. Palindrome Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
 **Description:**\
 Given a singly linked list, determine if it is a palindrome (e.g., 1-2-1, 1-2-2-1).\
 Follow up: Could you do it in O(n) time and O(1) space?\
@@ -374,7 +390,7 @@ return nodes[::-1]==nodes
 ```
 
 ##  6. Reverse nodes in pairs or groups
-[24. Swap Nodes in Pairs (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
+### [24M. Swap Nodes in Pairs](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
 **Description:**\
 Given a linked list, swap every two adjacent nodes and return its head.
 You may not modify the values in the list's nodes. Only nodes itself may be changed.\
@@ -417,7 +433,7 @@ def swapPairs(self, head):
    return nextTemp
 ```
 
-[25. Reverse Nodes in k-Group (hard)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
+### [25H. Reverse Nodes in k-Group](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
 **Description:**\
 Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 k is a positive integer and is less than or equal to the length of the linked list. 
@@ -460,7 +476,7 @@ def reverseKGroup(self, head, k):
 ```
 
 ##  7. Add two numbers
-[2. Add Two Numbers (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.py)\
+### [2M. Add Two Numbers](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.py)\
 **Description:**\
 You are given two non-empty linked lists representing two non-negative integers. 
 The digits are stored in reverse order, and each of their nodes contains a single digit. 
@@ -510,7 +526,7 @@ Then find out the length of this number by using len(str(num)).
 Finally, we save each of the digit to a new list.
 
 
-[445. Add Two Numbers II (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.py)\
+### [445M. Add Two Numbers II](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.py)\
 **Description:**\
 Similar to 2M. Add Two Numbers. But this time, two numbers are added from the right.\
 Follow up:\
@@ -540,7 +556,7 @@ return ans.next
 ```
 
 ##  8. Remove duplicates from sorted list
-[83. Remove Duplicates from Sorted List (easy)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)\
+### [83. Remove Duplicates from Sorted List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)\
 **Description:**\
 Given a sorted linked list, delete all duplicates such that each element appear only once.\
 Example:\
@@ -568,7 +584,7 @@ while cur:
 return head
 ```
 
-[82. Remove Duplicates from Sorted List II (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.py)\
+### [82M. Remove Duplicates from Sorted List II](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.py)\
 **Description:**\
 Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.\
 
@@ -625,7 +641,7 @@ return dummy.next
 ```
 
 ##  9. Copy list with random pointer
-[138. Copy List with Random Pointer (medium)](https://github.com/yshiyi/LeetCode/blob/157d4db3d488a7496f1fd273dc5528a4c058b197/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.py)\
+### [138M. Copy List with Random Pointer](https://github.com/yshiyi/LeetCode/blob/157d4db3d488a7496f1fd273dc5528a4c058b197/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.py)\
 **Description:**
 A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
 Return a deep copy of the list.
@@ -693,7 +709,7 @@ def copyRandomList(self, head):
 ```
 
 ##  10. Odd even linked list
-[328. Odd Even Linked List (medium)](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)\
+### [328M. Odd Even Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)\
 **Description:**\
 Given a singly linked list, group all odd nodes together followed by the even nodes. 
 Please note here we are talking about the node number and not the value in the nodes.
