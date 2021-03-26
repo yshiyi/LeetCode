@@ -18,7 +18,7 @@
        * [234. Palindrome Linked List](#234-Palindrome-Linked-List)
     * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
        * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
-       * [25H. Reverse Nodes in k-Group](#25H-Reverse-Nodes-in-k---Group)
+       * [25H. Reverse Nodes in k-Group](#25H-Reverse-Nodes-in-k-Group)
     * [7. Add two numbers](#7-Add-two-numbers)
        * [2M. Add Two Numbers](#2M-Add-Two-Numbers)
        * [445M. Add Two Numbers II](#445M-Add-Two-Numbers-II)
@@ -433,7 +433,7 @@ def swapPairs(self, head):
    return nextTemp
 ```
 
-### [25H. Reverse Nodes in k-Group](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
+### [25H. Reverse Nodes in k Group](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
 **Description:**\
 Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 k is a positive integer and is less than or equal to the length of the linked list. 
