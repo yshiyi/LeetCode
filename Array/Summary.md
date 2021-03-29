@@ -2,10 +2,37 @@
 <!-- GFM-TOC -->
 * [Leetcode Array](#Array)
     * [1. Search for a particular number or check duplicates](#1-Search-for-particular-number-or-check-duplicates)
+       * [1. Two Sum](#1-Two-Sum)
+       * [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
+       * [136. Single Number](#136-Single-Number)
+       * [217. Contains Duplicate](#217-Contains-Duplicate)
+       * [414. Third Maximum Number](#414-Third-Maximum-Number)
+       * [448. Find All Numbers Disappeared in an Array](#448-Find-All-Numbers-Disappeared-in-an-Array)
     * [2. Remove or remove elements within array](#2-Remove-or-remove-elements-within-array)
+       * [1089. Duplicate zeros](#1089-Duplicate-zeros)
+       * [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
+       * [27. Remove Element](#27-Remove-Element)
+       * [283. Move Zeroes](#283-Move-Zeroes)
     * [3. Two pointers](#3-Two-pointers)
+       * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
+       * [15M. 3Sum](#15M-3Sum)
+       * [167. Two Sum II - Input array is sorted](#167-Two-Sum-II-Input-array-is-sorted)
+       * [344. Reverse String](#344-Reverse-String)
+       * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
+       * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
     * [4. Peak and valley](#4-Peak-and-valley)
+       * [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
+       * [941. Valid Mountain Array](#941-Valid-Mountain-Array)
     * [5. Use some particular functions](#5-Use-some-particular-functions)
+       * [1051. Height checker](#1051-Height-checker)
+       * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
+       * [189M. Rotate Array](#189M-Rotate-Array)
+       * [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
+       * [36M. Valid Sudoku](#36M-Valid-Sudoku)
+       * [485. Max Consecutive Ones](#485-Max-Consecutive-Ones)
+       * [48M. Rotate Image](#48M-Rotate-Image)
+       * [66. Plus One](#66-Plus-One)
+       * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 <!-- GFM-TOC -->
 
 ## 1. Search for a particular number or check duplicates
@@ -206,6 +233,8 @@ Similar to 26. Create two pointer. The first one sweeps the whole array, the sec
 ## 3. Two pointers
 * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
 * [15M. 3Sum](#15M-3Sum)
+* [167. Two Sum II - Input array is sorted](#167-Two-Sum-II-Input-array-is-sorted)
+* [344. Reverse String](#344-Reverse-String)
 * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
 * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
 
@@ -231,6 +260,52 @@ Sort the array first. The first pointer starts from the next number, and the sec
 |[.cpp](https://github.com/yshiyi/LeetCode/blob/main/Array/15M.%203Sum.cpp)|[.py](https://github.com/yshiyi/LeetCode/blob/main/Array/15M.%203Sum.py)|
 |:-- |:-- |
 |<pre>vector<vector\<int\>> threeSum(vector<int>& nums) {<br>        vector<vector\<int\>> result;<br>        vector\<int\> triplet;<br>        int r, l, sum;<br>        sort(nums.begin(), nums.end());<br>        for (int i=0; i<nums.size(); i++) {<br>            if (i>0 && nums[i]==nums[i-1]) {<br>                continue;<br>            }<br>            r = nums.size() - 1;<br>            l = i + 1;<br>            while (l < r) {<br>                sum = nums[i] + nums[l] + nums[r];<br>                if (sum > 0) {<br>                    r--;<br>                }else if (sum < 0) {<br>                    l++;<br>                }else if (sum == 0) {<br>                    triplet.push_back(nums[i]);<br>                    triplet.push_back(nums[l]);<br>                    triplet.push_back(nums[r]);<br>                    result.push_back(triplet);<br>                    triplet.clear();<br>                    l++;<br>                    while (l<r && nums[l]==nums[l-1]){<br>                        l++;<br>                    }<br>                }<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def threeSum(self, nums):<br>        res = []<br>        nums.sort()<br>        for i, a in enumerate(nums):<br>            if i > 0 and a == nums[i - 1]:<br>                continue<br>            l, r = i + 1, len(nums) - 1<br>            while l < r:<br>                threeSum = a + nums[l] + nums[r]<br>                if threeSum > 0:<br>                    r -= 1<br>                elif threeSum < 0:<br>                    l += 1<br>                else:<br>                    res.append([a, nums[l], nums[r]])<br>                    l += 1<br>                    while nums[l] == nums[l - 1] and l < r:<br>                        l += 1<br>        return res </pre>|
+
+### 167. Two Sum II Input array is sorted
+**Description:**\
+Given an array of integers numbers that is already sorted in ascending order, find two numbers such that they add up to a specific target number. Return the indices of the two numbers (1-indexed) as an integer array answer of size 2, where 1 <= answer[0] < answer[1] <= numbers.length. You may assume that each input would have exactly one solution and you may not use the same element twice.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/167.%20Two%20Sum%20II%20-%20Input%20array%20is%20sorted.cpp)
+```
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int left = 0, right = numbers.size()-1;
+        vector<int> res;
+        while(left<right){
+            int sum = numbers[left] + numbers[right];
+            if(sum==target){
+                res.push_back(left+1);
+                res.push_back(right+1);
+                break;
+            }else if(sum>target){
+                right--;
+            }else if(sum<target){
+                left++;
+            }
+        }
+        return res;
+    }
+};
+```
+
+### 344. Reverse String
+**Description:**\
+Write a function that reverses a string. The input string is given as an array of characters s.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/344.%20Reverse%20String.cpp)
+```
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        int left = 0, right = s.size() - 1;
+        while(left < right){
+            swap(s[left], s[right]);
+            right--;
+            left++;
+        }
+    }
+};
+```
+
 
 ### 88. Merge Sorted Array
 **Description:**\
