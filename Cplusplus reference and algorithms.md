@@ -1,7 +1,9 @@
 ## C++ Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
 * [Sorting Algorithm](#Sorting-Algorithm)
+* [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
+* [Recursion](#Recursion)
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
@@ -144,6 +146,21 @@ def quickSelect(arr, l, r, k):
     return -1
 ```
 
+# Two Pointers
+There are two types of approaches using two pointers technique.
+1. Fast and slow pointers
+   Two pointers run with different speed. If they tun on a straight path, the fast pointer will first arrive at the end eventually. If there is a circle, the fast pointer will catch up with the slow pointer.\
+   ```
+   boolean hasCycle(ListNode head) {
+       while (head != null)
+           head = head.next;
+       return false;
+   }
+   ```
+
+3. Left and right pointers
+
+
 # Sliding Window
 Sliding window is a special method of two pointers. The basic idea is to use two different pointers to create a kind of window. Then, move this window by increasing the pointers individually. The time complexity is O(N). The basic logic is:
 ```
@@ -212,6 +229,7 @@ public:
 };
 ```
 
+# Recursion
 
 
 
