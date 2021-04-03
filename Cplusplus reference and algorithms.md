@@ -148,18 +148,56 @@ def quickSelect(arr, l, r, k):
 
 # Two Pointers
 There are two types of approaches using two pointers technique.
-1. Fast and slow pointers
-   Two pointers run with different speed. If they tun on a straight path, the fast pointer will first arrive at the end eventually. If there is a circle, the fast pointer will catch up with the slow pointer.\
+1. Fast and slow pointers\
+   a. Two pointers run with different speed. If they tun on a straight path, the fast pointer will first arrive at the end eventually. If there is a circle, the fast pointer will catch up with the slow pointer.
    ```
    boolean hasCycle(ListNode head) {
-       while (head != null)
-           head = head.next;
+       ListNode fast, slow;
+       fast = slow = head;
+       while (fast != null && fast.next != null) {
+           fast = fast.next.next;
+           slow = slow.next;
+
+           if (fast == slow) return true;
+       }
        return false;
    }
    ```
+      Related question: 141. Linked List Cycle [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.py)\
+   
+   b. Using this technique, we can also determine the location of the starting node of the circle.\
+      Related question: 142M. Linked List Cycle II [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)\
+   
+   c. Determine the middle node of a list.\
+      Related questions: 876. Middle of the Linked List [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/876.%20Middle%20of%20the%20Linked%20List.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/876.%20Middle%20of%20the%20Linked%20List.py)\
+   
+   d. Determine the Nth node from the end of list.\
+      Related questions: 19M. Remove Nth Node From End of List [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)
 
-3. Left and right pointers
-
+3. Left and right pointers\
+   a. Binary search for a sorted array.
+      ```
+      int binarySearch(int[] nums, int target) {
+       int left = 0; 
+       int right = nums.length - 1;
+       while(left <= right) {
+           int mid = (right + left) / 2;
+           if(nums[mid] == target)
+               return mid; 
+           else if (nums[mid] < target)
+               left = mid + 1; 
+           else if (nums[mid] > target)
+               right = mid - 1;
+       }
+       return -1;
+   }
+      ```
+    
+   b. Two sums\
+      Related question: 167. Two Sum II - Input array is sorted [C++](https://github.com/yshiyi/LeetCode/blob/main/Array/167.%20Two%20Sum%20II%20-%20Input%20array%20is%20sorted.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Array/167.%20Two%20Sum%20II%20-%20Input%20array%20is%20sorted.py)\
+   c. Reverse an array\
+      Related question: 344. Reverse String [C++](https://github.com/yshiyi/LeetCode/blob/main/Array/344.%20Reverse%20String.cpp), [Python](https://github.com/yshiyi/LeetCode/blob/main/Array/344.%20Reverse%20String.py)
+   
 
 # Sliding Window
 Sliding window is a special method of two pointers. The basic idea is to use two different pointers to create a kind of window. Then, move this window by increasing the pointers individually. The time complexity is O(N). The basic logic is:
