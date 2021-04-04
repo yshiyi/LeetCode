@@ -32,7 +32,7 @@
 <!-- GFM-TOC -->
 
 ##  1. Determine if the linked list has a cycle in it
-### [141. Linked List Cycle](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.py)
+### 141. Linked List Cycle
 **Description:**\
 Given head, the head of a linked list, determine if the linked list has a cycle in it.
 There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. 
@@ -43,6 +43,25 @@ Using Two-Pointer method.
 Let the first pointer move one step at a time, and the second pointer move two steps at a time.
 Check if head.next and head.next.next exist.
 While fast and fast.next exist, we keep moving two pointers and check they are equal.
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.cpp)
+```
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode *slow, *fast;
+        slow = head; fast = head;
+        while(fast!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.py)
 ```
 if not head:
    return False
@@ -55,7 +74,7 @@ while fast and fast.next:
 return False
 ```
 
-### [142M. Linked List Cycle](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)\
+### 142M. Linked List Cycle
 **Description:**\
 Similar to 141, but this time we need to find to which the tail connects if there is a cycle in the linked list.\
 **Method:** \
@@ -77,6 +96,10 @@ It means if we start move from p2 by a steps, we will reach to p1.\
 Therefore, we use two pointers to check if there is a cycle.
 If there is one, we then reset pointer 1 back to the starting point and let pointer 2 stay at p2.
 And move both pointers together. When they meet again, the meeting node will be the connection node.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.cpp)\
+
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)
 ```
 fast, slow = head, head
 while fast and fast.next:
@@ -93,43 +116,19 @@ while slow != fast:
 return slow
 ```
 
-### [61M. Rotate List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)\
+### 61M. Rotate List
 **Description:**\
 Given the head of a linked list, rotate the list to the right by k places.\
 Example:\
 Input: head = [1,2,3,4,5], k = 2\
 Output: [4,5,1,2,3]
 
-**Method 1:**\
-Using the similar idea of 189M. Rotate Array\
-First, convert the linked list to an array/a list.
-Rotate this array by k times, elements will be moved to (i + k) % L position.
-Finally, convert the rotated list to a new linked list.
-
-```
-l = []
-while head:
-   l.append(head.val)
-   head = head.next
-
-L = len(l)
-l_new = [0 for _ in range(L)]  # [0] * L
-for i in range(L):
-   l_new[(i + k) % L] = l[i]
-
-cur = ans = ListNode()
-for i in range(L):
-   newNode = ListNode(l_new[i])
-   cur.next = newNode
-   cur = cur.next
-return ans.next
-```
-
-**Method 2:**\
+**Method:**\
 Create a cycle link by linking the last to node of the list to the first node.
 Move n-k-1 steps to make the pointer points to the last node in the rotated link.
 Fianlly, let the cur2.next = None to terminate the cycle.
-
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)
 ```
 if head is None or head.next is None:
    return head
@@ -156,7 +155,7 @@ return head
                   
 
 ##  2. Determine the intersection of two linked lists
-### [160. Intersection of Two Linked Lists](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)\
+### [160. Intersection of Two Linked Lists]\
 **Description:**\
 Write a program to find the node at which the intersection of two singly linked lists begins.
 ```html
@@ -183,6 +182,8 @@ Specifically, when p1 reaches the end of list A, it goes back to the head of lis
 Eventually, p1 will travel through a + b + c + b, and p2 will travel through b + c + a + b.
 We need to recorde the end of each list. If the end is not the same, then there is no intersection.
 
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)
 ```
 if not headA or not headB:
    return None
@@ -208,7 +209,7 @@ return pA
 ```
 
 ##  3. Remove element from linked list
-### [203. Remove Linked List Elements](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)\
+### 203. Remove Linked List Elements
 **Description:**\
 Remove all elements from a linked list of integers that have value val.\
 Example:\
@@ -220,7 +221,8 @@ To remove a node from linked list, we need to implement current.next = current.n
 The condition is to check if current.next has a value and that value is equal to val.
 The second step, we need to consider the first node of the list.
 So, we create a while loop to check the head.val.
-
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)
 ```
 if head is None:
    return head
@@ -235,7 +237,7 @@ while curr:
 return head
 ```
 
-### [19M. Remove Nth Node From End of List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)\
+### 19M. Remove Nth Node From End of List
 **Description:**
 Given the head of a linked list, remove the nth node from the end of the list and return its head.\
 Follow up: Could you do this in one pass?\
@@ -255,18 +257,28 @@ Then move both pointers together and remain the gap n.
 When the first pointer reaches the last node, then p2.next = p2.next.next.
 Note, when p1 finishes moving n steps, we need to check if p1 is none.
 If it is, then it means to remove the head.
-
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)
 ```
-p1, p2 = head, head
-for _ in range(n):
-   p1 = p1.next
-if p1 is None:
-   return head.next
-while p1.next:
-   p1 = p1.next
-   p2 = p2.next
-p2.next = p2.next.next
-return head
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *slow, *fast;
+        slow = head; fast = head;
+        for(int i=0; i<n; i++){
+            fast = fast->next;
+        }
+        if(fast==NULL){
+            return head->next;
+        }
+        while(fast!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        slow->next = slow->next->next;
+        return head;
+    }
+};
 ```
 
 ##  4. Merge two sorted linked lists
