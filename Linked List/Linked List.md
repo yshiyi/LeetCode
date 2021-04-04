@@ -42,7 +42,7 @@ Return true if there is a cycle in the linked list. Otherwise, return false.\
 Using Two-Pointer method.
 Let the first pointer move one step at a time, and the second pointer move two steps at a time.
 Check if head.next and head.next.next exist.
-While fast and fast.next exist, we keep moving two pointers and check they are equal.
+While fast and fast.next exist, we keep moving two pointers and check they are equal.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/141.%20Linked%20List%20Cycle.cpp)
 ```
 class Solution {
@@ -95,10 +95,9 @@ Notice that a + b is equal to the length of cycle times an integer.
 It means if we start move from p2 by a steps, we will reach to p1.\
 Therefore, we use two pointers to check if there is a cycle.
 If there is one, we then reset pointer 1 back to the starting point and let pointer 2 stay at p2.
-And move both pointers together. When they meet again, the meeting node will be the connection node.
+And move both pointers together. When they meet again, the meeting node will be the connection node.\
 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.cpp)\
-
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/142M.%20Linked%20List%20Cycle%20II.py)
 ```
 fast, slow = head, head
@@ -126,7 +125,7 @@ Output: [4,5,1,2,3]
 **Method:**\
 Create a cycle link by linking the last to node of the list to the first node.
 Move n-k-1 steps to make the pointer points to the last node in the rotated link.
-Fianlly, let the cur2.next = None to terminate the cycle.
+Fianlly, let the cur2.next = None to terminate the cycle.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.cpp)\
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/61M.%20Rotate%20List.py)
 ```
@@ -180,7 +179,7 @@ If there is an intersection, then the travelled distance of two pointers should 
 From the figure, we can see that the only way that two pointers can meet together is that they travel through a + 2b + c.
 Specifically, when p1 reaches the end of list A, it goes back to the head of list B. Do the same to p2.
 Eventually, p1 will travel through a + b + c + b, and p2 will travel through b + c + a + b.
-We need to recorde the end of each list. If the end is not the same, then there is no intersection.
+We need to recorde the end of each list. If the end is not the same, then there is no intersection.\
 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.cpp)\
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/160.%20Intersection%20of%20Two%20Linked%20Lists.py)
@@ -220,7 +219,7 @@ Output: 1->2->3->4->5\
 To remove a node from linked list, we need to implement current.next = current.next.next.
 The condition is to check if current.next has a value and that value is equal to val.
 The second step, we need to consider the first node of the list.
-So, we create a while loop to check the head.val.
+So, we create a while loop to check the head.val.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.cpp)\
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/203.%20Remove%20Linked%20List%20Elements.py)
 ```
@@ -256,7 +255,7 @@ Move the first pointer n steps ahead.
 Then move both pointers together and remain the gap n.
 When the first pointer reaches the last node, then p2.next = p2.next.next.
 Note, when p1 finishes moving n steps, we need to check if p1 is none.
-If it is, then it means to remove the head.
+If it is, then it means to remove the head.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.cpp)\
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)
 ```
@@ -282,7 +281,7 @@ public:
 ```
 
 ##  4. Merge two sorted linked lists
-### [21. Merge Two Sorted Lists](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.py)\
+### 21. Merge Two Sorted Lists
 **Description:**\
 Merge two sorted linked lists and return it as a new sorted list. 
 The new list should be made by splicing together the nodes of the first two lists.\
@@ -294,8 +293,36 @@ Output: [1,1,2,3,4,4]\
 Using the similar idea with merge sorted array.
 Create a new list to hold the nodes and two pointers to traverse l1 and l2.
 Compare each node from l1 and l2, and save the smaller one to the new list.
-When reach the end of one of the list, we add the rest of nodes of the other list to the end of the new list.
-
+When reach the end of one of the list, we add the rest of nodes of the other list to the end of the new list.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.cpp)\
+```
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode *cur1 = l1, *cur2 = l2;
+        ListNode *head = new ListNode(0);
+        ListNode *ans = head;
+        while(cur1!=NULL && cur2!=NULL){
+            if(cur1->val <= cur2->val){
+                head->next = cur1;
+                cur1 = cur1->next;
+            }else{
+                head->next = cur2;
+                cur2 = cur2->next;
+            }
+            head = head->next;
+        }
+        if(cur1!=NULL){
+            head->next = cur1;
+        }
+        if(cur2!=NULL){
+            head->next = cur2;
+        }
+        return ans->next;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/21.%20Merge%20Two%20Sorted%20Lists.py)
 ```
 ans = ListNode(None)
 l = ans
@@ -319,7 +346,7 @@ else:
 ```
 
 ##  5. Reverse linked list
-### [206. Reverse Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
+### 206. Reverse Linked List
 **Description:**\
 Reverse a singly linked list.\
 Example:\
@@ -328,8 +355,24 @@ Output: 5->4->3->2->1->NULL
 
 **Method:** 
 Note, if we let temp = current and current = temp.next, then when we modify current, we also modify temp.
-But, if we let temp = current.next, then the changes on current won't affect temp.
-
+But, if we let temp = current.next, then the changes on current won't affect temp.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.cpp)\
+```
+// Recursive method:
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -> next){
+            return head;
+        } 
+        ListNode* ans=reverseList(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/206.%20Reverse%20Linked%20List.py)\
 ```
 # Iterative method
 head2 = None
@@ -358,16 +401,44 @@ def CreateRev(self, head):
    return self.head2
 ```
 
-### [234. Palindrome Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
+### 234. Palindrome Linked List
 **Description:**\
 Given a singly linked list, determine if it is a palindrome (e.g., 1-2-1, 1-2-2-1).\
 Follow up: Could you do it in O(n) time and O(1) space?\
 
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/234.%20Palindrome%20Linked%20List.py)\
 **Method 1: Two Pointers**\
 Create two pointers.
 One moves two steps and the other moves one step per iteration. So, we can determine the middle point.
 Then, we reverse the second part of the list and compare it with the first half.
-
+```
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+        ListNode *head2=nullptr, *temp;
+        while(fast!=NULL&&fast->next!=NULL){
+            fast = fast->next->next;
+            temp = slow->next;
+            slow->next = head2;
+            head2 = slow;
+            slow = temp;
+        }
+        if(fast!=NULL){
+            slow = slow->next;
+        }
+        while(head2!=NULL&&slow!=NULL){
+            if(head2->val != slow->val){
+                return false;
+            }
+            head2 = head2->next;
+            slow = slow->next;
+        }
+        return true;
+    }
+};
+```
 ```
 fast, slow = head, head
 while fast and fast.next:
