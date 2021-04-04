@@ -8,6 +8,8 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+// Method 1: Iterative
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
@@ -22,5 +24,19 @@ public:
             cur = tmp;
         }
         return newHead;
+    }
+};
+
+// Method 2: Recursive
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -> next){
+            return head;
+        } 
+        ListNode* ans=reverseList(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return ans;
     }
 };
