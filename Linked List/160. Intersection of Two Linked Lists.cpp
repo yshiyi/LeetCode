@@ -6,6 +6,40 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+// Method 1: Hash Table
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        set<ListNode*> s;
+        ListNode *curA = headA, *curB = headB;
+        while(curA!=NULL){
+            s.insert(curA);
+            curA=curA->next;
+        }
+        while(curB!=NULL){
+            if(s.find(curB)!=s.end()){
+                return curB;
+            }else{
+                curB = curB->next;
+            }
+        }
+        
+        return NULL;
+    }
+    
+};
+
+
+// Method 2: Travel listA and listB.
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
