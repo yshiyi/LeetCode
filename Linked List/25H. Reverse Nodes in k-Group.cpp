@@ -14,7 +14,7 @@ public:
         if(k==1 || getSize(head)<k){
             return head;
         }
-        // Note: we must define head2 as a null pointer, otherwise if will course problem when we check cur->next!=NULL.
+        // Note: we must define head2 as a null pointer, otherwise it will course problem when we check cur->next!=NULL.
         ListNode *head2=nullptr, *tmp;
         int counter = 0;
         while(counter < k){
