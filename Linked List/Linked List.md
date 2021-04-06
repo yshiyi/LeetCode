@@ -473,7 +473,7 @@ return nodes[::-1]==nodes
 ```
 
 ##  6. Reverse nodes in pairs or groups
-### [24M. Swap Nodes in Pairs](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)\
+### 24M. Swap Nodes in Pairs
 **Description:**\
 Given a linked list, swap every two adjacent nodes and return its head.
 You may not modify the values in the list's nodes. Only nodes itself may be changed.\
@@ -483,7 +483,8 @@ Output: [2,1,4,3]
 
 **Method 1:**
 Using only one pointer and create a new list. Check cur and cur.next, and save nodes to the new list.
-
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/24M.%20Swap%20Nodes%20in%20Pairs.py)
 ```
 cur2 = head2
 cur1 = head
@@ -516,7 +517,7 @@ def swapPairs(self, head):
    return nextTemp
 ```
 
-### [25H. Reverse Nodes in k Group](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)\
+### 25H. Reverse Nodes in k Group
 **Description:**\
 Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 k is a positive integer and is less than or equal to the length of the linked list. 
@@ -532,8 +533,9 @@ Output: [2,1,4,3,5]
 Using the similar idea of recursive method in 24M. Swap Nodes in Pairs\
 We first reverse the first k nodes and save them to a new list.
 Then send the rest of the list back to the recursive function.
-Note, we can't use global self.head2. It will save the nodes in front of it rather than in the end.
-
+Note, we can't use global self.head2. It will save the nodes in front of it rather than in the end.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.cpp), Note: we must define the new head as a null pointer, otherwise it will course problem when we check sweep the new head list.
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/25H.%20Reverse%20Nodes%20in%20k-Group.py)
 ```
 def reverseKGroup(self, head, k):
    L = self.getLen(head)
@@ -559,7 +561,7 @@ def reverseKGroup(self, head, k):
 ```
 
 ##  7. Add two numbers
-### [2M. Add Two Numbers](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.py)\
+### 2M. Add Two Numbers
 **Description:**\
 You are given two non-empty linked lists representing two non-negative integers. 
 The digits are stored in reverse order, and each of their nodes contains a single digit. 
@@ -574,8 +576,9 @@ Explanation: 342 + 465 = 807.
 Elementary math\
 Create a new list to hold the result of summation.
 Define a new variable carry. If the summation is greater or equal to 10, then carry = 1, otherwise carry = 0.
-The result of summation is equal to the sum of each node val and carry.
-
+The result of summation is equal to the sum of each node val and carry.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/2M.%20Add%20Two%20Numbers.py)
 ```
 carry = 0
 ans = ListNode(None)
@@ -609,7 +612,7 @@ Then find out the length of this number by using len(str(num)).
 Finally, we save each of the digit to a new list.
 
 
-### [445M. Add Two Numbers II](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.py)\
+### 445M. Add Two Numbers II
 **Description:**\
 Similar to 2M. Add Two Numbers. But this time, two numbers are added from the right.\
 Follow up:\
@@ -620,8 +623,10 @@ Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)\
 Output: 7 -> 8 -> 0 -> 7
 
 **Method:**\
-Convert two lists to two integers. Then convert the summation of these two integers to a new linked list.
-
+C++: Using stack.\
+Python: Convert two lists to two integers. Then convert the summation of these two integers to a new linked list.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/445M.%20Add%20Two%20Numbers%20II.py)
 ```
 num1 = self.convertToNum(l1)
 num2 = self.convertToNum(l2)
@@ -639,7 +644,7 @@ return ans.next
 ```
 
 ##  8. Remove duplicates from sorted list
-### [83. Remove Duplicates from Sorted List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)\
+### 83. Remove Duplicates from Sorted List
 **Description:**\
 Given a sorted linked list, delete all duplicates such that each element appear only once.\
 Example:\
@@ -650,8 +655,9 @@ Output: 1->2->3
 Brute force\
 Create two pointers. We move the first pointer in the main loop.
 If the second pointer points to a duplicate, we then skip that node and keep moving it until we reach to a new node.
-Then we link the first pointer to the second by cur.next = cur2.
-
+Then we link the first pointer to the second by cur.next = cur2.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/83.%20Remove%20Duplicates%20from%20Sorted%20List.py)
 ```
 if head is None or head.next is None:
    return head
@@ -667,7 +673,7 @@ while cur:
 return head
 ```
 
-### [82M. Remove Duplicates from Sorted List II](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.py)\
+### 82M. Remove Duplicates from Sorted List II
 **Description:**\
 Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.\
 
@@ -680,7 +686,8 @@ Two pointers\
 Create a dummy head before the linked list to avoid duplicate beginnings.
 The first pointer points to the distinct node. The second pointer swaps through the whole list.
 Let the second pointer start from the original head. Just keep moving the second pointer. When the second pointer reaches the end of the list of duplicates, we move the first pointer.\
-
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/82M.%20Remove%20Duplicates%20from%20Sorted%20List%20II.py)
 ```
 if head is None or head.next is None:
    return head
@@ -724,7 +731,7 @@ return dummy.next
 ```
 
 ##  9. Copy list with random pointer
-### [138M. Copy List with Random Pointer](https://github.com/yshiyi/LeetCode/blob/157d4db3d488a7496f1fd273dc5528a4c058b197/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.py)\
+### 138M. Copy List with Random Pointer
 **Description:**
 A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
 Return a deep copy of the list.
@@ -739,9 +746,42 @@ Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]
 
 **Method 1:**\
 Iterative method\
-Create a global dictionary self.visitedDict to check if the node has already been copied. The keys are the old node and values are the new node. Then swap through the whole list.\
-We copy the current node in the original list. We then copy the next and random from the original. Since we have already created the next node, we can directly move to that node.
-
+**C++**: We use an unordered_map. The key is the node from the original list and the value is the created new node.\
+**Python**: Create a global dictionary self.visitedDict to check if the node has already been copied. The keys are the old node and values are the new node. Then swap through the whole list.\
+We copy the current node in the original list. We then copy the next and random from the original. Since we have already created the next node, we can directly move to that node.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.cpp)
+```
+class Solution {
+public:
+    unordered_map<Node*, Node*> m;
+    Node* createNode(Node* node){
+        if(node==NULL){
+            return node;
+        }else if(m.find(node)==m.end()){
+            Node* newNode = new Node(node->val);
+            newNode->next = nullptr;
+            newNode->random = nullptr;
+            m[node] = newNode;
+            return newNode;
+        }else{
+            return m[node];
+        }
+    }
+    Node* copyRandomList(Node* head) {
+        Node *head2 = createNode(head);
+        Node *cur2 = head2;
+        Node *cur = head;
+        while(cur!=NULL){
+            cur2->next = createNode(cur->next);
+            cur2->random = createNode(cur->random);
+            cur2 = cur2->next;
+            cur = cur->next;
+        }
+        return head2;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/157d4db3d488a7496f1fd273dc5528a4c058b197/Linked%20List/138M.%20Copy%20List%20with%20Random%20Pointer.py)
 ```
 def __init__(self):
   self.visitedDict = {}
@@ -792,7 +832,7 @@ def copyRandomList(self, head):
 ```
 
 ##  10. Odd even linked list
-### [328M. Odd Even Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)\
+### 328M. Odd Even Linked List
 **Description:**\
 Given a singly linked list, group all odd nodes together followed by the even nodes. 
 Please note here we are talking about the node number and not the value in the nodes.
@@ -806,8 +846,9 @@ Output: 1->3->5->2->4->NULL
 Two pointers\
 Create a variable to count the position.
 When the fast pointer reaches the even position, take out the next odd node.
-Then incert this odd node to the next position to where the slow pointer points.
-
+Then incert this odd node to the next position to where the slow pointer points.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.cpp)\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)
 ```
 if head is None:
    return head
@@ -818,12 +859,12 @@ while cur2 and cur2.next:
    if p % 2 == 0:
        # Take out odd node
        temp = cur2.next
+       cur2.next = cur2.next.next
        # Incert node
        temp.next = cur1.next
        cur1.next = temp
-       # Move both pointers
+       # Move the first pointers
        cur1 = cur1.next
-       cur2.next = cur2.next.next
        p += 1
    else:
        cur2 = cur2.next
