@@ -14,9 +14,9 @@ public:
 };
 */
 
-/* Method: Hash Table
-           Note: we use an unordered_map. The key is the node from the original list and 
-                 the value is the created new node. 
+/* Method 1: Hash Table
+             Note: we use an unordered_map. The key is the node from the original list and 
+                   the value is the created new node. 
 */
 class Solution {
 public:
@@ -45,5 +45,25 @@ public:
             cur = cur->next;
         }
         return head2;
+    }
+};
+
+
+// Method 2: Recursive approach
+class Solution {
+public:
+    unordered_map<Node*, Node*> m;
+    Node* copyRandomList(Node* head){
+        if(head==NULL){
+            return head;
+        }else if(m.find(head)!=m.end()){
+            return m[head];
+        }else{
+            Node *newNode = new Node(head->val);
+            m[head] = newNode;
+            newNode->next = copyRandomList(head->next);
+            newNode->random = copyRandomList(head->random);
+            return newNode;
+        }
     }
 };
