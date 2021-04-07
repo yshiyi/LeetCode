@@ -2,7 +2,7 @@
 <!-- GFM-TOC -->
 * [Leetcode Array](#Array)
     * [1. Introduction to String](#1-Introduction-to-String)
-       * [1.1 Compare Function](#1.1-Compare-Function)
+       * [1.1 Compare Function](#1-.-1-Compare-Function)
        * [1.2 Immutable or Mutable]
        * [1.3 Extra Operation]
        * [1.4 Time Complexity]
