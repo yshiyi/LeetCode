@@ -1,7 +1,7 @@
 # Hash Table
 <!-- GFM-TOC -->
 * [Leetcode Hash Table](#Hash-Table)
-   * [1. The Principle of Builtin Hash Table](#1-The-Principle-of-Builtin-Hash-Table)   
+   * [1. The Principle of Building Hash Table](#1-The-Principle-of-Building-Hash-Table)   
    * [2. Design the key](#4-Design-the-key)
    * [3. Hash Set](#2-Hash-Set)
        * [170. Two Sum III](#170-Two-Sum-III)
@@ -35,7 +35,7 @@
            * [771. Jewels and Stones](#771-Jewels-and-Stones)
 <!-- GFM-TOC -->
 
-## 1. The Principle of Builtin Hash Table
+## 1. The Principle of Building Hash Table
 The typical design of built-in hash table is:
   1. The key value can be any hashable type. And a value which belongs to a hashable type will have a hashcode. 
      This code will be used in the mapping function to get the bucket index.
