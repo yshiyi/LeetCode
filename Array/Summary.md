@@ -1,29 +1,31 @@
 # Array
 <!-- GFM-TOC -->
 * [Leetcode Array](#Array)
-    * [1. Search for a particular number or check duplicates](#1-Search-for-particular-number-or-check-duplicates)
+    * [1. Introduction to Array](#1-Introduction-to-Array)
+    * [2. Search for a particular number or check duplicates](#2-Search-for-particular-number-or-check-duplicates)
        * [1. Two Sum](#1-Two-Sum)
        * [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
        * [136. Single Number](#136-Single-Number)
        * [217. Contains Duplicate](#217-Contains-Duplicate)
        * [414. Third Maximum Number](#414-Third-Maximum-Number)
        * [448. Find All Numbers Disappeared in an Array](#448-Find-All-Numbers-Disappeared-in-an-Array)
-    * [2. Remove or remove elements within array](#2-Remove-or-remove-elements-within-array)
+    * [3. Remove or remove elements within array](#3-Remove-or-remove-elements-within-array)
        * [1089. Duplicate zeros](#1089-Duplicate-zeros)
        * [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
        * [27. Remove Element](#27-Remove-Element)
        * [283. Move Zeroes](#283-Move-Zeroes)
-    * [3. Two pointers](#3-Two-pointers)
+    * [4. Two pointers](#4-Two-pointers)
        * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
        * [15M. 3Sum](#15M-3Sum)
        * [167. Two Sum II - Input array is sorted](#167-Two-Sum-II-Input-array-is-sorted)
        * [344. Reverse String](#344-Reverse-String)
        * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
        * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
-    * [4. Peak and valley](#4-Peak-and-valley)
+       * [209M. Minimum Size Subarray Sum](#209M-Minimum-Size-Subarray-Sum)
+    * [5. Peak and valley](#5-Peak-and-valley)
        * [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
        * [941. Valid Mountain Array](#941-Valid-Mountain-Array)
-    * [5. Use some particular functions](#5-Use-some-particular-functions)
+    * [6. Use some particular functions](#6-Use-some-particular-functions)
        * [1051. Height checker](#1051-Height-checker)
        * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
        * [189M. Rotate Array](#189M-Rotate-Array)
@@ -35,7 +37,77 @@
        * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 <!-- GFM-TOC -->
 
-## 1. Search for a particular number or check duplicates
+## 1. Introduction to Array
+An array is a basic data structure to store a collection of elements sequentially. 
+But elements can be accessed randomly since each element in the array can be identified by an array index.\
+**Static Array**
+```
+// 1. Initialize
+int a0[5];
+int a1[5] = {1, 2, 3};  // other element will be set as the default value
+// 2. Get Length
+int size = sizeof(a1) / sizeof(*a1);
+cout << "The size of a1 is: " << size << endl;
+// 3. Access Element
+cout << "The first element is: " << a1[0] << endl;
+// 4. Iterate all Elements
+cout << "[Version 1] The contents of a1 are:";
+for (int i = 0; i < size; ++i) {
+    cout << " " << a1[i];
+}
+cout << endl;
+cout << "[Version 2] The contents of a1 are:";
+for (int& item: a1) {
+    cout << " " << item;
+}
+cout << endl;
+// 5. Modify Element
+a1[0] = 4;
+// 6. Sort
+sort(a1, a1 + size);
+```
+**Dynamic Array**
+```
+// 1. initialize
+vector<int> v0;
+vector<int> v1(5, 0);
+// 2. make a copy
+vector<int> v2(v1.begin(), v1.end());
+vector<int> v3(v2);
+// 2. cast an array to a vector
+int a[5] = {0, 1, 2, 3, 4};
+vector<int> v4(a, *(&a + 1));
+// 3. get length
+cout << "The size of v4 is: " << v4.size() << endl;
+// 4. access element
+cout << "The first element in v4 is: " << v4[0] << endl;
+// 5. iterate the vector
+cout << "[Version 1] The contents of v4 are:";
+for (int i = 0; i < v4.size(); ++i) {
+    cout << " " << v4[i];
+}
+cout << endl;
+cout << "[Version 2] The contents of v4 are:";
+for (int& item : v4) {
+    cout << " " << item;
+}
+cout << endl;
+cout << "[Version 3] The contents of v4 are:";
+for (auto item = v4.begin(); item != v4.end(); ++item) {
+    cout << " " << *item;
+}
+cout << endl;
+// 6. modify element
+v4[0] = 5;
+// 7. sort
+sort(v4.begin(), v4.end());
+// 8. add new element at the end of the vector
+v4.push_back(-1);
+// 9. delete the last element
+v4.pop_back();
+```
+
+## 2. Search for a particular number or check duplicates
 * [1. Two Sum](#1-Two-Sum)
 * [1346. Check If N and Its Double Exist](#1346-Check-If-N-and-Its-Double-Exist)
 * [136. Single Number](#136-Single-Number)
@@ -175,7 +247,7 @@ def findDisappearedNumbers(self, nums):
 
 
 
-## 2. Remove or remove elements within array
+## 3. Remove or remove elements within array
 * [1089. Duplicate zeros](#1089-Duplicate-zeros)
 * [26. Remove Duplicates from Sorted Array](#26-Remove-Duplicates-from-Sorted-Array)
 * [27. Remove Element](#27-Remove-Element)
@@ -230,13 +302,14 @@ Similar to 26. Create two pointer. The first one sweeps the whole array, the sec
 |<pre> void moveZeroes(vector\<int\>& nums) {<br>        if (nums.size() < 1) {return;}<br>        int i = 0, j = 0, temp;<br>        for (i; i<nums.size(); i++) {<br>            if (nums[i] != 0) {<br>                temp = nums[j];<br>                nums[j] = nums[i];<br>                nums[i] = temp;<br>                j++;<br>            }<br>        }<br>    }</pre>|<pre>def moveZeroes(self, nums):<br>        '''<br>        Method: Create two pointers.<br>                Pointer i sweeps the entire array. Pointer count points to the zero position.<br>                Starting from the first element, when there is a zero, we stop count and keep increasing i.<br>                When there is nonzero element, we move this element to the position where count is pointing to.<br>                This operation only excutes when i != count (i.e., there is a zero element in front).<br>        '''<br>        i = 0<br>        count = 0<br>        if len(nums) < 2:<br>            return nums<br>        for i in range(len(nums)):<br>            if nums[i] != 0:<br>                if i != count:<br>                    nums[count] = nums[i]<br>                    nums[i] = 0<br>                count += 1<br>        return nums </pre>|
 
 
-## 3. Two pointers
+## 4. Two pointers
 * [1299. Replace Elements with Greatest Element on Right Side](#1299-Replace-Elements-with-Greatest-Element-on-Right-Side)
 * [15M. 3Sum](#15M-3Sum)
 * [167. Two Sum II - Input array is sorted](#167-Two-Sum-II-Input-array-is-sorted)
 * [344. Reverse String](#344-Reverse-String)
 * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
 * [905. Sort Array By Parity](#905-Sort-Array-By-Parity)
+* [209M. Minimum Size Subarray Sum](#209M-Minimum-Size-Subarray-Sum)
 
 ### 1299. Replace Elements with Greatest Element on Right Side
 **Description:**\
@@ -401,8 +474,42 @@ def sortArrayByParity(self, A):
      return A
 ```
 
+### 209M. Minimum Size Subarray Sum
+**Description:**\
+Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray \[numsl, numsl+1, ..., numsr-1, numsr\] of which the sum is greater than or equal to target. If there is no such subarray, return 0 instead.\
+**Method:**\
+Sliding windows.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/String/209M.%20Minimum%20Size%20Subarray%20Sum.cpp)
+```
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        if(nums[0]>=target){
+            return 1;
+        }
+        
+        int left=0, right=1;
+        int sum = nums[0], min_len = INT_MAX;
+        while(right < nums.size()){
+            sum = sum + nums[right];
+            while(sum>=target){
+                min_len = min(min_len, right-left+1);
+                sum = sum - nums[left];
+                left++;
+            }
+            right++;
+        }
+        if(min_len==INT_MAX){
+            return 0;
+        }else{
+            return min_len;
+        }
+    }
+};
+```
 
-## 4. Peak and valley
+
+## 5. Peak and valley
 * [122. Best time to Buy and Sell Stock II](#122-Best-time-to-Buy-and-Sell-Stock-II)
 * [941. Valid Mountain Array](#941-Valid-Mountain-Array)
 
@@ -487,7 +594,7 @@ def validMountainArray(self, A):
 ```
 
 
-## 5. Use some particular functions
+## 6. Use some particular functions
 * [1051. Height checker](#1051-Height-checker)
 * [1295. Find Numbers with Even Number of Digits](#1295-Find-Numbers-with-Even-Number-of-Digits)
 * [189M. Rotate Array](#189M-Rotate-Array)
