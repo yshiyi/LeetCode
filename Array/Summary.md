@@ -793,7 +793,8 @@ If the index is on the left edge of the array, then the left sum is 0 because th
 Return the leftmost pivot index. If no such index exists, return -1.\
 **Method:**\
 1. Using hash table
-2. Summing up all elements, take the sum from left and check.\
+2. Summing up all elements, take the sum from left and check.
+
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Array/724.%20Find%20Pivot%20Index.cpp)
 ```
 class Solution {
