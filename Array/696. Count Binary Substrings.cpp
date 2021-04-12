@@ -32,7 +32,7 @@ public:
         vector<int> v;
         int i = 0, c = 0;
         while(i<s.size()){
-            while(s[i]=='0'){
+            while(i<s.size() && s[i]=='0'){
                 c++;
                 i++;
             }
@@ -40,7 +40,7 @@ public:
                 v.push_back(c);
                 c = 0;
             }
-            while(s[i]=='1'){
+            while(i<s.size() && s[i]=='1'){
                 c++;
                 i++;
             }
