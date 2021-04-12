@@ -34,6 +34,7 @@
        * [485. Max Consecutive Ones](#485-Max-Consecutive-Ones)
        * [48M. Rotate Image](#48M-Rotate-Image)
        * [66. Plus One](#66-Plus-One)
+       * [724. Find Pivot Index](#724-Find-Pivot-Index)
        * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
 <!-- GFM-TOC -->
 
@@ -783,6 +784,61 @@ def plusOne(self, digits):
      # digits.insert(0, 1)
      return [1] + digits
 ```
+
+### 724. Find Pivot Index
+**Description:**\
+Given an array of integers nums, calculate the pivot index of this array.\
+The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.\
+If the index is on the left edge of the array, then the left sum is 0 because there are no elements to the left. This also applies to the right edge of the array.\
+Return the leftmost pivot index. If no such index exists, return -1.\
+**Method:**\
+1. Using hash table
+2. Summing up all elements, take the sum from left and check.
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/724.%20Find%20Pivot%20Index.cpp)
+```
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        if(nums.size()==1 && nums[0]==0){
+            return 0;
+        }else if(nums.size()==1 && nums[0]!=0){
+            return -1;
+        }
+        unordered_map<int, int> m;
+        m[nums.size()-1] = 0;
+        int sum_right = 0;
+        for(int j=nums.size()-2; j>-1; j--){
+            sum_right = sum_right + nums[j+1];
+            m[j] = sum_right;
+        }
+        if(m[0]==0){
+            return 0;
+        }
+        int sum = 0;
+        for(int i=1;i<nums.size();i++){
+            sum = sum + nums[i-1];
+            if(sum==m[i]){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Array/724.%20Find%20Pivot%20Index.py)
+```
+class Solution(object):
+    def pivotIndex(self, nums):
+        S = sum(nums)
+        leftsum = 0
+        for i, x in enumerate(nums):
+            if leftsum == (S - leftsum - x):
+                return i
+            leftsum += x
+        return -1
+```
+
 
 ### 977. Squares of a Sorted Array
 **Description:**\
