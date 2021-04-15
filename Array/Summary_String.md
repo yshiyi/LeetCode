@@ -17,7 +17,7 @@
     * [4. Hash Table](#4-Hash-Table)
        * [242. Valid Anagram](#242-Valid-Anagram)
        * [409. Longest Palindrome](#409-Longest-Palindrome)
-       * [205. Isomorphic Strings](#205-Isomorphic Strings)
+       * [205. Isomorphic Strings](#205-Isomorphic-Strings)
     * [5. Others](#5-Others)
        * [14. Longest Common Prefix](#14-Longest-Common-Prefix)
        * [696. Count Binary Substrings](#696-Count-Binary-Substrings)
