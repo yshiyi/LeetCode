@@ -6,19 +6,19 @@
        * [1.2 Immutable or Mutable](#12-Immutable-or-Mutable)
        * [1.3 Extra Operation](#13-Extra-Operation)
        * [1.4 Time Complexity](#14-Time-Complexity)
-    * [2. Stack]
+    * [2. Stack](#2-Stack)
        * [67. Add Binary](#67-Add-Binary)
-    * [3. Two Pointers]
+    * [3. Two Pointers](#3-Two-Pointers)
        * [28. Implement strStr()](#28-Implement-strStr)
        * [344. Reverse String](#344-Reverse-String)
        * [9. Palindrome Number](#9-Palindrome-Number)
        * [167. Two Sum II](#167-Two-Sum-II)
        * [209M. Minimum Size Subarray Sum](#209M-Minimum-Size-Subarray-Sum)
-    * [4. Hash Table]
+    * [4. Hash Table](#4-Hash-Table)
        * [242. Valid Anagram](#242-Valid-Anagram)
        * [409. Longest Palindrome](#409-Longest-Palindrome)
        * [205. Isomorphic Strings](#205-Isomorphic Strings)
-    * [5. Others]
+    * [5. Others](#5-Others)
        * [14. Longest Common Prefix](#14-Longest-Common-Prefix)
        * [696. Count Binary Substrings](#696-Count-Binary-Substrings)
        * [561. Array Partition I](#561-Array-Partition-I)
