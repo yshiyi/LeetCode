@@ -1,5 +1,6 @@
 ## C++ Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
+* [Max and min int](#Max-and-min-int)
 * [Sorting Algorithm](#Sorting-Algorithm)
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
@@ -27,6 +28,10 @@ for (unsigned int j = v.size()-1; j < (unsigned)-1; --j)
 */
 for (unsigned int i = v.size()-1; i > -1; --i) 
 ```
+
+# Max and min int
+For C++: INT_MAX, INT_MIN
+For Python: float('inf'), float('-inf')
 
 # Sorting Algorithm
 ## 1. Bubble Sort
