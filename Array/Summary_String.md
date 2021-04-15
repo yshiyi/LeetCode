@@ -894,7 +894,7 @@ Note that s may contain leading or trailing spaces or multiple spaces between tw
 **Example:**\
 Input: s = "the sky is blue"\
 Output: "blue is sky the"\
-**Method:**
+**Method:**\
 Note:\
 For C++, use isspace() to check if the character is a space.\
 For Python, use string.split() to retrieve the words within the string.\
