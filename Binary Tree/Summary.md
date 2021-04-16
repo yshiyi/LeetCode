@@ -2,17 +2,19 @@
 <!-- GFM-TOC -->
 * [Leetcode Binary Tree](#Binary-Tree)
     * [1. Introduction to Binary Tree](#1-Introduction-to-Binary-Tree)
-       * [1.1 Pre order Traversal](#11-Pre-Order-Traversal)
+       * [1.1 Preorder Traversal](#11-Preorder-Traversal)
           * [144M. Binary Tree Preorder Traversal](#144M-Binary-Tree-Preorder-Traversal)
-       * [1.2 In order Traversal](#12-In-Order-Traversal)
-       * [1.3 Post order Traversal](#13-Post-Order-Traversal)
+       * [1.2 Inorder Traversal](#12-Inorder-Traversal)
+          * [94M. Binary Tree Inorder Traversal](#94M-Binary-Tree-Inorder-Traversal)
+       * [1.3 Postorder Traversal](#13-Postorder-Traversal)
+          * [145M. Binary Tree Postorder Traversal](#145M-Binary-Tree-Postorder-Traversal)
        * [1.4 Breadth First Search](#14-Breadth-First-Search)
     * [2. Recursive](#2-Recursive)
        * [67. Add Binary](#67-Add-Binary)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Tree
-## 1.1 Pre Order Traversal
+## 1.1 Preorder Traversal
 Pre-order traversal is to visit the root first. Then traverse the left subtree. Finally, traverse the right subtree. Here is an example:\
 <pre>
           F
@@ -40,7 +42,7 @@ void sort(int[] nums, int lo, int hi) {
 **Description:**\
 Given the root of a binary tree, return the preorder traversal of its nodes' values.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/144M.%20Binary%20Tree%20Preorder%20Traversal.cpp)
-'''
+```
 // Method 1: Recursive
 class Solution {
 public:
@@ -87,8 +89,55 @@ public:
         return ans;
     }
 };
-'''
-[Python]
+
+// Method 3: Iterative approach
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL){
+            return ans;
+        }
+        stack<TreeNode*> st;
+        st.push(root);
+        while(st.size()!=0){
+            root = st.top();
+            st.pop();
+            ans.push_back(root->val);
+            if(root->right!=NULL){
+                st.push(root->right);
+            }
+            if(root->left!=NULL){
+                st.push(root->left);
+            }
+        }
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/144M.%20Binary%20Tree%20Preorder%20Traversal.py)
+```
+class Solution(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = []
+        st = collections.deque()
+        while True:
+            while root!=None:
+                ans.append(root.val)
+                st.append(root)
+                root = root.left
+            if len(st)==0:
+                break
+            root = st[-1]
+            st.pop()
+            root = root.right
+        
+        return ans
+```
 
 ## 1.2 In Order Traversal
 In-order traversal is to traverse the left subtree first. Then visit the root. Finally, traverse the right subtree.\
@@ -100,6 +149,99 @@ In-order traversal is to traverse the left subtree first. Then visit the root. F
 </pre>
 **Inorder:A-B-C-D-E-F-G-H-I**\
 Typically, for binary search tree, we can retrieve all the data in sorted order using in-order traversal. 
+### 94M. Binary Tree Inorder Traversal
+**Description:**\
+Given the root of a binary tree, return the inorder traversal of its nodes' values.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/94M.%20Binary%20Tree%20Inorder%20Traversal.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if (root==NULL){
+            return ans;
+        }
+        inorderRecur(ans, root);
+        return ans;
+    }
+    void inorderRecur(vector<int> &ans, TreeNode* root){
+        if(root==NULL){
+            return;
+        }
+        inorderRecur(ans, root->left);
+        ans.push_back(root->val);
+        inorderRecur(ans, root->right);
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL){
+            return ans;
+        }
+        stack<TreeNode*> st;
+        while(root!=NULL || st.size()!=0){
+            while(root!=NULL){
+                st.push(root);
+                root = root->left;
+            }
+            root = st.top();
+            ans.push_back(root->val);
+            st.pop();
+            root = root->right;
+        }
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/94M.%20Binary%20Tree%20Inorder%20Traversal.py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        self.ans = []
+        if root==None:
+            return self.ans
+        self.inorderRecur(root)
+        return self.ans
+        
+    def inorderRecur(self, root):
+        if root==None:
+            return
+        self.inorderRecur(root.left)
+        self.ans.append(root.val)
+        self.inorderRecur(root.right)
+ 
+# Method 2: Iterative approach
+class Solution(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = []
+        if root==None:
+            return ans
+        st = collections.deque()
+        while root!=None or len(st)!=0:
+            while root!=None:
+                st.append(root)
+                root = root.left
+            root = st[-1]
+            st.pop()
+            ans.append(root.val)
+            root = root.right
+        return ans
+```
+
 
 ## 1.3 Post Order Traversal
 Post-order traversal is to traverse the left subtree first. Then traverse the right subtree. Finally, visit the root.\
@@ -134,6 +276,104 @@ void sort(int[] nums, int lo, int hi) {
     merge(nums, lo, mid, hi);
     /************************/
 }
+```
+### 145M. Binary Tree Postorder Traversal
+**Description:**\
+Given the root of a binary tree, return the postorder traversal of its nodes' values.\
+**Method:**\
+Notice: The order of preorder traversal is center - left - right, the the order of postorder traversal is left - right - center. The reverse order is center - left - right.\
+Hence, we only need to modify the order of the stack in the while-loop and return the reverse order of ans.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/145M.%20Binary%20Tree%20Postorder%20Traversal.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        
+        postorderRecur(ans, root);
+        return ans;
+    }
+    void postorderRecur(vector<int> &ans, TreeNode* root){
+        if (root==NULL){
+            return;
+        }
+        postorderRecur(ans, root->left);
+        postorderRecur(ans, root->right);
+        ans.push_back(root->val);
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL){
+            return ans;
+        }
+        stack<TreeNode*> st;
+        st.push(root);
+        while(st.size()!=0){
+            root = st.top();
+            st.pop();
+            ans.push_back(root->val);
+            if(root->left!=NULL){
+                st.push(root->left);
+            }
+            if(root->right!=NULL){
+                st.push(root->right);
+            }
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/145M.%20Binary%20Tree%20Postorder%20Traversal.py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        self.ans = []
+        if root==None:
+            return self.ans
+        self.postorderRecur(root)
+        return self.ans
+        
+    def postorderRecur(self, root):
+        if root==None:
+            return
+        self.postorderRecur(root.left)
+        self.postorderRecur(root.right)
+        self.ans.append(root.val)
+
+# Method 2: Iterative approach
+class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = []
+        if root==None:
+            return ans
+        st = collections.deque()
+        st.append(root)
+        while len(st)!=0:
+            root = st[-1]
+            st.pop()
+            ans.append(root.val)
+            if root.left!=None:
+                st.append(root.left)
+            if root.right!=None:
+                st.append(root.right)
+        
+        return ans[::-1]
 ```
 
 ## 1.4 Breadth First Search
