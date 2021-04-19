@@ -53,3 +53,25 @@ public:
         return root;
     }
 };
+
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        while(q.size()!=0){
+            TreeNode* cur = q.front();
+            q.pop();
+            swap(cur->left, cur->right);
+            if(cur->left!=NULL){q.push(cur->left);}
+            if(cur->right!=NULL){q.push(cur->right);}
+        }
+        return root;
+    }
+};
