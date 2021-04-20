@@ -48,18 +48,24 @@ public:
         if(root==NULL){
             return;
         }
+        // Flatten the left tree and the right tree sequentially
         flatten(root->left);
         flatten(root->right);
         
+        // Save the flat subtress to temps
         TreeNode* tempLeft = root->left;
         TreeNode* tempRight = root->right;
+        // Set the left of root to NULL
         root->left = NULL;
+        // Connect the flat left tree to the right of root
         root->right = tempLeft;
         
+        // Define a temp node and move it the end of the right tree
         TreeNode* cur = root;
         while(cur->right!=NULL){
             cur = cur->right;
         }
+        // Connect the flat right tree to the end of right subtree
         cur->right = tempRight;
     }
 };
@@ -83,6 +89,8 @@ public:
                 s.push(cur->left);
                 cur->left = NULL;
             }
+            
+            // Connect the current node to the right of the previous node
             if(cur!=ref){
                 ref->right = cur;
                 ref = cur;
