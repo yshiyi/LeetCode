@@ -1,6 +1,7 @@
-## C++ Reference and Algorithms
+## C++ and Python Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
 * [Max and min int](#Max-and-min-int)
+* [Stack and Queue](#Stack-and-Queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
@@ -32,6 +33,37 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 # Max and min int
 For C++: INT_MAX, INT_MIN
 For Python: float('inf'), float('-inf')
+
+# Stack and Queue
+In C++
+```
+// Stack
+stack<int> s;
+s.push(1);
+s.top(); // 1
+s.pop(); // remove from top/back
+
+//Queue
+queue<int> q;
+q.push(1);
+q.front();
+q.back();
+q.pop(); // remove from bottom/front
+```
+In Python
+```
+# Stack
+s = collections.deque()
+s.append(1)
+s[-1]
+s.pop()
+
+# Queue
+q = collections.deque()
+q.append(1)
+q[0]
+q.popleft()
+```
 
 # Sorting Algorithm
 ## 1. Bubble Sort
