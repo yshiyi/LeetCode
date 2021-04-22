@@ -9,6 +9,8 @@
        * [1.3 Postorder Traversal](#13-Postorder-Traversal)
           * [145M. Binary Tree Postorder Traversal](#145M-Binary-Tree-Postorder-Traversal)
        * [1.4 Breadth First Search](#14-Breadth-First-Search)
+          * [102M. Binary Tree Level Order Traversal](#102M-Binary-Tree-Level-Order-Traversal)
+          * [637. Average of Levels in Binary Tree](#637-Average-of-Levels-in-Binary-Tree)
     * [2. Recursive](#2-Recursive)
        * [67. Add Binary](#67-Add-Binary)
 <!-- GFM-TOC -->
@@ -455,8 +457,67 @@ class Solution(object):
         return ans
 ```
 
-
-
+### 637. Average of Levels in Binary Tree
+**Description:**\
+Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.\
+**Method:**\
+Similar with 102M. Using queue.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/637.%20Average%20of%20Levels%20in%20Binary%20Tree.cpp)
+```
+class Solution {
+public:
+    vector<double> averageOfLevels(TreeNode* root) {
+        vector<double> ans;
+        if(!root){
+            return ans;
+        }
+        queue<TreeNode*> qt;
+        qt.push(root);
+        while(qt.size()){
+            double n1 = qt.size(), n2 = n1;
+            double sum=0.0;
+            while(n1){
+                root = qt.front();
+                qt.pop();
+                sum += (double)root->val;
+                if(root->left){qt.push(root->left);}
+                if(root->right){qt.push(root->right);}
+                n1--;
+            }
+            ans.push_back(sum/n2);
+        }
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/637.%20Average%20of%20Levels%20in%20Binary%20Tree.py)
+```
+class Solution(object):
+    def averageOfLevels(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[float]
+        """
+        ans = []
+        if root is None:
+            return ans
+        q = collections.deque()
+        q.append(root)
+        while len(q)!=0:
+            n1 = n2 = len(q)
+            sum = 0.0
+            while n1!=0:
+                root = q[0]
+                q.popleft()
+                sum += root.val
+                if root.left is not None:
+                    q.append(root.left)
+                if root.right is not None:
+                    q.append(root.right)
+                n1 -= 1
+            ans.append(sum/n2)
+        return ans
+```
 
 
 
