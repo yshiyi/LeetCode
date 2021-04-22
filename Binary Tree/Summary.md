@@ -390,6 +390,71 @@ Here is an example of level-order traversal:
 **Queue: F-B-G-A-D-I-C-E-H**\
 **Ans: \[\[F\], \[B, G\], \[A, D, I\], \[C, E, H\]\]**
 
+### 102M. Binary Tree Level Order Traversal
+**Description:**\
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).\
+**Method:**\
+1. Using queue (First-In-First-Out). 
+2. On each level, we push each node's value to a vector and save their leaves to the queue (from left to right). 
+3. After pushing the node to the vector, we need to pop it from the queue.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/102M.%20Binary%20Tree%20Level%20Order%20Traversal.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(root==NULL){
+            return ans;
+        }
+        queue<TreeNode*> qt;
+        qt.push(root);
+        while(qt.size()!=0){
+            int n = qt.size();
+            vector<int> v;
+            while(n){
+                root = qt.front();
+                qt.pop();
+                v.push_back(root->val);
+                if(root->left){qt.push(root->left);}
+                if(root->right){qt.push(root->right);}
+                n--;
+            }
+            ans.push_back(v);
+        }
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/102M.%20Binary%20Tree%20Level%20Order%20Traversal.py)
+```
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        ans = []
+        if root is None:
+            return ans
+        q = collections.deque()
+        q.append(root)
+        while len(q)!=0:
+            n = len(q)
+            l = []
+            while n!=0:
+                root = q[0]
+                q.popleft()
+                l.append(root.val)
+                if root.left is not None:
+                    q.append(root.left)
+                if root.right is not None:
+                    q.append(root.right)
+                n -= 1
+            ans.append(l)
+        return ans
+```
+
 
 
 
