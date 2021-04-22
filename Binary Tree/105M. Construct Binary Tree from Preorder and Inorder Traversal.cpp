@@ -28,7 +28,9 @@ Construct Binary Tree from Inorder and Postorder Traversal - Medium
 */
 
 /*
-Method: We need to figure out what we need to do for the root.
+Method: The structure of preorder is C - L - R, and the structure of inorder is L - C - R.
+        We can use preorder to determine the root value, and use inorder to determine the subtrees.
+        We need to figure out what we need to do for the root.
         1. Determine the root. It is the first value in preorder.
         2. Determine the left array and the right array for the left side of and the right side of the tree, respectively.
         3. We can do this by using inorder array. We first find the root in the inorder, and then split the array into two subtrees.
