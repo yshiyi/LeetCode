@@ -38,5 +38,39 @@ n == graph.length
 0 <= graph[i][j] < n
 graph[i][j] != i (i.e., there will be no self-loops).
 The input graph is guaranteed to be a DAG.
-
 */
+
+
+// Solution: traverse the graph and save each path
+class Solution {
+public:
+    vector<vector<int>> res;
+    map<int, bool> m;
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<int> path;
+        // traverse(graph, 0, path, m);
+        traverse(graph, 0, path);
+        return res;
+    }
+    void traverse(vector<vector<int>> graph, int s, vector<int> path){
+        // if(m[s]==true){return;}
+        
+        // enter the node and save it to the path
+        path.push_back(s);
+        // m[s] = true;
+        int n = graph.size();
+        if(s==n-1){
+            res.push_back(path);
+            path.pop_back();
+            return;
+        }
+        for(auto val:graph[s]){
+            // traverse(graph, val, path, m);
+            traverse(graph, val, path);
+        }
+        
+        // Leave the node and remove it from the path
+        path.pop_back();
+        // m[s] = false;
+    }
+};
