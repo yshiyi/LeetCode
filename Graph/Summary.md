@@ -149,3 +149,66 @@ Therefore, to traverse a graph, we should use the first method.\
 
 
 ## 797. All Paths From Source to Target
+**Description:**\
+Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1, and return them in any order.\
+The graph is given as follows: graph\[i\] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph\[i\]\[j\]).\
+**Method:**\
+Traverse the graph and save each path.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/797M.%20All%20Paths%20From%20Source%20to%20Target.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    map<int, bool> m;
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<int> path;
+        // traverse(graph, 0, path, m);
+        traverse(graph, 0, path);
+        return res;
+    }
+    void traverse(vector<vector<int>> graph, int s, vector<int> path){
+        // if(m[s]==true){return;}
+        
+        // enter the node and save it to the path
+        path.push_back(s);
+        // m[s] = true;
+        int n = graph.size();
+        if(s==n-1){
+            res.push_back(path);
+            path.pop_back();
+            return;
+        }
+        for(auto val:graph[s]){
+            // traverse(graph, val, path, m);
+            traverse(graph, val, path);
+        }
+        
+        // Leave the node and remove it from the path
+        path.pop_back();
+        // m[s] = false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/797M.%20All%20Paths%20From%20Source%20to%20Target.py)
+```
+class Solution(object):
+    def allPathsSourceTarget(self, graph):
+        """
+        :type graph: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        path = []
+        self.traverse(graph, 0, path)
+        return self.res
+    
+    def traverse(self, graph, s, path):
+        path.append(s)
+        if s==(len(graph)-1):
+            self.res.append(deepcopy(path))
+            path.pop()
+            return
+        for node in graph[s]:
+            self.traverse(graph, node, path)
+        path.pop()
+```
