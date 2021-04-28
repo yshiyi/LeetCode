@@ -39,7 +39,7 @@ Serialize and Deserialize N-ary Tree - Hard
 
 /*
 Method: Recursion
-        We can use preorder method to traverse the whole tree and save the node->val to a string.
+        We can use pre-order method to traverse the whole tree and save the node->val to a string.
         If the node is NULL, we can save a character to represent it, sush as 'N', '#', etc..
         Then we use the same traverse method to read values from the string.
         Note, use stringstream to iteratively read the data in the string.
@@ -116,3 +116,47 @@ private:
 // Your Codec object will be instantiated and called as such:
 // Codec ser, deser;
 // TreeNode* ans = deser.deserialize(ser.serialize(root));
+
+
+
+/*
+Method 2: Post-order traverse
+          Note: the sequence of pre-order is C-L-R, and the sequence of post-order is L-R-C.
+*/
+class Codec {
+public:
+    string preOrder(TreeNode* root){
+        if(root==NULL){
+            s += "N ";
+            return s;
+        }
+        preOrder(root->left);
+        preOrder(root->right);
+        s += to_string(root->val) + " ";
+        return s;
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = preOrder(root);
+        return res;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        reverse(data.begin(), data.end());
+        stringstream ss(data);
+        return helper(ss);  
+    }
+
+private:
+    string s;
+    TreeNode* helper(stringstream& ss){
+        string s;
+        ss >> s;
+        if(s == "N") return NULL;
+        TreeNode* node = new TreeNode(stoi(s));
+        node->right = helper(ss);
+        node->left = helper(ss);
+        return node;
+    }
+};
