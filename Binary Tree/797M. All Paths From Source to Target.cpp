@@ -46,6 +46,8 @@ class Solution {
 public:
     vector<vector<int>> res;
     map<int, bool> m;
+    // We can also define a globle variable. In this case, we don't need to pass this variable every iteration.
+    // vector<int> path; 
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
         vector<int> path;
         // traverse(graph, 0, path, m);
