@@ -3,7 +3,8 @@
 Tree, Depth-first Search, Breadth-first Search
 
 Description:
-You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. 
+The binary tree has the following definition:
 
 struct Node {
   int val;
@@ -11,7 +12,8 @@ struct Node {
   Node *right;
   Node *next;
 }
-Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Populate each next pointer to point to its next right node. 
+If there is no next right node, the next pointer should be set to NULL.
 Initially, all next pointers are set to NULL.
 
 Follow up:
@@ -25,7 +27,10 @@ Recursive approach is fine, you may assume implicit stack space does not count a
 Example 1:
 Input: root = [1,2,3,4,5,6,7]
 Output: [1,#,2,3,#,4,5,6,7,#]
-Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.
+Explanation: Given the above perfect binary tree (Figure A), 
+             your function should populate each next pointer to point to its next right node, just like in Figure B. 
+             The serialized output is in level order as connected by the next pointers, 
+             with '#' signifying the end of each level.
 
 Similar Questions:
 Populating Next Right Pointers in Each Node II - Medium
@@ -34,7 +39,8 @@ Binary Tree Right Side View - Medium
 
 /*
 Method 1: Recursive approach
-          One recursive function is not enough to solve the problem, because we can't connect one node's right to another node's left.
+          One recursive function is not enough to solve the problem, 
+          because we can't connect one node's right to another node's left.
           Hence, we define another seperate recursive function to connect two different nodes.
 */
 /*
