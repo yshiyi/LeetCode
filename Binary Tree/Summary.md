@@ -155,12 +155,12 @@ class Solution(object):
 
 ### 226. Invert Binary Tree
 **Description:**\
-Given the root of a binary tree, invert the tree, and return its root.
+Given the root of a binary tree, invert the tree, and return its root.\
 **Method:**\
-This is a question to practice recursive approach to solve tree problems
-Note: the swap function can be operated at pre-order or post-order, but can't be done in-order.
-      Pre-order: Swap left and right first, and then go to left and right sequentially
-      Post-order: Invert left and right first, then swap left and right
+This is a question to practice recursive approach to solve tree problems\
+Note: the swap function can be operated at pre-order or post-order, but can't be done in-order.\
+      Pre-order: Swap left and right first, and then go to left and right sequentially\
+      Post-order: Invert left and right first, then swap left and right\
       In-order: Invert left first, then swap left and right. Then go to right and invert that node again.\
 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/226.%20Invert%20Binary%20Tree.cpp)
