@@ -4,6 +4,7 @@
     * [1. Introduction to Binary Tree](#1-Introduction-to-Binary-Tree)
        * [1.1 Preorder Traversal](#11-Preorder-Traversal)
           * [144M. Binary Tree Preorder Traversal](#144M-Binary-Tree-Preorder-Traversal)
+          * [226. Invert Binary Tree](#226-Invert-Binary-Tree)
        * [1.2 Inorder Traversal](#12-Inorder-Traversal)
           * [94M. Binary Tree Inorder Traversal](#94M-Binary-Tree-Inorder-Traversal)
        * [1.3 Postorder Traversal](#13-Postorder-Traversal)
@@ -11,11 +12,22 @@
        * [1.4 Breadth First Search](#14-Breadth-First-Search)
           * [102M. Binary Tree Level Order Traversal](#102M-Binary-Tree-Level-Order-Traversal)
           * [637. Average of Levels in Binary Tree](#637-Average-of-Levels-in-Binary-Tree)
-    * [2. Recursive](#2-Recursive)
-       * [67. Add Binary](#67-Add-Binary)
+
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Tree
+The frame of traversing a binary tree is:
+```
+/* 二叉树遍历框架 */
+void traverse(TreeNode root) {
+    // Preorder
+    traverse(root.left)
+    // Inorder
+    traverse(root.right)
+    // Postorder
+}
+```
+
 ## 1.1 Preorder Traversal
 Pre-order traversal is to visit the root first. Then traverse the left subtree. Finally, traverse the right subtree. Here is an example:\
 <pre>
@@ -139,6 +151,74 @@ class Solution(object):
             root = root.right
         
         return ans
+```
+
+### 226. Invert Binary Tree
+**Description:**\
+Given the root of a binary tree, invert the tree, and return its root.
+**Method:**\
+This is a question to practice recursive approach to solve tree problems
+Note: the swap function can be operated at pre-order or post-order, but can't be done in-order.
+      Pre-order: Swap left and right first, and then go to left and right sequentially
+      Post-order: Invert left and right first, then swap left and right
+      In-order: Invert left first, then swap left and right. Then go to right and invert that node again.\
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/226.%20Invert%20Binary%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        
+        swap(root->right, root->left);
+        // root->right = invertTree(root->right);
+        invertTree(root->left);
+        
+        // root->left = invertTree(root->left);
+        invertTree(root->right);
+        
+        return root;
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        while(q.size()!=0){
+            TreeNode* cur = q.front();
+            q.pop();
+            swap(cur->left, cur->right);
+            if(cur->left!=NULL){q.push(cur->left);}
+            if(cur->right!=NULL){q.push(cur->right);}
+        }
+        return root;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/226.%20Invert%20Binary%20Tree.py)
+```
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if root is None:
+            return None
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root
 ```
 
 ## 1.2 In Order Traversal
