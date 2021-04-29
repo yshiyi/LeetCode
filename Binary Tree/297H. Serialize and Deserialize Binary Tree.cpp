@@ -121,7 +121,8 @@ private:
 
 /*
 Method 2: Post-order traverse
-          Note: the sequence of pre-order is C-L-R, and the sequence of post-order is L-R-C.
+          Note: The sequence of pre-order is C-L-R, and the sequence of post-order is L-R-C.
+                Since we must reverse the string, this method doesn't work if there are negative nodes.
 */
 class Codec {
 public:
@@ -158,5 +159,68 @@ private:
         node->right = helper(ss);
         node->left = helper(ss);
         return node;
+    }
+};
+
+/*
+Method 3: Breadth-first Search
+          Using queue to traverse the tree.
+          Much faster than recursion.
+*/
+class Codec {
+public:
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = "";
+        if(root==NULL){
+            res = "# ";
+            return res;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* cur;
+        while(q.size()!=0){
+            cur = q.front(); q.pop();
+            if(cur==NULL){
+                res += "# ";
+            }else{
+                res += to_string(cur->val) + " ";
+                q.push(cur->left);
+                q.push(cur->right);
+            }
+        }
+        return res;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data[0]=='#'){
+            return NULL;
+        }
+        cout << data << endl;
+        stringstream ss(data);
+        string s;
+        ss >> s;
+        TreeNode* root = new TreeNode(stoi(s));
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* cur;
+        while(ss >> s){
+            cur = q.front(); q.pop();
+            if(s=="#"){
+                cur->left = NULL;
+            }else{
+                cur->left = new TreeNode(stoi(s));
+                q.push(cur->left);
+            }
+            ss >> s;
+            if(s=="#"){
+                cur->right = NULL;
+            }else{
+                cur->right = new TreeNode(stoi(s));
+                q.push(cur->right);
+            }
+        }
+        return root;  
     }
 };
