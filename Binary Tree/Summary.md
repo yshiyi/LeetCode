@@ -5,13 +5,24 @@
        * [1.1 Preorder Traversal](#11-Preorder-Traversal)
           * [144M. Binary Tree Preorder Traversal](#144M-Binary-Tree-Preorder-Traversal)
           * [226. Invert Binary Tree](#226-Invert-Binary-Tree)
+          * [116M. Populating Next Right Pointers in Each Node](#116M-Populating-Next-Right-Pointers-in-Each-Node)
+          * [117M. Populating Next Right Pointers in Each Node II](#117M-Populating-Next-Right-Pointers-in-Each-Node-II)
+          * [654M. Maximum Binary Tree](#654M-Maximum-Binary-Tree)
        * [1.2 Inorder Traversal](#12-Inorder-Traversal)
           * [94M. Binary Tree Inorder Traversal](#94M-Binary-Tree-Inorder-Traversal)
        * [1.3 Postorder Traversal](#13-Postorder-Traversal)
           * [145M. Binary Tree Postorder Traversal](#145M-Binary-Tree-Postorder-Traversal)
+          * [114M. Flatten Binary Tree to Linked List](#114M-Flatten-Binary-Tree-to-Linked-List)
        * [1.4 Breadth First Search](#14-Breadth-First-Search)
           * [102M. Binary Tree Level Order Traversal](#102M-Binary-Tree-Level-Order-Traversal)
           * [637. Average of Levels in Binary Tree](#637-Average-of-Levels-in-Binary-Tree)
+          * [116M. Populating Next Right Pointers in Each Node](#116M-Populating-Next-Right-Pointers-in-Each-Node)
+          * [117M. Populating Next Right Pointers in Each Node II](#117M-Populating-Next-Right-Pointers-in-Each-Node-II)
+       * [1.5 Depth First Search](#15-Depth-First-Search)
+          * [114M. Flatten Binary Tree to Linked List](#114M-Flatten-Binary-Tree-to-Linked-List)
+       * [1.6 Construct a Binary Tree](#16-Construct-a-Binary-Tree)
+          * [105M. Construct Binary Tree from Preorder and Inorder Traversal](#105M-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal)
+          * [106M. Construct Binary Tree from Inorder and Postorder Traversal](#106M-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal)
 
 <!-- GFM-TOC -->
 
@@ -161,7 +172,6 @@ This is a question to practice recursive approach to solve tree problems\
 Note: the swap function can be operated at pre-order or post-order, but can't be done in-order.\
       Pre-order: Swap left and right first, and then go to left and right sequentially\
       Post-order: Invert left and right first, then swap left and right\
-      In-order: Invert left first, then swap left and right. Then go to right and invert that node again.\
 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/226.%20Invert%20Binary%20Tree.cpp)
 ```
@@ -209,10 +219,6 @@ public:
 ```
 class Solution(object):
     def invertTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
         if root is None:
             return None
         root.left, root.right = root.right, root.left
@@ -220,6 +226,269 @@ class Solution(object):
         self.invertTree(root.right)
         return root
 ```
+
+### 116M. Populating Next Right Pointers in Each Node
+**Description:**\
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children.\ 
+Populate each next pointer to point to its next right node. \
+If there is no next right node, the next pointer should be set to NULL.\
+Initially, all next pointers are set to NULL.\
+**Method:**\
+One recursive function is not enough to solve the problem, because we can't connect one node's right to another node's left.\
+Hence, we define another seperate recursive function to connect two different nodes.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/116M.%20Populating%20Next%20Right%20Pointers%20in%20Each%20Node.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        connectTwoNode(root->left, root->right);
+        return root;
+    }
+    void connectTwoNode(Node* node1, Node* node2){
+        if(node2==NULL){
+        // if(node1==NULL || node2==NULL){
+            return;
+        }
+        node1->next = node2;
+        connectTwoNode(node1->left, node1->right);
+        connectTwoNode(node2->left, node2->right);
+        connectTwoNode(node1->right, node2->left);
+    }
+};
+
+
+/* 
+Method 2: Iterative Approach
+          Using queue, the idea is similar with that of the Breadth-first search approach
+          Connect q.front() to its next node
+*/
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        queue<Node*> q;
+        Node* cur = root;
+        q.push(cur);
+        while(q.size()!=0){
+            int n = q.size();
+            while(n!=0){
+                cur = q.front();
+                q.pop();
+                if(n!=1){
+                    cur->next = q.front();
+                }else{
+                    cur->next = NULL;
+                }
+                if(cur->left!=NULL){q.push(cur->left);}
+                if(cur->right!=NULL){q.push(cur->right);}
+                n--;
+            }
+        }
+        return root;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/116M.%20Populating%20Next%20Right%20Pointers%20in%20Each%20Node.py)
+```
+# Method 1: Recursive Approach
+class Solution(object):
+    def connect(self, root):
+        if root is None:
+            return None
+        self.connectTwoNode(root.left, root.right)
+        return root
+    
+    def connectTwoNode(self, node1, node2):
+        if node2 is None:
+            return
+        node1.next = node2
+        self.connectTwoNode(node1.left, node1.right)
+        self.connectTwoNode(node2.left, node2.right)
+        self.connectTwoNode(node1.right, node2.left)
+
+# Method 2: Iterative approach
+class Solution(object):
+    def connect(self, root):
+        if root is None:
+            return None
+        q = collections.deque()
+        q.append(root)
+        while len(q)!=0:
+            n = len(q)
+            while n!=0:
+                cur = q[0]
+                q.popleft()
+                if n!=1:
+                    cur.next = q[0]
+                else:
+                    cur.next = None
+                if cur.left is not None:
+                    q.append(cur.left)
+                if cur.right is not None:
+                    q.append(cur.right)
+                n -= 1
+        return root
+```
+
+### 117M. Populating Next Right Pointers in Each Node II
+**Description:**\
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.\
+Initially, all next pointers are set to NULL.\
+**Method:**\
+For iterative approach, we can use the same method as the one for 116M.\
+For recursive approach, since this is not a perfect binary tree, we need a seperate function to find the next node.\
+Note: we need to connect the nodes from right to left.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/117M.%20Populating%20Next%20Right%20Pointers%20in%20Each%20Node%20II.cpp)
+```
+// Method 1: Iterative approach
+// Same as 116M
+ 
+// Method 2: Recursive approach
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        if(root->left!=NULL){
+            if(root->right!=NULL){
+                root->left->next = root->right;
+            }else{
+                root->left->next = findNext(root->next);
+            }
+        }
+        if(root->right!=NULL){
+            root->right->next = findNext(root->next);
+        }
+        connect(root->right);
+        connect(root->left);
+        return root;
+    }
+    Node* findNext(Node* node){
+        if(node==NULL){return NULL;}
+        else if(node->left!=NULL){return node->left;}
+        else if(node->right!=NULL){return node->right;}
+        else{return findNext(node->next);}
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/117M.%20Populating%20Next%20Right%20Pointers%20in%20Each%20Node%20II.py)
+```
+# Method: Recursive approach
+class Solution(object):
+    def connect(self, root):
+        def findNext(node):
+            if node is None:
+                return None
+            if node.left:
+                return node.left
+            if node.right:
+                return node.right
+            return findNext(node.next)
+
+        def helper(root):
+            if root is None:
+                return
+            if root.left:
+                if root.right:
+                    root.left.next = root.right
+                else:
+                    root.left.next = findNext(root.next)
+            if root.right:
+                root.right.next = findNext(root.next)
+            helper(root.right)
+            helper(root.left)
+        helper(root)
+        return root
+```
+
+### 654M. Maximum Binary Tree
+**Description:**\
+You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:\
+Create a root node whose value is the maximum value in nums.\
+Recursively build the left subtree on the subarray prefix to the left of the maximum value.\
+Recursively build the right subtree on the subarray suffix to the right of the maximum value.\
+Return the maximum binary tree built from nums.\
+**Method:**\
+For recursive approach, find the max element, and create a new node using this max. Then work on the left and the right subarray recursively. The terminate condition is when lo > hi. To find the max element, we need to loop from i=lo to i=hi.\
+For iterative approach, we can use a stack to keep some nodes and ensure a decreasing order. For each number, we keep pop the stack until empty or a bigger number. The bigger number is current number's root.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/654M.%20Maximum%20Binary%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        return buildTree(nums, 0, nums.size()-1);
+    }
+    
+    TreeNode* buildTree(vector<int>& nums, int lo, int hi){
+        if(lo > hi){
+            return NULL;
+        }
+        int maxVal = INT_MIN, index;
+        for(int i=lo;i<=hi;i++){
+            if(nums[i]>maxVal){
+                maxVal = nums[i];
+                index = i;
+            }
+        }
+        TreeNode* root = new TreeNode(maxVal);
+        root->left = buildTree(nums, lo, index-1);
+        root->right = buildTree(nums, index+1, hi);
+        return root;
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        vector<TreeNode*> stk;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            TreeNode* cur = new TreeNode(nums[i]);
+            while (!stk.empty() && stk.back()->val < nums[i])
+            {
+                cur->left = stk.back();
+                stk.pop_back();
+            }
+            if (!stk.empty())
+                stk.back()->right = cur;
+            stk.push_back(cur);
+        }
+        return stk.front();
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/654M.%20Maximum%20Binary%20Tree.py)
+```
+class Solution(object):
+    def constructMaximumBinaryTree(self, nums):
+        return self.buildTree(nums, 0, len(nums)-1)
+    
+    def buildTree(self, nums, lo, hi):
+        if lo > hi:
+            return None
+        maxVal = float('-inf')
+        for i in range(lo, hi+1):
+            if nums[i] > maxVal:
+                maxVal = nums[i]
+                index = i
+        root = TreeNode(maxVal)
+        root.left = self.buildTree(nums, lo, index-1)
+        root.right = self.buildTree(nums, index+1, hi)
+        return root
+```
+
+
+
+
 
 ## 1.2 In Order Traversal
 In-order traversal is to traverse the left subtree first. Then visit the root. Finally, traverse the right subtree.\
@@ -458,6 +727,120 @@ class Solution(object):
         return ans[::-1]
 ```
 
+### 114M. Flatten Binary Tree to Linked List
+**Description:**\
+Given the root of a binary tree, flatten the tree into a "linked list":\
+The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.\
+The "linked list" should be in the same order as a pre-order traversal of the binary tree.\
+**Method:**\
+For recursive approach, we first need to consider what to do for the current node.\
+1. Flat the left subtree and the right subtree sequentially.
+2. Connect the flatted left subtree to node->right, and connect the flatted right subtree to the end of flatted left subtree.
+
+For iterative approach, we can use stack or preorder traverse method to traverse the tree. Meanwhile, create a new tree to connect each visited node.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/114M.%20Flatten%20Binary%20Tree%20to%20Linked%20List.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        if(root==NULL){
+            return;
+        }
+        // Flatten the left tree and the right tree sequentially
+        flatten(root->left);
+        flatten(root->right);
+        
+        // Save the flat subtress to temps
+        TreeNode* tempLeft = root->left;
+        TreeNode* tempRight = root->right;
+        // Set the left of root to NULL
+        root->left = NULL;
+        // Connect the flat left tree to the right of root
+        root->right = tempLeft;
+        
+        // Define a temp node and move it the end of the right tree
+        TreeNode* cur = root;
+        while(cur->right!=NULL){
+            cur = cur->right;
+        }
+        // Connect the flat right tree to the end of right subtree
+        cur->right = tempRight;
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        if(root==NULL){
+            return;
+        }
+        stack<TreeNode*> s;
+        s.push(root);
+        TreeNode* ref = root;
+        while(s.size()!=0){
+            TreeNode* cur = s.top();
+            s.pop();
+            if(cur->right!=NULL){s.push(cur->right);}
+            if(cur->left!=NULL){
+                s.push(cur->left);
+                cur->left = NULL;
+            }
+            
+            // Connect the current node to the right of the previous node
+            if(cur!=ref){
+                ref->right = cur;
+                ref = ref->right;
+            }
+        }
+        return;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/114M.%20Flatten%20Binary%20Tree%20to%20Linked%20List.py)
+```
+# Method 1: Iterative approach
+class Solution(object):
+    def flatten(self, root):
+        if root is None:
+            return None
+        s = collections.deque()
+        s.append(root)
+        ref = root
+        while len(s)!=0:
+            cur = s[-1]
+            s.pop()
+            if cur.right is not None:
+                s.append(cur.right)
+            if cur.left is not None:
+                s.append(cur.left)
+                cur.left = None
+            if ref!=cur:
+                ref.right = cur
+                ref = cur
+        return root
+
+# Method 2: Recursive approach
+class Solution(object):
+    def flatten(self, root):
+        if root is None:
+            return None
+        self.flatten(root.left)
+        self.flatten(root.right)
+        tempLeft = root.left
+        tempRight = root.right
+        root.left = None
+        root.right = tempLeft
+        cur = root
+        while cur.right is not None:
+            cur = cur.right
+        cur.right = tempRight
+        return root
+```
+
+
+
 ## 1.4 Breadth First Search
 Breadth-First Search is an algorithm to traverse or search in data structures like a tree or a graph. The algorithm starts with a root node and visit the node itself first. Then traverse its neighbors, traverse its second level neighbors, traverse its third level neighbors, so on and so forth.\
 When we do breadth-first search in a tree, the order of the nodes we visited is in level order.\
@@ -600,10 +983,138 @@ class Solution(object):
 ```
 
 
+## 1.5 Depth First Search
+Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.\
+Pre-order traverse, in-order traverse and post-order traverse are all belonged to Depth-first Search.
 
+## 1.6 Construct a Binary Tree
+### 105M. Construct Binary Tree from Preorder and Inorder Traversal
+**Description:**\
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.\
+**Method:**\
+The structure of preorder is C - L - R, and the structure of inorder is L - C - R.\
+We can use preorder to determine the root value, and use inorder to determine the subtrees.\
+We need to figure out what we need to do for the root.
+1. Determine the root. It is the first value in preorder.
+2. Determine the left array and the right array for the left side of and the right side of the tree, respectively.
+3. We can do this by using inorder array. We first find the root in the inorder, and then split the array into two subtrees.
+4. The subtrees in preorder can be determined using the length of them.
+5. The termination condition is preStart(prelo) > preEnd(prehi).
+6. Carefully define the start and the end positions.
 
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/105M.%20Construct%20Binary%20Tree%20from%20Preorder%20and%20Inorder%20Traversal.cpp)
+```
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return build(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1);
+    }
+    TreeNode* build(vector<int>& preorder, int prelo, int prehi, vector<int>& inorder, int inlo, int inhi){
+        if(prelo > prehi){
+            return NULL;
+        }
+        int rootVal = preorder[prelo], index;
+        for(int i=inlo;i<=inhi;i++){
+            if(inorder[i]==rootVal){
+                index = i;
+                break;
+            }
+        }
+        TreeNode* root = new TreeNode(rootVal);
+        int inStart_left = inlo, inEnd_left = index - 1, inStart_right = index+1, inEnd_right = inhi;
+        int preStart_left = prelo+1, preEnd_left = prelo+index-inlo, preStart_right = prelo+index-inlo+1, preEnd_right = prehi;
+        root->left = build(preorder, preStart_left, preEnd_left, inorder, inStart_left, inEnd_left);
+        root->right = build(preorder, preStart_right, preEnd_right, inorder, inStart_right, inEnd_right);
+        return root;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/105M.%20Construct%20Binary%20Tree%20from%20Preorder%20and%20Inorder%20Traversal.py)
+```
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        return self.build(preorder, 0, len(preorder)-1, inorder, 0, len(inorder)-1)
+        
+    def build(self, preorder, preStart, preEnd, inorder, inStart, inEnd):
+        if preStart > preEnd:
+           return None
+        rootVal = preorder[preStart]
+        for i in range(inStart, inEnd+1):
+            if inorder[i]==rootVal:
+                index = i
+                break
+        root = TreeNode(rootVal)
+        length_left = index - inStart
+        root.left = self.build(preorder, preStart+1, preStart+length_left, inorder, inStart, index-1)
+        root.right = self.build(preorder, preStart+length_left+1, preEnd, inorder, index+1, inEnd)
+        return root
 
+```
 
+### 106M. Construct Binary Tree from Inorder and Postorder Traversal
+**Desciption:**\
+Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.\
+**Method:**\
+The idea is similar to 105M.\
+The structure of inorder is L - C - R, the structure of postorder is L - R - C.\
+We can use postorder array to determine the root value, and use inorder array to determine the subtrees.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/106M.%20Construct%20Binary%20Tree%20from%20Inorder%20and%20Postorder%20Traversal.cpp)
+```
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        return build(inorder, 0, inorder.size()-1, postorder, 0, postorder.size()-1);
+    }
+    
+    TreeNode* build(vector<int>& inorder, int inStart, int inEnd, vector<int>& postorder, int postStart, int postEnd){
+        if (inStart > inEnd){
+            return NULL;
+        }
+        int rootVal = postorder[postEnd], index;
+        for(int i=inStart;i<=inEnd;i++){
+            if(inorder[i]==rootVal){
+                index = i;
+                break;
+            }
+        }
+        TreeNode* root = new TreeNode(rootVal);
+        int length_left = index - inStart;
+        root->left = build(inorder, inStart, index-1, postorder, postStart, postStart+length_left-1);
+        root->right = build(inorder, index+1, inEnd, postorder, postStart+length_left, postEnd-1);
+        return root;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/106M.%20Construct%20Binary%20Tree%20from%20Inorder%20and%20Postorder%20Traversal.py)
+```
+class Solution(object):
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        return self.build(inorder, 0, len(inorder)-1, postorder, 0, len(postorder)-1)
+        
+    def build(self, inorder, inStart, inEnd, postorder, postStart, postEnd):
+        if inStart > inEnd:
+            return None
+        rootVal = postorder[postEnd]
+        for i in range(inStart, inEnd+1):
+            if inorder[i]==rootVal:
+                index = i
+                break
+        root = TreeNode(rootVal)
+        length_left = index - inStart
+        root.left = self.build(inorder, inStart, index-1, postorder, postStart, postStart+length_left-1)
+        root.right = self.build(inorder, index+1, inEnd, postorder, postStart+length_left, postEnd-1)
+        return root
+```
 
 
 
