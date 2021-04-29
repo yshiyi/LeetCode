@@ -28,7 +28,7 @@ The values of the integers in the nested list is in the range [-106, 106].
 /*
 Method: Recursive approach
         For each element in the nested list, it could be either an integer or another nested list.
-        1. If the current element is an integer, we save it to a vector.
+        1. If the current element is an integer, we save it to a queue.
         2. If the current element is a nested list, we call the recursive function.
 */
 /**
@@ -48,16 +48,14 @@ Method: Recursive approach
  *     const vector<NestedInteger> &getList() const;
  * };
  */
-
 class NestedIterator {
 public:
-    vector<int> V;
-    int i = 0;
+    queue<int> q;
     
     void flatten(vector<NestedInteger> &A){
         for (auto x: A){
             if (x.isInteger()){
-                V.push_back(x.getInteger());
+                q.push(x.getInteger());
             }
             else{
                 flatten(x.getList());
@@ -70,15 +68,12 @@ public:
     }
     
     int next() {
-        if(i<=V.size()){
-            return V[i++];
-        }else{
-            return -1;
-        }
+        int n = q.front(); q.pop();
+        return n;
     }
     
     bool hasNext() {
-        return i < V.size();
+        return q.size() > 0;
     }
 };
 
