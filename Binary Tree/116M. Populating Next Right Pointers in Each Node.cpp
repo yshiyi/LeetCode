@@ -85,7 +85,7 @@ public:
 
 /* 
 Method 2: Iterative Approach
-          Using stack, the idea is similar with that of the Breadth-first search approach
+          Using queue, the idea is similar with that of the Breadth-first search approach
           Connect q.front() to its next node
 */
 class Solution {
