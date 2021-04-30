@@ -37,13 +37,9 @@ class Solution {
 public:
     map<int, int> m;
     int fib(int n) {
-        if(n==0){
-            m[0] = 0;
-            return 0;
-        }
-        if(n==1){
-            m[1] = 1;
-            return 1;
+        if(n<2){
+            m[n] = n;
+            return n;
         }
         if(m.find(n-1)==m.end()){
             m[n-1] = fib(n-1);
