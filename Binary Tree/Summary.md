@@ -8,22 +8,33 @@
           * [116M. Populating Next Right Pointers in Each Node](#116M-Populating-Next-Right-Pointers-in-Each-Node)
           * [117M. Populating Next Right Pointers in Each Node II](#117M-Populating-Next-Right-Pointers-in-Each-Node-II)
           * [654M. Maximum Binary Tree](#654M-Maximum-Binary-Tree)
+          * [101. Symmetric Tree](#101-Symmetric-Tree)
+          * [112. Path Sum](#112-Path-Sum)
        * [1.2 Inorder Traversal](#12-Inorder-Traversal)
           * [94M. Binary Tree Inorder Traversal](#94M-Binary-Tree-Inorder-Traversal)
        * [1.3 Postorder Traversal](#13-Postorder-Traversal)
           * [145M. Binary Tree Postorder Traversal](#145M-Binary-Tree-Postorder-Traversal)
           * [114M. Flatten Binary Tree to Linked List](#114M-Flatten-Binary-Tree-to-Linked-List)
+          * [652M. Find Duplicate Subtrees](#652M-Find-Duplicate-Subtrees)
+          * [104. Maximum Depth of Binary Tree](#104-Maximum-Depth-of-Binary-Tree)
        * [1.4 Breadth First Search](#14-Breadth-First-Search)
           * [102M. Binary Tree Level Order Traversal](#102M-Binary-Tree-Level-Order-Traversal)
           * [637. Average of Levels in Binary Tree](#637-Average-of-Levels-in-Binary-Tree)
           * [116M. Populating Next Right Pointers in Each Node](#116M-Populating-Next-Right-Pointers-in-Each-Node)
           * [117M. Populating Next Right Pointers in Each Node II](#117M-Populating-Next-Right-Pointers-in-Each-Node-II)
+          * [297H. Serialize and Deserialize Binary Tree](#297H-Serialize-and-Deserialize-Binary-Tree)
+          * [341M. Flatten Nested List Iterator](#341M-Flatten-Nested-List-Iterator)
+          * [236M. Lowest Common Ancestor of a Binary Tree](#236M-Lowest-Common-Ancestor-of-a-Binary-Tree)
+          * [222M. Count Complete Tree Nodes](#222M-Count-Complete-Tree-Nodes)
+          * [101. Symmetric Tree](#101-Symmetric-Tree)
+          * [104. Maximum Depth of Binary Tree](#104-Maximum-Depth-of-Binary-Tree)
+          * [112. Path Sum](#112-Path-Sum)
        * [1.5 Depth First Search](#15-Depth-First-Search)
           * [114M. Flatten Binary Tree to Linked List](#114M-Flatten-Binary-Tree-to-Linked-List)
+          * [797M. All Paths From Source to Target](#797M-All-Paths-From-Source-to-Target)
        * [1.6 Construct a Binary Tree](#16-Construct-a-Binary-Tree)
           * [105M. Construct Binary Tree from Preorder and Inorder Traversal](#105M-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal)
           * [106M. Construct Binary Tree from Inorder and Postorder Traversal](#106M-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal)
-
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Tree
@@ -486,7 +497,194 @@ class Solution(object):
         return root
 ```
 
+###  101. Symmetric Tree
+**Description:**\
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).\
+**Method:**\
+*Recursive approach*\
+Similar to 116M. Populating Next Right Pointers in Each Node We send two nodes to the recursive function in every iteration.\
+*Iterative approach*\
+Using queue. Take the first two elements from the queue in each iteration. The sequence of the nodes is important.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/101.%20Symmetric%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        return checkSymm(root->left, root->right);
+    }
+    bool checkSymm(TreeNode* node1, TreeNode* node2){
+        if(node1==NULL && node2==NULL){
+            return true;
+        }else if(node1==NULL && node2!=NULL){
+            return false;
+        }else if(node1!=NULL && node2==NULL){
+            return false;
+        }
+        if(node1->val!=node2->val){
+            return false;
+        }else{
+            return checkSymm(node1->left, node2->right) && checkSymm(node1->right, node2->left);
+        }
+    }
+};
 
+// Method 2: Iterative approach
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(root);
+        while(q.size()!=0){
+            TreeNode *t1, *t2;
+            t1 = q.front(); q.pop();
+            t2 = q.front(); q.pop();
+            if(t1==NULL && t2==NULL){
+                continue;
+            }
+            if(t1!=NULL && t2==NULL){
+                return false;
+            }
+            if(t1==NULL && t2!=NULL){
+                return false;
+            }
+            if(t1->val!=t2->val){
+                return false;
+            }
+            q.push(t1->left);
+            q.push(t2->right);
+            q.push(t1->right);
+            q.push(t2->left);
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/101.%20Symmetric%20Tree.py)
+```
+class Solution(object):
+    def isSymmetric(self, root):
+        return self.checkSymmetric(root.left, root.right)
+    
+    def checkSymmetric(self, node1, node2):
+        if node1 is None and node2 is None:
+            return True
+        if node1 is None or node2 is None:
+            return False
+        if node1.val != node2.val:
+            return False
+        return self.checkSymmetric(node1.left, node2.right) and self.checkSymmetric(node1.right, node2.left)
+
+```
+
+### 112. Path Sum
+**Description:**\
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum. A leaf is a node with no children.\
+**Method:**\
+*Recursive approach*\
+Pre-order traverse. Check if the currrent sum is equal to the target sum and if both the left node and the right node are null. If so, then return true. Otherwise, call recursion function for left subtree and right subtree.\
+*Iterative approach*\
+Breadth-first Search. Save the current node and the current sum to a queue while traversing. When both the left and right node are null, save the current sum to a vector. Finally, check if the target sum is in the vector.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/112.%20Path%20Sum.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        checkSum(root, targetSum, sum);
+        return res;
+    }
+    void checkSum(TreeNode* root, int targetSum, int sum){
+        if(root==NULL){
+            return;
+        }
+        sum += root->val;
+        if(sum==targetSum && root->left==NULL && root->right==NULL){
+            res = true;
+        }
+        checkSum(root->left, targetSum, sum);
+        checkSum(root->right, targetSum, sum);
+    }
+private:
+    int sum = 0;
+    bool res = false;
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if(root==NULL){
+            return false;
+        }
+        vector<int> res;
+        queue<pair<TreeNode*, int>> q;
+        q.push(make_pair(root, root->val));
+        while(q.size()!=0){
+            auto [node, curSum] = q.front(); q.pop();
+            if(node->left==NULL && node->right==NULL){
+                res.push_back(curSum);
+            }
+            if(node->left!=NULL){
+                q.push({node->left, curSum+node->left->val});
+            }
+            if(node->right!=NULL){
+                q.push({node->right, curSum+node->right->val});
+            }
+        }
+        for(auto v:res){
+            if(v==targetSum){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/112.%20Path%20Sum.py)
+```
+# Method 1: Recursive approach, define sum as a general variable
+class Solution(object):
+    def hasPathSum(self, root, targetSum):
+        self.res = False
+        Sum = 0
+        self.checkSum(root, targetSum, Sum)
+        return self.res
+    
+    def checkSum(self, node, targetSum, Sum):
+        if node is None:
+            return
+        Sum += node.val
+        if node.left is None and node.right is None and Sum == targetSum:
+            self.res = True
+        self.checkSum(node.left, targetSum, Sum)
+        self.checkSum(node.right, targetSum, Sum)
+
+
+# Method 2: Iterative approach, Breadth-first Search
+class Solution(object):
+    def hasPathSum(self, root, targetSum):
+        if root is None:
+            return False
+        q = collections.deque()
+        q.append((root, root.val))
+        res = []
+        while len(q)!=0:
+            cur, curSum = q[0]
+            q.popleft()
+            if cur.left is None and cur.right is None:
+                res.append(curSum)
+            if cur.left is not None:
+                q.append((cur.left, curSum+cur.left.val))
+            if cur.right is not None:
+                q.append((cur.right, curSum+cur.right.val))
+        
+        for v in res:
+            if v == targetSum:
+                return True
+        return False
+```
 
 
 
@@ -839,6 +1037,75 @@ class Solution(object):
         return root
 ```
 
+### 652M. Find Duplicate Subtrees
+**Description:**|
+Given the root of a binary tree, return all duplicate subtrees.\
+For each kind of duplicate subtrees, you only need to return the root node of any one of them.\
+Two trees are duplicate if they have the same structure with the same node values.\
+**Method:**\
+Recursive approach, consider what needs to be done for the current node:
+1. What the left and right subtree looks like?
+2. Does the format of the current node appears before?
+
+As to the first one, we need to use the post-order traverse method. \
+As to the second one, we need to create an unordered_map to save the subtrees as to_string(root->val) + ',' + Recur(root->left) + ',' + Recur(root->right).\
+Keep in mind that don't save duplicate results when one appears more than two times.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/652M.%20Find%20Duplicate%20Subtrees.cpp)
+```
+class Solution {
+public:
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        find(root);
+        return res;
+    }
+    string find(TreeNode* root){
+        if(root==NULL){
+            return " ";
+        }
+        string left = find(root->left);
+        string right = find(root->right);
+        string s = to_string(root->val) + ',' + left + ',' + right;
+        m[s]++;
+        if(m[s]==2){
+            res.push_back(root);
+        }
+        return s;
+    }
+private:
+    unordered_map<string, int> m;
+    vector<TreeNode*> res;    
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/652M.%20Find%20Duplicate%20Subtrees.py)
+```
+class Solution(object):
+    def findDuplicateSubtrees(self, root):
+        result = []
+        seen = collections.defaultdict(int)
+        def collect(root):
+            if not root:
+                return '#'
+            l = str(root.val) + " " + collect(root.left) + " " + collect(root.right)
+            seen[l] = seen.get(l, 0) + 1
+            if seen[l] == 2:
+                result.append(root)
+            return l
+        collect(root)
+        return result
+        
+        count = collections.Counter()
+        ans = []
+        def collect(node):
+            if not node: return "#"
+            serial = "{},{},{}".format(node.val, collect(node.left), collect(node.right))
+            count[serial] += 1
+            if count[serial] == 2:
+                ans.append(node)
+            return serial
+
+        collect(root)
+        return ans
+```
 
 
 ## 1.4 Breadth First Search
@@ -982,10 +1249,600 @@ class Solution(object):
         return ans
 ```
 
+### 297H. Serialize and Deserialize Binary Tree
+**Description:**\
+Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.\
+Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.\
+Clarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.\
+**Method:**\
+*Breadth-first Search*\
+Using queue to traverse the tree. Much faster than recursion.\
+*Recursive approach*\
+We can use pre-order method to traverse the whole tree and save the node->val to a string. If the node is NULL, we can save a character to represent it, sush as 'N', '#', etc..\
+Then we use the same traverse method to read values from the string. Note, use stringstream to iteratively read the data in the string.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/297H.%20Serialize%20and%20Deserialize%20Binary%20Tree.cpp)
+```
+// Breadth-first Search
+class Codec {
+public:
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = "";
+        if(root==NULL){
+            res = "# ";
+            return res;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* cur;
+        while(q.size()!=0){
+            cur = q.front(); q.pop();
+            if(cur==NULL){
+                res += "# ";
+            }else{
+                res += to_string(cur->val) + " ";
+                q.push(cur->left);
+                q.push(cur->right);
+            }
+        }
+        return res;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data[0]=='#'){
+            return NULL;
+        }
+        cout << data << endl;
+        stringstream ss(data);
+        string s;
+        ss >> s;
+        TreeNode* root = new TreeNode(stoi(s));
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* cur;
+        while(ss >> s){
+            cur = q.front(); q.pop();
+            if(s=="#"){
+                cur->left = NULL;
+            }else{
+                cur->left = new TreeNode(stoi(s));
+                q.push(cur->left);
+            }
+            ss >> s;
+            if(s=="#"){
+                cur->right = NULL;
+            }else{
+                cur->right = new TreeNode(stoi(s));
+                q.push(cur->right);
+            }
+        }
+        return root;  
+    }
+};
+
+// Recursive approach
+class Codec {
+public:
+    string preOrder(TreeNode* root){
+        if(root==NULL){
+            s += "N ";
+            return s;
+        }
+        s += to_string(root->val) + " ";
+        preOrder(root->left);
+        preOrder(root->right);
+        return s;
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = preOrder(root);
+        return res;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        stringstream ss(data);
+        return helper(ss);  
+    }
+
+private:
+    string s;
+    TreeNode* helper(stringstream& ss){
+        string s;
+        ss >> s;
+        if(s == "N") return NULL;
+        TreeNode* node = new TreeNode(stoi(s));
+        node->left = helper(ss);
+        node->right = helper(ss);
+        return node;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/297H.%20Serialize%20and%20Deserialize%20Binary%20Tree.py)
+```
+class Codec:
+    ans = []
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        ans = []
+        self.help1(root, ans)
+        return ans
+    
+    def help1(self, root, ans):
+        if root is None:
+            ans.append('#')
+            return 
+        ans.append(root.val)
+        self.help1(root.left, ans)
+        self.help1(root.right, ans)
+        return ans
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+        if data is None:
+            return None
+        d = collections.deque(data)
+        return self.helper2(d)
+    
+    def helper2(self, d):
+        i = d[0]
+        d.popleft()
+        if i is None:
+            return None
+        if i=='#':
+            return None
+        node = TreeNode(str(i))
+        node.left = self.helper2(d)
+        node.right = self.helper2(d)
+        return node
+```
+
+### 341M. Flatten Nested List Iterator
+**Description:**\
+You are given a nested list of integers nestedList. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.\
+**Method:**\ 
+Recursive approach\
+For each element in the nested list, it could be either an integer or another nested list.
+1. If the current element is an integer, we save it to a queue.
+2. If the current element is a nested list, we call the recursive function.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/341M.%20Flatten%20Nested%20List%20Iterator.cpp)
+```
+class NestedIterator {
+public:
+    queue<int> q;
+    
+    void flatten(vector<NestedInteger> &A){
+        for (auto x: A){
+            if (x.isInteger()){
+                q.push(x.getInteger());
+            }
+            else{
+                flatten(x.getList());
+            }
+        }
+    }
+    
+    NestedIterator(vector<NestedInteger> &A) {
+        flatten(A);
+    }
+    
+    int next() {
+        int n = q.front(); q.pop();
+        return n;
+    }
+    
+    bool hasNext() {
+        return q.size() > 0;
+    }
+};
+
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/341M.%20Flatten%20Nested%20List%20Iterator.py)
+```
+class NestedIterator(object):
+
+    def __init__(self, nestedList):
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.v = []
+        self.flatten(nestedList)
+        print(self.v)
+    
+    def flatten(self, nestedList):
+        
+        for node in nestedList:
+            if node.isInteger():
+                self.v.append(node.getInteger())
+            else:
+                self.flatten(node.getList())
+        
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        return self.v.pop(0)
+        
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        return len(self.v)
+```
+
+### 236M. Lowest Common Ancestor of a Binary Tree
+**Description:**\
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”\
+**Method:**\
+*Iterative approach*\
+Use a map to save the current node and its parent. We traverse the tree and save all the nodes and their corresponding parents to the map.\
+Then, we create a set and save all the ancestors of p to the set. Finally, we check the ancestors of q and find the one that appears in the p's set.\
+*Recursive approach*\
+When apply recursive approach, we only need to consider what we need to do for a single node.
+1. We need to check if the root is p or q. If so, root is the LCA.
+2. We inquire the left subtree recursion and the right subtree recursion.
+3. If both of them are not NULL, in other words, they are either p or q, then the root is LCA.
+4. The subtree that returns non-NULL value is the root. In other words, the other target root is in the subtree of this root.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.cpp)
+```
+// Method 1: Iterative approach
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL){
+            return NULL;
+        }
+        unordered_map<TreeNode*, TreeNode*> m;
+        m.insert({root, NULL});
+        stack<TreeNode*> s;
+        s.push(root);
+        TreeNode* cur;
+        while(s.size()!=0){
+            cur = s.top(); s.pop();
+            if(cur->right!=NULL){
+                s.push(cur->right);
+                m.insert({cur->right, cur});
+            }
+            if(cur->left!=NULL){
+                s.push(cur->left);
+                m.insert({cur->left, cur});
+            }
+        }
+        set<TreeNode*> s_anc;
+        while(m[p]!=NULL){
+            s_anc.insert(p);
+            p = m[p];
+        }
+        while(m[q]!=NULL){
+            if(s_anc.find(q)!=s_anc.end()){
+                break;
+            }
+            q = m[q];
+        }
+        return q;
+    }
+};
+
+// Method 2: Recursive approach
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL)
+            return NULL;
+        if(root==p || root==q)
+            return root;
+        TreeNode* left=lowestCommonAncestor(root->left,p,q);
+        TreeNode* right=lowestCommonAncestor(root->right,p,q);
+        if(left!=NULL && right!=NULL)
+            return root;
+        else
+        {
+            if(left!=NULL)
+                return left;
+            return right;
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        if root is None:
+            return None
+        if root==p or root==q:
+            return root
+        leftRoot = self.lowestCommonAncestor(root.left, p, q)
+        rightRoot = self.lowestCommonAncestor(root.right, p, q)
+        if leftRoot is not None and rightRoot is not None:
+            return root
+        if leftRoot is not None:
+            return leftRoot
+        if rightRoot is not None:
+            return rightRoot
+
+
+# Method 2: Iterative approach
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        if root is None:
+            return None
+        m = {}
+        m[root] = None
+        s = collections.deque()
+        s.append(root)
+        while len(s)!=0:
+            cur = s[-1]
+            s.pop()
+            if cur.right is not None:
+                s.append(cur.right)
+                m[cur.right] = cur
+            if cur.left is not None:
+                s.append(cur.left)
+                m[cur.left] = cur
+        
+        s_ans = set()
+        while m[p] is not None:
+            s_ans.add(p)
+            p = m[p]
+        while m[q] is not None:
+            if q in s_ans:
+                break
+            q = m[q]
+        return q
+```
+
+### 222M. Count Complete Tree Nodes
+**Description:**\
+Given the root of a complete binary tree, return the number of the nodes in the tree.\
+According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.\
+**Method:**\
+*Breadth-first Search*\
+Traverse the tree, the time complexity is O(N).\
+*Recursive approach*\
+Time complexity is O(log(N)\*log(N)).\
+Check the level of the left subtree and that of the right subtree. If they are same, then the total number of nodes is  2^level - 1. If they are not same, then call the recursion function for left subtree and right subtree separately.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/222M.%20Count%20Complete%20Tree%20Nodes.cpp)
+```
+// Method 1: Traverse the tree using Breadth-first Search
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if(root==NULL){
+            return 0;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* cur;
+        int res = 0;
+        while(q.size()!=0){
+            cur = q.front(); q.pop();
+            res++;
+            if(cur->left!=NULL){
+                q.push(cur->left);
+            }
+            if(cur->right!=NULL){
+                q.push(cur->right);
+            }
+        }
+        return res;
+    }
+};
+
+// Method 2: Recursive approach
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if (root == NULL) return 0;
+        TreeNode *leftTree = root, *rightTree = root;
+        int hl = 0, hr = 0;
+        while(leftTree!=NULL){
+            leftTree = leftTree->left;
+            hl++;
+        }
+        while(rightTree!=NULL){
+            rightTree = rightTree->right;
+            hr++;
+        }
+        if(hl==hr){
+            return pow(2, hl) - 1;
+        }
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/222M.%20Count%20Complete%20Tree%20Nodes.py)
+```
+class Solution(object):
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        leftTree, rightTree = root, root
+        hl, hr = 0, 0
+        while leftTree is not None:
+            leftTree = leftTree.left
+            hl += 1
+        while rightTree is not None:
+            rightTree = rightTree.right
+            hr += 1
+        if hl == hr:
+            return 2 ** hl - 1
+        return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+```
+
+### 104. Maximum Depth of Binary Tree
+**Description:**\
+Given the root of a binary tree, return its maximum depth.\
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\
+**Method:**\
+*Iterative approach*\
+Using queue (similar to 102M. Binary Tree Level Order Traversal).\
+*Recursive approach*\
+Using post-order traverse. Obtain the max depth of left subtree and that of the right subtree. Return max of those two depths plus one.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/104.%20Maximum%20Depth%20of%20Binary%20Tree.cpp)
+```
+// Method 1: Iterative approach
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(root==NULL){
+            return NULL;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        int res = 0;
+        while(q.size()!=0){
+            int n = q.size();
+            while(n!=0){
+                root = q.front();
+                q.pop();
+                if(root->right!=NULL){q.push(root->right);}
+                if(root->left!=NULL){q.push(root->left);}
+                n--;
+            }
+            res++;
+        }
+        return res;
+    }
+};
+
+// Method 2: Recursive approach
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        int res = 1;
+        if(root==NULL){
+            return 0;
+        }
+        res = res + max(maxDepth(root->left), maxDepth(root->right));
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/104.%20Maximum%20Depth%20of%20Binary%20Tree.py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def maxDepth(self, root):
+        if root is None:
+            return 0
+        res = 1
+        res = res + max(self.maxDepth(root.left), self.maxDepth(root.right))
+        return res
+
+
+# Method 2: using collections.deque()
+class Solution(object):
+    def maxDepth(self, root):
+        if root is None:
+            return 0
+        res = 0
+        q = collections.deque()
+        q.append(root)
+        while len(q)!=0:
+            n = len(q)
+            while n!=0:
+                root = q[0]
+                q.popleft()
+                if root.left is not None:
+                    q.append(root.left)
+                if root.right is not None:
+                    q.append(root.right)
+                n -= 1
+            res += 1
+        return res
+
+```
+
+
+
 
 ## 1.5 Depth First Search
 Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.\
 Pre-order traverse, in-order traverse and post-order traverse are all belonged to Depth-first Search.
+
+### 797M. All Paths From Source to Target
+**Description:**\
+Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1, and return them in any order.\
+The graph is given as follows: graph\[i\] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph\[i\]\[j\]).\
+**Method:**\
+*Recursive approach, Depth-first Search*\
+Consider what we need to do for the current single node:
+1. Push the current node/val to a path which saves all the nodes along the way to the terminal node.
+2. Check if the current node/val is equal to the terminal one. If so, save the path to a vector and pop the last element in the path.
+3. Call the recursion function for all the values in the current node.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Graph/797M.%20All%20Paths%20From%20Source%20to%20Target.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<int> path;
+        traverse(graph, 0, path);
+        return res;
+    }
+    void traverse(vector<vector<int>> graph, int s, vector<int> path){
+        // enter the node and save it to the path
+        path.push_back(s);
+        
+        int n = graph.size();
+        if(s==n-1){
+            res.push_back(path);
+            path.pop_back();
+            return;
+        }
+        for(auto val:graph[s]){
+            traverse(graph, val, path);
+        }
+        
+        // Leave the node and remove it from the path
+        path.pop_back();
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Graph/797M.%20All%20Paths%20From%20Source%20to%20Target.py)
+```
+# Note: We must use deepcopy(path) to save it to self.res. Otherwise, the elements in self.res will be changed in accordance with the changes of path.
+
+class Solution(object):
+    def allPathsSourceTarget(self, graph):
+        self.res = []
+        path = []
+        self.traverse(graph, 0, path)
+        return self.res
+    
+    def traverse(self, graph, s, path):
+        path.append(s)
+        if s==(len(graph)-1):
+            self.res.append(deepcopy(path))
+            path.pop()
+            return
+        for node in graph[s]:
+            self.traverse(graph, node, path)
+        path.pop()
+```
+
 
 ## 1.6 Construct a Binary Tree
 ### 105M. Construct Binary Tree from Preorder and Inorder Traversal
@@ -1115,8 +1972,6 @@ class Solution(object):
         root.right = self.build(inorder, index+1, inEnd, postorder, postStart+length_left, postEnd-1)
         return root
 ```
-
-
 
 
 
