@@ -29,11 +29,26 @@ Super Pow - Medium
 */
 
 /*
-Solution: 
+Solution: If we use the brute force approach, the time complexity will be O(n).
+          To accelerate the calculation process, we can use divide and conquer approach. The time complexity is O(log(n)).
+          1. Divid the whole list into two pieces, and calculate the result for each of them.
+          2. If n ia even number, then just return temp * temp. If n is an odd number, then return temp * temp * x.
 */
 class Solution {
 public:
     double myPow(double x, int n) {
+        // Brute force recursion
+        // double res = 1.0;
+        // if(n==0){
+        //     return 1.0;
+        // }
+        // res = x * myPow(x, abs(n)-1);
+        // if(n>0){
+        //     return res;
+        // }else{
+        //     return 1/res;
+        // }
+        
         if(n>=0){
             return helper(x, n);
         }else {
