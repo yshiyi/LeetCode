@@ -3,6 +3,7 @@
 * [Max and min int](#Max-and-min-int)
 * [Stack and Queue](#Stack-and-Queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
+  * [1. Bubble Sort](#1-Bubble-Sort)
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
 * [Recursion](#Recursion)
