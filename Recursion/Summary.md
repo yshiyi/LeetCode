@@ -8,6 +8,7 @@
        * [4.1 Recursion Related Space](#41-Recursion-Related-Space)
        * [4.2 Non-Recursion Related Space](#42-Non-Recursion-Related-Space)
     * [5. Tail Recursion](#5-Tail-Recursion)
+    * [6. Divide and Conquer](#6-Divide-and-Conquer)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Recursion
@@ -79,7 +80,16 @@ def sum_tail_recursion(ls):
 ```
 The benefit of having tail recursion is that it could avoid the accumulation of stack overheads during the recursive calls, since the system could reuse a fixed amount space in the stack for each recursive call.\
 Note that in tail recursion, we know that as soon as we return from the recursive call we are going to immediately return as well, so we can skip the entire chain of recursive calls returning and return straight to the original caller. That means we don't need a call stack at all for all of the recursive calls, which saves us space.\
-A tail recursion function can be executed as non-tail-recursion functions, i.e. with piles of call stacks, without impact on the result. Often, the compiler recognizes tail recursion pattern, and optimizes its execution. However, not all programming languages support this optimization. For instance, C, C++ support the optimization of tail recursion functions. On the other hand, Java and Python do not support tail recursion optimization.\
+A tail recursion function can be executed as non-tail-recursion functions, i.e. with piles of call stacks, without impact on the result. Often, the compiler recognizes tail recursion pattern, and optimizes its execution. However, not all programming languages support this optimization. For instance, C, C++ support the optimization of tail recursion functions. On the other hand, Java and Python do not support tail recursion optimization.
+
+# 6. Divide and Conquer
+Divide-and-conquer algorithm is naturally implemented in the form of recursion. Another subtle difference that tells a divide-and-conquer algorithm apart from other recursive algorithms is that we break the problem down into two or more subproblems in the divide-and-conquer algorithm, rather than a single smaller subproblem.\
+There are in general three steps that one can follow in order to solve the problem in a divide-and-conquer manner.
+1. Divide. Divide the problem {S}S into a set of subproblems: {S_1, S_2, ... S_n} where n>=2, i.e. there are usually more than one subproblem.
+2. Conquer. Solve each subproblem recursively. 
+3. Combine. Combine the results of each subproblem.
+
+
 
 
 
