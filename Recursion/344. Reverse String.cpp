@@ -26,7 +26,6 @@ public:
         return;
     }
     void helper(vector<char>& str, int left, int right){
-        cout << left << " " << right << endl;
         if(left>right){
             return;
         }
