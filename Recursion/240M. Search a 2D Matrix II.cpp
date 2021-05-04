@@ -33,16 +33,15 @@ Search a 2D Matrix - Medium
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int row = matrix.size(), col = matrix[0].size();
-        int i = 0, j = col - 1;
-        while(i < row and j >= 0){
-            if(matrix[i][j] == target){
+        int row = 0, col = matrix[0].size()-1;
+        while(row<matrix.size() && col>=0){
+            if(matrix[row][col]==target){
                 return true;
             }
-            if(matrix[i][j] > target){
-                j--;
+            if(matrix[row][col]>target){
+                col--;
             }else{
-                i++;
+                row++;
             }
         }
         return false;
@@ -53,35 +52,31 @@ public:
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int rows = matrix.size();
-        int cols = matrix[0].size();
-        int r = 0;
-        int c = 0;
-        int len = min(rows, cols);
-        
-        for (int i = 0; i < len; i++) {
-            if (matrix[i][i] == target) {
+        int row = matrix.size(), col = matrix[0].size();
+        int r = 0, c = 0;
+        for(int i=0; i<min(row, col); i++){
+            if(matrix[i][i]==target){
                 return true;
-            } else if (matrix[i][i] > target) {  // key operation, separating the matrix into four parts.
+            }else if(matrix[i][i]>target){
                 r = i;
                 c = i;
                 break;
             }
         }
-        
-        for (int i = r; i < rows; i++) {
-            for (int j = 0; j <= c; j++) {
-                if (matrix[i][j] == target)
+        for(int i=r; i<row; i++){
+            for(int j=0; j<=c; j++){
+                if(matrix[i][j]==target){
                     return true;
+                }
             }
         }
-        for (int i = 0; i <= r; i++) {
-            for (int j = c; j < cols; j++) {
-                if (matrix[i][j] == target)
+        for(int i=0; i<=r; i++){
+            for(int j=c; j<col; j++){
+                if(matrix[i][j]==target){
                     return true;
+                }
             }
         }
-        
         return false;
     }
 };
