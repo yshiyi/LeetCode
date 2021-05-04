@@ -47,7 +47,12 @@ public:
         }
         return true;
     }
-
+    
+    /* 
+       If we don't use a global variable, we can define the function like:
+       void traverse(TreeNode* root, vector<int>& res)
+       Note: it must be the reference of res.
+    */
     void traverse(TreeNode* root){
         if(root==NULL){
             return;
