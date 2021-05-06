@@ -71,6 +71,7 @@ public:
 /*
 Method 2: In this script, we randomly select the pivot.
           Note, we need to record the new position of the pivot.
+          To generate a random number between a and a+b-1, we use rand()% b + a.
           The run time is about 4-8 ms.
 */
 int partition(vector<int>& nums, int left, int right){
