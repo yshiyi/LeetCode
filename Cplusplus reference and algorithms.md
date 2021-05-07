@@ -4,6 +4,8 @@
 * [Stack and Queue](#Stack-and-Queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
   * [1. Bubble Sort](#1-Bubble-Sort)
+  * [2. Quick Sort](#2-Quick-Sort)
+  * [3. Merge Sort](#3-Merge-Sort)
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
 * [Recursion](#Recursion)
@@ -122,6 +124,56 @@ def RecurBubbleSort(nums, l):
 ```
 
 ## 2. Quick Sort
+Quick sort is a classcial divide-and-conquer algorithm for sorting. In detail, given a list of values to sort, the quick sort algorithm works in the following steps:
+1. First, it selects a value from the list, which serves as a pivot value to divide the list into two sublists. One sublist contains all the values that are less than the pivot value, while the other sublist contains the values that are greater than or equal to the pivot value. This process is also called partitioning. The strategy of choosing a pivot value can vary. Typically, one can choose the first element in the list as the pivot, or randomly pick an element from the list.
+2. After the partitioning process, the original list is then reduced into two smaller sublists. We then recursively sort the two sublists.
+3. After the partitioning process, we are sure that all elements in one sublist are less or equal than any element in another sublist. Therefore, we can simply concatenate the two sorted sublists that we obtain in step 2 to obtain the final sorted list. 
+
+The base cases of the recursion in step 2 are either when the input list is empty or the empty list contains only a single element. In either case, the input list can be considered as sorted already.\
+
+**Time Complexity:**\
+Depending on the pivot values, the time complexity of the quick sort algorithm can vary from O(NlogN) in the best case and O(N^2) in the worst case.\
+In the best case, if the pivot value happens to be median value of the list, then at each partition the list would be divided into two sublists of equal size. At the end, we actually construct a balanced binary search tree (BST) out of the list. One can infer that the height of the tree would be logN, and at each level of the tree the input list would be scanned once with the complexity O(N) due to the partitioning process. As a result, the overall time complexity of the algorithm in this case would be O(NlogN).\
+While in the worst case, if the pivot value happens to be the extreme value of the list, i.e. either the smallest or the biggest element in the list, then at each partition we end up with only one single sublist (i.e. the other sublist is empty). The reduction of the problem still works, but at a rather slow pace, i.e. one element at a time. The partitioning would then occur N times, and each time the partitioning scans at most N elements. Therefore, the overall time complexity of the quick sort algorithm in this case would be O(N). Actually, in this case, the quick sort algorithm ends up to be exactly as the insertion sort.\
+On average, as proved mathematically, the time complexity of quick sort is O(NlogN).\
+```
+# Python
+def quicksort(lst):
+    """
+    Sorts an array in the ascending order in O(n log n) time
+    :param nums: a list of numbers
+    :return: the sorted list
+    """
+    n = len(lst)
+    qsort(lst, 0, n - 1)
+
+def qsort(lst, lo, hi):
+    """
+    Helper
+    :param lst: the list to sort
+    :param lo:  the index of the first element in the list
+    :param hi:  the index of the last element in the list
+    :return: the sorted list
+    """
+    if lo < hi:
+        p = partition(lst, lo, hi)
+        qsort(lst, lo, p - 1)
+        qsort(lst, p + 1, hi)
+
+def partition(lst, lo, hi):
+    """
+    Picks the last element hi as a pivot
+     and returns the index of pivot value in the sorted array
+    """
+    pivot = lst[hi]
+    i = lo
+    for j in range(lo, hi):
+        if lst[j] < pivot:
+            lst[i], lst[j] = lst[j], lst[i]
+            i += 1
+    lst[i], lst[hi] = lst[hi], lst[i]
+    return i
+```
 
 ### Quickselect Algorithm
 **[347M.Top K Frequent Elements](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/347M.%20Top%20K%20Frequent%20Elements.cpp)**\
@@ -170,7 +222,6 @@ def partition(arr, l, r):
             arr[pivot_index], arr[i] = arr[i], arr[pivot_index]
             pivot_index += 1
     arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
-    print(arr, pivot, pivot_index)
     return pivot_index
 
 def quickSelect(arr, l, r, k):
@@ -183,6 +234,59 @@ def quickSelect(arr, l, r, k):
         return quickSelect(arr, index+1, r, k-(index-l+1))
     return -1
 ```
+
+## 3. Merge Sort
+Merge sort algorithm is one of the classic examples of the divide-and-conquer algorithm. There are two approaches to implement the merge sort algorithm: top down or bottom up.\
+**Top down approach:**\
+1. In the first step, we divide the list into two sublists.  (Divide)
+2. Then in the next step, we recursively sort the sublists in the previous step.  (Conquer)
+3. Finally we merge the sorted sublists in the above step repeatedly to obtain the final list of sorted elements.  (Combine)
+
+The recursion in step (2) would reach the base case where the input list is either empty or contains a single element.\
+Now, we have reduced the problem down to a merge problem, which is much simpler to solve. Merging two sorted lists can be done in linear time complexity O(N), where N is the total lengths of the two lists to merge.\
+```
+# Python code:
+def merge_sort(nums):
+    # bottom cases: empty or list of a single element.
+    if len(nums) <= 1:
+        return nums
+
+    pivot = int(len(nums) / 2)
+    left_list = merge_sort(nums[0:pivot])
+    right_list = merge_sort(nums[pivot:])
+    return merge(left_list, right_list)
+
+
+def merge(left_list, right_list):
+    left_cursor = right_cursor = 0
+    ret = []
+    while left_cursor < len(left_list) and right_cursor < len(right_list):
+        if left_list[left_cursor] < right_list[right_cursor]:
+            ret.append(left_list[left_cursor])
+            left_cursor += 1
+        else:
+            ret.append(right_list[right_cursor])
+            right_cursor += 1
+    
+    # append what is remained in either of the lists
+    ret.extend(left_list[left_cursor:])
+    ret.extend(right_list[right_cursor:])
+    
+    return ret
+```
+**Bottom up approach:**\
+In the bottom up approach, we divide the list into sublists of a single element at the beginning. Each of the sublists is then sorted already. Then from this point on, we merge the sublists two at a time until a single list remains.\
+
+**Complexity:**\
+The overall time complexity of the merge sort algorithm is O(NlogN), where N is the length of the input list. To calculate the complexity, we break it down to the following steps:
+1. We recursively divide the input list into two sublists, until a sublist with single element remains. This dividing step computes the midpoint of each of the sublists, which takes O(1) time. This step is repeated N times until a single element remains, therefore the total time complexity is O(N).\
+2. Then, we repetitively merge the sublists, until one single list remains. As shown in the recursion tree, there are a total of N elements on each level. Therefore, it takes O(N) time for the merging process to complete on each level. And since there are a total of logN levels, the overall complexity of the merge process is O(NlogN).
+
+Taking into account the complexity of the above two parts in the merge sort algorithm, we conclude that the overall time complexity of merge sort is O(NlogN).\
+The space complexity of the merge sort algorithm is O(N), where {N}N is the length of the input list, since we need to keep the sublists as well as the buffer to hold the merge results at each round of merge process.
+
+
+
 
 # Two Pointers
 There are two types of approaches using two pointers technique.
