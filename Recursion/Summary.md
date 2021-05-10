@@ -9,6 +9,7 @@
        * [4.2 Non-Recursion Related Space](#42-Non-Recursion-Related-Space)
     * [5. Tail Recursion](#5-Tail-Recursion)
     * [6. Divide and Conquer](#6-Divide-and-Conquer)
+    * [7. Backtracking](#7-Backtracking)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Recursion
@@ -85,10 +86,36 @@ A tail recursion function can be executed as non-tail-recursion functions, i.e. 
 # 6. Divide and Conquer
 Divide-and-conquer algorithm is naturally implemented in the form of recursion. Another subtle difference that tells a divide-and-conquer algorithm apart from other recursive algorithms is that we break the problem down into two or more subproblems in the divide-and-conquer algorithm, rather than a single smaller subproblem.\
 There are in general three steps that one can follow in order to solve the problem in a divide-and-conquer manner.
-1. Divide. Divide the problem {S}S into a set of subproblems: {S_1, S_2, ... S_n} where n>=2, i.e. there are usually more than one subproblem.
+1. Divide. Divide the problem S into a set of subproblems: {S_1, S_2, ... S_n} where n>=2, i.e. there are usually more than one subproblem.
 2. Conquer. Solve each subproblem recursively. 
 3. Combine. Combine the results of each subproblem.
 
+
+# 7. Backtracking
+Backtracking is a general algorithm for finding all (or some) solutions to some computational problems (notably Constraint satisfaction problems or CSPs), which incrementally builds candidates to the solution and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot lead to a valid solution. \
+A pseudocode template for backtracking algorithm:
+```
+# Python
+def backtrack(candidate):
+    if find_solution(candidate):
+        output(candidate)
+        return
+    
+    # iterate all possible candidates.
+    for next_candidate in list_of_candidates:
+        if is_valid(next_candidate):
+            # try this partial candidate solution
+            place(next_candidate)
+            # given the candidate, explore further.
+            backtrack(next_candidate)
+            # backtrack
+            remove(next_candidate)
+```
+Here are a few notes about the above pseudocode.
+1. Overall, the enumeration of candidates is done in two levels: 1). at the first level, the function is implemented as recursion. At each occurrence of recursion, the function is one step further to the final solution.  2). as the second level, within the recursion, we have an iteration that allows us to explore all the candidates that are of the same progress to the final solution.
+2. The backtracking should happen at the level of the iteration within the recursion. 
+3. Unlike brute-force search, in backtracking algorithms we are often able to determine if a partial solution candidate is worth exploring further (i.e. is_valid(next_candidate)), which allows us to prune the search zones. This is also known as the constraint, e.g. the attacking zone of queen in N-queen game. 
+4. There are two symmetric functions that allow us to mark the decision (place(candidate)) and revert the decision (remove(candidate)).  
 
 
 
