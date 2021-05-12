@@ -117,7 +117,10 @@ Here are a few notes about the above pseudocode.
 3. Unlike brute-force search, in backtracking algorithms we are often able to determine if a partial solution candidate is worth exploring further (i.e. is_valid(next_candidate)), which allows us to prune the search zones. This is also known as the constraint, e.g. the attacking zone of queen in N-queen game. 
 4. There are two symmetric functions that allow us to mark the decision (place(candidate)) and revert the decision (remove(candidate)).  
 
-
+The basic idea of the backtracking method is similar to traversing a decision tree. There are three things that we need to consider:
+1. The terminal condition. When to stop the recursion.
+2. The path. All the decisions that have been taken.
+3. The candidates. The list of candidates.
 
 
 
