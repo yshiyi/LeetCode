@@ -1,6 +1,7 @@
 ## C++ and Python Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
 * [Max and min int](#Max-and-min-int)
+* [Convert between char and int](#Convert-between-char-and-int)
 * [Stack and Queue](#Stack-and-Queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
   * [1. Bubble Sort](#1-Bubble-Sort)
@@ -36,6 +37,34 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 # Max and min int
 For C++: INT_MAX, INT_MIN
 For Python: float('inf'), float('-inf')
+
+# Convert between char and int
+For C++
+```
+// From char to int
+char c = '1';
+
+// Method 1:
+int c_int = c - '0'; // c_int = 1;
+// Method 2:
+int c_int2 = (int)c-48;  // c_int2 = 1; 
+
+
+// From int to char:
+int a = 1;
+char c_a = (char)a+48;  // c_a = '1';
+```
+For Python
+```
+# From char to int
+ord('a') -> 97
+ord('1') -> 49
+
+# From int to char
+chr(97) -> 'a'
+chr(49) -> '1'
+```
+
 
 # Stack and Queue
 In C++
