@@ -688,7 +688,7 @@ class Solution(object):
 
 
 
-## 1.2 In Order Traversal
+## 1.2 Inorder Traversal
 In-order traversal is to traverse the left subtree first. Then visit the root. Finally, traverse the right subtree.\
 <pre>
           F
