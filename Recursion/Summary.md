@@ -10,6 +10,7 @@
     * [5. Tail Recursion](#5-Tail-Recursion)
     * [6. Divide and Conquer](#6-Divide-and-Conquer)
     * [7. Backtracking](#7-Backtracking)
+    * [8. Unfold Recursion to Iteration](#8-Unfold-Recursion-to-Iteration)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Recursion
@@ -123,6 +124,10 @@ The basic idea of the backtracking method is similar to traversing a decision tr
 3. The candidates. The list of candidates.
 
 
+# 8. Unfold Recursion to Iteration
+To convert a recursion approach to an iteration one, we could perform the following two steps:
+1. We use a stack or queue data structure within the function, to replace the role of the system call stack. At each occurrence of recursion, we simply push the parameters as a new element into the data structure that we created, instead of invoking a recursion.
+2. In addition, we create a loop over the data structure that we created before. The chain invocation of recursion would then be replaced with the iteration within the loop.
 
 
 
