@@ -10,7 +10,8 @@
     * [5. Tail Recursion](#5-Tail-Recursion)
     * [6. Divide and Conquer](#6-Divide-and-Conquer)
     * [7. Backtracking](#7-Backtracking)
-    * [8. Unfold Recursion to Iteration](#8-Unfold-Recursion-to-Iteration)
+    * [8. Divide and Conquer vs Backtracking](#8-Divide-and-Conquer-vs-Backtracking)
+    * [9. Unfold Recursion to Iteration](#9-Unfold-Recursion-to-Iteration)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Recursion
@@ -124,7 +125,13 @@ The basic idea of the backtracking method is similar to traversing a decision tr
 3. The candidates. The list of candidates.
 
 
-# 8. Unfold Recursion to Iteration
+# 8. Divide and Conquer vs Backtracking
+1. Often the case, the divide-and-conquer problem has a sole solution, while the backtracking problem has unknown number of solutions. For example, when we apply the merge sort algorithm to sort a list, we obtain a single sorted list, while there are many solutions to place the queens for the N-queen problem.
+2. Each step in the divide-and-conquer problem is indispensable to build the final solution, while many steps in backtracking problem might not be useful to build the solution, but serve as atttempts to search for the potential solutions. For example, each step in the merge sort algorithm, i.e. divide, conquer and combine, are all indispensable to build the final solution, while there are many trials and errors during the process of building solutions for the N-queen problem.
+3. When building the solution in the divide-and-conquer algorithm, we have a clear and predefined path, though there might be several different manners to build the path. While in the backtracking problems, one does not know in advance the exact path to the solution. For example, in the top-down merge sort algorithm, we first recursively divide the problems into two subproblems and then combine the solutions of these subproblems. The steps are clearly defined and the number of steps is fixed as well. While in the N-queen problem, if we know exactly where to place the queens, it would only take N steps to do so. When applying the backtracking algorithm to the N-queen problem, we try many candidates and many of them do not eventually lead to a solution but abandoned at the end. As a result, we do not know beforehand how many steps exactly it would take to build a valid solution. 
+
+
+# 9. Unfold Recursion to Iteration
 To convert a recursion approach to an iteration one, we could perform the following two steps:
 1. We use a stack or queue data structure within the function, to replace the role of the system call stack. At each occurrence of recursion, we simply push the parameters as a new element into the data structure that we created, instead of invoking a recursion.
 2. In addition, we create a loop over the data structure that we created before. The chain invocation of recursion would then be replaced with the iteration within the loop.
