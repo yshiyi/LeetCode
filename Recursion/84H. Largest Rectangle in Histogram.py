@@ -8,6 +8,9 @@ class Solution(object):
         st = collections.deque()
         heights.append(0)
         for i in range(len(heights)):
+            # We can also use
+            # st and heights[st[-1]] >= heights[i]
+            # This is faster than len(st)
             while len(st) and heights[st[-1]] >= heights[i]:
                 cur = st[-1]
                 st.pop()
