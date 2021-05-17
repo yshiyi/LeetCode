@@ -95,6 +95,8 @@ public:
         string letters = m[digits[0]];
         // Initially, we save all the letters contained in the first digit to the queue.
         for(int i=0; i<letters.size(); i++){
+            // Note: the queue is supposed to store strings.
+            //       to save char, we need string(1, char) to convert a char to string.
             q.push(string(1, letters[i]));
         }
         
