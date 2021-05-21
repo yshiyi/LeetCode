@@ -28,6 +28,7 @@ Partition Equal Subset Sum - Medium
 Method 1: Backtracking
           There are two different backtracking approaches for this questions.
           In this method, we define k buckests and iterate through the values in nums.
+          For each number, we determine the correct bucket.
           To improve the computational efficiency, we sort nums in descending order first.
 */
 class Solution {
@@ -77,5 +78,53 @@ public:
 };
 
 /*
-Method 2:
+Method 2: Backtracking
+          There are two steps in this method:
+          1. Determine if the current number should be put into the bucket i.
+          2. If the sum of the numbers in buckets i reaches to target, we then move to bucket i+1 and repeat step 1.
+          This approach is much faster than method 1.
 */
+class Solution {
+public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = 0;
+        for(auto v:nums){
+            sum += v;
+        }
+        if(sum%k!=0){
+            return false;
+        }
+        int target = sum/k;
+        // This vector is used to check if the value has been put into a bucket.
+        vector<int> used(nums.size(), 0);
+        int bucket_sum = 0;
+        return backtrack(nums, 0, k, bucket_sum, used, target);
+    }
+    bool backtrack(vector<int>& nums, int start, int k, int bucket_sum, vector<int>& used, int target){
+        if(k==0){
+            return true;
+        }
+        // If the sum of the bucket is equal to target, we then move on to the next bucket.
+        if(bucket_sum==target){
+            return backtrack(nums, 0, k-1, 0, used, target);
+        }
+        // Iterate through all values in nums.
+        // Start from start to improve the computational efficiency
+        for(int i=start; i<nums.size(); i++){
+            if(used[i]==1){
+                continue;
+            }
+            if(nums[i]+bucket_sum>target){
+                continue;
+            }
+            bucket_sum += nums[i];
+            used[i] = 1;
+            if(backtrack(nums, i+1, k, bucket_sum, used, target)){
+                return true;
+            }
+            used[i] = 0;
+            bucket_sum -= nums[i];
+        }
+        return false;
+    }
+};
