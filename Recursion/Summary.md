@@ -65,7 +65,7 @@ Given a linked list, swap every two adjacent nodes and return its head.\
 Input: head = \[1,2,3,4\]\
 Output: \[2,1,4,3\]\
 **Method:**\
-To solve a recursion problem, we only need to consider two things:
+To solve a recursive problem, we only need to consider two things:
 1. What is the base case? In this problem, the base case is head is NULL or head->next is NULL.
 2. What should we do in the current step? Save head->next->next as a temp, swap head and head->next, and call recursive function.
 
@@ -116,7 +116,7 @@ Given the head of a singly linked list, reverse the list, and return the reverse
 **Method:**\
 We only show the recursive approach here.
 There are two recursive approach we can use:
-1. For each single node, we call the recursion function with cur->next.\
+1. For each single node, we call the recursive function with cur->next.\
    The return of the recursion function should be a reversed linked list.\
    Then, cur node is pointing to the end of the reversed linked list, because the original cur->next is now at the end of the list.\
    Now, we only need to move cur node to the end of the list. \
