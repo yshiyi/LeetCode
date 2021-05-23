@@ -125,7 +125,7 @@ There are two recursive approach we can use:
 2. In this approach, we create a new list with a pseudo head.\
    The basic idea of this approach is that we iterate through the original list and add each cur node to the next of head2.\
    e.g. head = 1-2, head2 = 0\
-   head = 2, head2 = 0-1
+   head = 2, head2 = 0-1\
    head = NULL, head2 = 0-2-1
 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/206.%20Reverse%20Linked%20List.cpp)
