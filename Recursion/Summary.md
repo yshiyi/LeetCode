@@ -2,6 +2,9 @@
 <!-- GFM-TOC -->
 * [Leetcode Recursion](#Recursion)
     * [1. Introduction to Recursion](#1-Introduction-to-Recursion)
+       * [344. Reverse String](#344-Reverse-String)
+       * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
+       * [206. Reverse Linked List](#206-Reverse-Linked-List)
     * [2. Memoization](#2-Memoization)
     * [3. Time Complexity](#3-Time-Complexity)
     * [4. Space Complexity](#4-Space-Complexity)
@@ -18,6 +21,174 @@
 A recursive function should have the following properties so that it does not result in an infinite loop:
 1. A simple base case (or cases) — a terminating scenario that does not use recursion to produce an answer.
 2. A set of rules, also known as recurrence relation that reduces all other cases towards the base case.
+
+## 344. Reverse String
+Two Pointers, String\
+**Description:**\
+Write a function that reverses a string. The input string is given as an array of characters s.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/344.%20Reverse%20String.cpp)
+```
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        helper(s, 0, s.size()-1);
+        return;
+    }
+    void helper(vector<char>& str, int left, int right){
+        if(left>right){
+            return;
+        }
+        swap(str[left], str[right]);
+        helper(str, ++left, --right);
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/344.%20Reverse%20String.py)
+```
+class Solution(object):
+    def reverseString(self, s):
+        def helper(s, left, right):
+            if left > right:
+                return
+            s[left], s[right] = s[right], s[left]
+            left += 1
+            right -= 1
+            helper(s, left, right)
+        helper(s, 0, len(s)-1)
+        return
+```
+
+## 24M. Swap Nodes in Pairs
+**Description:**\
+Given a linked list, swap every two adjacent nodes and return its head.\
+**Example:**\
+Input: head = \[1,2,3,4\]\
+Output: \[2,1,4,3\]\
+**Method:**\
+To solve a recursion problem, we only need to consider two things:
+1. What is the base case? In this problem, the base case is head is NULL or head->next is NULL.
+2. What should we do in the current step? Save head->next->next as a temp, swap head and head->next, and call recursive function.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/24M.%20Swap%20Nodes%20in%20Pairs.cpp)
+```
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+        ListNode *head2 = head->next, *tmp = head->next->next;
+        head2->next = head;
+        head->next = swapPairs(tmp);
+        
+        return head2;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/24M.%20Swap%20Nodes%20in%20Pairs.py)
+```
+class Solution(object):
+    def swapPairs(self, head):
+        # Method 1
+        def recurSwap(head):
+            if head is None or head.next is None:
+                return head
+            temp = head.next.next
+            head2 = head.next
+            head2.next = head
+            head.next = recurSwap(temp)
+            return head2
+        return recurSwap(head)
+      
+        # Method 2
+        if head is None or head.next is None:
+            return head
+        temp = head.next.next
+        head2 = head.next
+        head2.next = head
+        head.next = self.swapPairs(temp)
+        return head2
+```
+
+## 206. Reverse Linked List
+**Description:**\
+Given the head of a singly linked list, reverse the list, and return the reversed list.\
+**Method:**\
+We only show the recursive approach here.
+There are two recursive approach we can use:
+1. For each single node, we call the recursion function with cur->next.\
+   The return of the recursion function should be a reversed linked list.\
+   Then, cur node is pointing to the end of the reversed linked list, because the original cur->next is now at the end of the list.\
+   Now, we only need to move cur node to the end of the list. \
+   cur->next->next = cur, let cur->next point to cur itself\
+   cur->next = NULL, make cur be the last node in the list
+2. In this approach, we create a new list with a pseudo head.\
+   The basic idea of this approach is that we iterate through the original list and add each cur node to the next of head2.\
+   e.g. head = 1-2, head2 = 0\
+   head = 2, head2 = 0-1
+   head = NULL, head2 = 0-2-1
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/206.%20Reverse%20Linked%20List.cpp)
+```
+// Method 1:
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+        ListNode* last = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return last;
+    }
+};
+
+// Method 2:
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL){
+            return head;
+        }
+        ListNode *head2 = new ListNode(0);
+        head2 = recurReverse(head, head2);
+        return head2->next;
+    }
+    ListNode* recurReverse(ListNode* head, ListNode* head2){
+        if(head==NULL){
+            return head;
+        }
+        ListNode* temp1 = head->next;
+        ListNode* temp2 = head2->next;
+        head2->next = head;
+        head->next = temp2;
+        recurReverse(temp1, head2);
+        return head2;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/206.%20Reverse%20Linked%20List.py)
+```
+class Solution(object):
+    def reverseList(self, head):
+        if head is None:
+            return head
+        head2 = ListNode(0)
+        
+        def recurReverse(head, head2):
+            if head is None:
+                return head
+            temp1, temp2 = head.next, head2.next
+            head2.next = head
+            head.next = temp2
+            recurReverse(temp1, head2)
+            return head2
+        
+        head2 = recurReverse(head, head2)
+        return  head2.next
+```
+
 
 # 2. Memoization
 In some cases, we may encounter the duplicate calculations problem where some intermediate results are calculated multiple times.\
