@@ -19,7 +19,7 @@
           * [3.2.1 Recursion Related Space](#321-Recursion-Related-Space)
           * [3.2.2 Non-Recursion Related Space](#322-Non-Recursion-Related-Space)
        * [3.3 Tail Recursion](#33-Tail-Recursion)
-       * [50M. Pow(x, n)](#50M-Pow)
+       * [50M. Pow(x, n)](#50M-Powx-n)
        * [104. Maximum Depth of Binary Tree](#104-Maximum-Depth-of-Binary-Tree)
     * [4. Divide and Conquer](#4-Divide-and-Conquer)
     * [5. Backtracking](#5-Backtracking)
