@@ -9,7 +9,7 @@
   * [3. Merge Sort](#3-Merge-Sort)
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
-* [Return {} Statement](#Return-{}-Statement)
+* [Return {} Statement](#Return-{-}-Statement)
 
 
 # int vs unsigned int
