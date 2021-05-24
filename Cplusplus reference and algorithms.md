@@ -444,7 +444,12 @@ public:
 ```
 
 # Return {} Statement
-
+In C++, return {} indicates "return an object of the function's return type initialized with an empty list-initializer". The exact behaviour depends on the returned object's type.\
+```
+std::string get_string() {
+    return {}; // an empty string is returned
+}
+```
 
 
 
