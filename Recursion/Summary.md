@@ -435,6 +435,88 @@ Recall the example of Fibonacci number. In a full binary tree with n levels, the
 Memoization can reduce the time complexity to O(1)\*n = O(n)
 
 ## 50M. Pow(x, n)
+Pow(x, n)\
+Math, Binary Search\
+**Dexcription:**\
+Implement pow(x, n), which calculates x raised to the power n (i.e., xn).\
+**Method:**\
+If we use the brute force approach, the time complexity will be O(n).\
+To accelerate the calculation process, we can use divide and conquer approach. The time complexity is O(log(n)).
+1. Divid the whole list into two pieces, and calculate the result for each of them.
+2. If n is even number, then just return temp * temp. If n is an odd number, then return temp * temp * x.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/50M.%20Pow(x,%20n).cpp)
+```
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if(n>=0){
+            return helper(x, n);
+        }else {
+            return 1/helper(x, abs(n));
+        }
+    }
+    double helper(double x, int n){
+        if(n==0){
+            return 1.0;
+        }else if(n == 1){
+            return x;
+        }
+        double temp = helper(x, n/2);
+        if (n % 2 == 0) {
+            return temp * temp;
+        }else{
+            return temp * temp * x;
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/50M.%20Pow(x%2C%20n).py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        def helper(x, n):
+            if n == 0:
+                return 1.0
+            if n == 1:
+                return x
+            temp = helper(x, n/2)
+            if n % 2==0:
+                return temp * temp
+            else:
+                return temp * temp * x
+        if n >=0:
+            return helper(x, abs(n))
+        else:
+            return 1.0/helper(x, abs(n))
+        
+
+"""
+Method 2: Iterative approach
+          This doesn't work in C++, because it will exceed the limit of int when n is super large.
+          Note: every number can be represented as a combination of even powers.
+                e.g. x^5 = x^1 * x^4, x^9 = x^1 + x^8 
+"""
+class Solution(object):
+    def myPow(self, x, n):
+        res = 1.0
+        if n<0:
+            x = 1/x
+            n = -n
+        while n:
+            if n%2==1:
+                res *= x
+            x *= x
+            n /= 2
+        return res
+```
+
 
 # 4. Space Complexity
 There are mainly two parts of the space consumption that one should bear in mind when calculating the space complexity of a recursive algorithm: recursion related and non-recursion related space.\
