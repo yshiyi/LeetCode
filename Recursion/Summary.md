@@ -662,8 +662,7 @@ The benefit of having tail recursion is that it could avoid the accumulation of 
 Note that in tail recursion, we know that as soon as we return from the recursive call we are going to immediately return as well, so we can skip the entire chain of recursive calls returning and return straight to the original caller. That means we don't need a call stack at all for all of the recursive calls, which saves us space.\
 A tail recursion function can be executed as non-tail-recursion functions, i.e. with piles of call stacks, without impact on the result. Often, the compiler recognizes tail recursion pattern, and optimizes its execution. However, not all programming languages support this optimization. For instance, C, C++ support the optimization of tail recursion functions. On the other hand, Java and Python do not support tail recursion optimization.
 
-## 50M. Pow
-Pow(x, n)\
+## 50M. Pow(x, n)
 Math, Binary Search\
 **Dexcription:**\
 Implement pow(x, n), which calculates x raised to the power n (i.e., xn).\
