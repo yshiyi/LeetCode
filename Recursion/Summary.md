@@ -9,7 +9,7 @@
        * [700. Search in a Binary Search Tree](#700-Search-in-a-Binary-Search-Tree)
        * [21. Merge Two Sorted Lists](#21-Merge-Two-Sorted-Lists)
        * [779M. K-th Symbol in Grammar](#779M-Kth-Symbol-in-Grammar)
-       * [95M. Unique Binary Search Trees II](#95M.-Unique-Binary-Search-Trees-II)
+       * [95M. Unique Binary Search Trees II](#95M-Unique-Binary-Search-Trees-II)
     * [2. Memoization](#2-Memoization)
        * [509. Fibonacci Number](#509-Fibonacci-Number)
        * [70. Climbing Stairs](#70-Climbing-Stairs)
