@@ -5,8 +5,13 @@
        * [344. Reverse String](#344-Reverse-String)
        * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
        * [206. Reverse Linked List](#206-Reverse-Linked-List)
+       * [119. Pascal's Triangle II](#119-Pascals-Triangle-II)
+       * [700. Search in a Binary Search Tree](#700-Search-in-a-Binary-Search-Tree)
     * [2. Memoization](#2-Memoization)
+       * [509. Fibonacci Number](#509-Fibonacci-Number)
+       * [70. Climbing Stairs](#70-Climbing-Stairs)
     * [3. Time Complexity](#3-Time-Complexity)
+       * [50M. Pow(x, n)](#50M-Pow-(-x-,-n-))
     * [4. Space Complexity](#4-Space-Complexity)
        * [4.1 Recursion Related Space](#41-Recursion-Related-Space)
        * [4.2 Non-Recursion Related Space](#42-Non-Recursion-Related-Space)
@@ -189,11 +194,236 @@ class Solution(object):
         return  head2.next
 ```
 
+## 119. Pascals Triangle II
+Array\
+**Description:**\
+Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.\
+In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:\
+1\
+11\
+121\
+1331\
+14641\
+**Method:**\
+We first create a vector to store the values and assign 1 to the first and the last position.\
+We then inquire the values in the previous row.\
+Finally, construct the current row based on the values from the previous row.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/119.%20Pascal's%20Triangle%20II.cpp)
+```
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> res(rowIndex+1);
+        res[0] = 1;
+        if(rowIndex==0){
+            return res;
+        }
+        res[rowIndex] = 1;
+        vector<int> preRow = getRow(rowIndex-1);
+        for(int i=1; i<rowIndex; i++){
+            res[i] = preRow[i-1] + preRow[i];
+        }
+        return res;
+      }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/119.%20Pascal's%20Triangle%20II.py)
+```
+class Solution(object):
+    def getRow(self, rowIndex):
+        res = [0] * (rowIndex+1)
+        res[0] = 1
+        if rowIndex==0:
+            return res
+        res[rowIndex] = 1
+        preRow = self.getRow(rowIndex-1)
+        for i in range(1, rowIndex):
+            res[i] = preRow[i-1] + preRow[i]
+        return res
+```
+## 700. Search in a Binary Search Tree
+Tree\
+**Description:**\
+You are given the root of a binary search tree (BST) and an integer val.\
+Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/700.%20Search%20in%20a%20Binary%20Search%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(root==NULL){
+            return NULL;
+        }
+        recurSearch(root, val);
+        return res;
+    }
+    void recurSearch(TreeNode* root, int val){
+        if(root==NULL){
+            return;
+        }
+        if(root->val == val){
+            res = root;
+        }else{
+            recurSearch(root->left, val);
+            recurSearch(root->right, val);
+        }
+    }
+private:
+    TreeNode* res;
+};
+
+// Method 2: Iterative approach
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(root==NULL){
+            return NULL;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        while(q.size()){
+            TreeNode* cur = q.front(); q.pop();
+            if(cur->val==val){
+                return cur;
+            }
+            if(cur->left != NULL){
+                q.push(cur->left);
+            }
+            if(cur->right != NULL){
+                q.push(cur->right);
+            }
+        }
+        return NULL;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/700.%20Search%20in%20a%20Binary%20Search%20Tree.py)
+```
+class Solution(object):
+    def searchBST(self, root, val):
+        self.res = None
+        def recurSearch(root, val):
+            if root is None:
+                return
+            if root.val == val:
+                self.res = root
+            else:
+                recurSearch(root.left, val)
+                recurSearch(root.right, val)
+        recurSearch(root, val)
+        return self.res
+```
+
+
 
 # 2. Memoization
 In some cases, we may encounter the duplicate calculations problem where some intermediate results are calculated multiple times.\
 To eliminate the duplicate calculation in the recursion, one of the idea would be to store the intermediate results in the cache so that we could reuse them later without re-calculation.\
 This idea is also known as memoization, which is a technique that is frequently used together with recursion.
+
+## 509. Fibonacci Number
+Array\
+**Description:**\
+The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,\
+F(0) = 0, F(1) = 1\
+F(n) = F(n - 1) + F(n - 2), for n > 1.\
+Given n, calculate F(n).\
+**Method:**\
+If we use the standard recursive approach, the time complexity will be O(2^N).\
+Therefore, we need a dictionary to store the values that we have calculated.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/509.%20Fibonacci%20Number.cpp)
+```
+class Solution {
+public:
+    map<int, int> m;
+    int fib(int n) {
+        if(n<2){
+            m[n] = n;
+            return n;
+        }
+        if(m.find(n-1)==m.end()){
+            m[n-1] = fib(n-1);
+        }
+        if(m.find(n-2)==m.end()){
+            m[n-2] = fib(n-2);
+        }
+        return m[n-1] + m[n-2];
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/509.%20Fibonacci%20Number.py)
+```
+class Solution(object):
+    m = {}
+    def fib(self, n):
+        if n<2:
+            Solution.m[n] = n
+            return n
+        if n-1 not in Solution.m:
+            Solution.m[n-1] = self.fib(n-1)
+        if n-2 not in Solution.m:
+            Solution.m[n-2] = self.fib(n-2)
+        return Solution.m[n-1] + Solution.m[n-2]
+```
+
+## 70. Climbing Stairs
+Dynamic Programming\
+**Description:**\
+You are climbing a staircase. It takes n steps to reach the top.\
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?\
+**Method:**\
+Consider the basic case in which there are only 1 step or 2 steps left.\
+When there is only 1 step left, there is only 1 way. When there are 2 steps left, there are 2 different ways (i.e.m 1+1 and 2).\
+The recursive procedure is no. of ways to reach n is equal to the sum of no. of ways to reach n-1 and that to reach to n-2.\
+
+[C++]()
+```
+class Solution {
+public:
+    map<int, int> m;
+    int climbStairs(int n) {
+        if(n<3){
+            m[n] = n;
+            return n;
+        }
+        if(m.find(n-1)==m.end()){
+            m[n-1] = climbStairs(n-1);
+        }
+        if(m.find(n-2)==m.end()){
+            m[n-2] = climbStairs(n-2);
+        }
+        return m[n-1] + m[n-2];
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/70.%20Climbing%20Stairs.py)
+```
+class Solution(object):
+    m = {}
+    def climbStairs(self, n):
+        if n<3:
+            Solution.m[n] = n
+            return n
+        if n-1 not in Solution.m:
+            Solution.m[n-1] = self.climbStairs(n-1)
+        if n-2 not in Solution.m:
+            Solution.m[n-2] = self.climbStairs(n-2)
+        return Solution.m[n-1] + Solution.m[n-2]
+```
+
+
 
 # 3. Time Complexity
 Given a recursion algorithm, its time complexity O(T) is typically the product of the number of recursion invocations (denoted as R) and the time complexity of calculation (denoted as O(s)) that incurs along with each recursion call:\
@@ -203,6 +433,8 @@ O(T) = R \* O(s)
 Execution tree is a tree that is used to denote the execution flow of a recursive function in particular. Each node in the tree represents an invocation of the recursive function. Therefore, the total number of nodes in the tree corresponds to the number of recursion calls during the execution.\
 Recall the example of Fibonacci number. In a full binary tree with n levels, the total number of nodes would be 2^n − 1. Therefore, the upper bound (though not tight) for the number of recursion in f(n) would be 2^n - 1, as well. As a result, we can estimate that the time complexity for f(n) would be O(2^n).\
 Memoization can reduce the time complexity to O(1)\*n = O(n)
+
+## 50M. Pow(x, n)
 
 # 4. Space Complexity
 There are mainly two parts of the space consumption that one should bear in mind when calculating the space complexity of a recursive algorithm: recursion related and non-recursion related space.\
