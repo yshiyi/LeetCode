@@ -32,7 +32,7 @@ Super Pow - Medium
 Solution: If we use the brute force approach, the time complexity will be O(n).
           To accelerate the calculation process, we can use divide and conquer approach. The time complexity is O(log(n)).
           1. Divid the whole list into two pieces, and calculate the result for each of them.
-          2. If n ia even number, then just return temp * temp. If n is an odd number, then return temp * temp * x.
+          2. If n is even number, then just return temp * temp. If n is an odd number, then return temp * temp * x.
 */
 class Solution {
 public:
