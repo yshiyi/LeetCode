@@ -11,7 +11,7 @@
        * [509. Fibonacci Number](#509-Fibonacci-Number)
        * [70. Climbing Stairs](#70-Climbing-Stairs)
     * [3. Time Complexity](#3-Time-Complexity)
-       * [50M. Pow(x, n)](#50M-Pow-(-x-,-n-))
+       * [50M. Pow(x, n)](#50M-Pow(x,-n))
     * [4. Space Complexity](#4-Space-Complexity)
        * [4.1 Recursion Related Space](#41-Recursion-Related-Space)
        * [4.2 Non-Recursion Related Space](#42-Non-Recursion-Related-Space)
