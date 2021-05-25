@@ -68,6 +68,8 @@ chr(49) -> '1'
 
 
 # Stack and Queue
+**Note:**\
+In python, collections.deque() or list can contain None. On contrary, in C++, neither stack nor queue can contain nullptr.\
 In C++
 ```
 // Stack
