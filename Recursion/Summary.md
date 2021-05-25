@@ -1441,6 +1441,191 @@ The basic idea of the backtracking method is similar to traversing a decision tr
 2. The path. All the decisions that have been taken.
 3. The candidates. The list of candidates.
 
+## 22M. Generate Parentheses
+**Description:**\
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.\
+**Example:**\
+Input: n = 3\
+Output: \["((()))","(()())","(())()","()(())","()()()"\]\
+**Method:**\
+backtrack
+1. setting up the base case, when the total length of the string is equal to 2*n
+2. if it is possible, insert "(" first.
+3. whenever the number of "(" is greater than ")", insert ")"
+
+Note: don't use if-else, in that case, we will only insert ")" when the number of "(" is equal to n.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/22M.%20Generate%20Parentheses.cpp)
+```
+class Solution {
+public:
+    vector<string> res; 
+    vector<string> generateParenthesis(int n) {
+        backTrack(0, 0, n, "");
+        return res;
+    }
+    void backTrack(int left, int right, int n, string S){
+        if(S.size()==n*2){
+            res.push_back(S);
+            return;
+        }
+        if(left < n){
+            backTrack(left+1, right, n, S+'(');
+        }
+        if(left > right){
+            backTrack(left, right+1, n, S+')');
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/22M.%20Generate%20Parentheses.py)
+```
+class Solution(object):
+    def generateParenthesis(self, n):
+        S = ""
+        res = []
+        left, right = 0, 0
+        def backTracking(left, right, S):
+            if len(S)==n*2:
+                res.append(S)
+                return
+            else:
+                if left < n:
+                    backTracking(left+1, right, S+'(')
+                if left > right:
+                    backTracking(left, right+1, S+')')
+                
+        backTracking(left, right, S)
+        return res
+```
+
+## 51H. N-Queens
+**Description:**\
+The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\
+Given an integer n, return all distinct solutions to the n-queens puzzle.\
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.\
+**Method:**\
+Create a vector\<string\> to hold the layout of the board.\
+Then we check the board row by row.\
+In each row, we also check each column and also check if the cell is a valid position to place the queen.\
+Once we place the queen, then we call the recursion to check the following rows.\
+Once it is done, we take out the queen from the current cell and move to the next one.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/51H.%20N-Queens.cpp)
+```
+class Solution {
+public:
+    vector<vector<string>> res;
+    vector<vector<string>> solveNQueens(int n) {
+        vector<string> board(n, string(n, '.'));
+        backtrack(board, 0);
+        return res;
+    }
+    void backtrack(vector<string>& board, int row){
+        if(row == board.size()){
+            res.push_back(board);
+            return;
+        }
+        int n = board.size();
+        for(int col=0; col < n; col++){
+            if(is_valid(board, row, col)){
+                board[row][col] = 'Q';
+                backtrack(board, row+1);
+                board[row][col] = '.';
+            }
+        }
+    }
+    bool is_valid(vector<string>& board, int row, int col){
+        // Check if there is queen in the same column
+        for(int i=0; i<board.size(); i++){
+            if(board[i][col]=='Q'){
+                return false;
+            }
+        }
+        // Check upper right side
+        for(int i=row-1, j=col+1; i>=0 && j<board.size(); i--, j++){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+        // Check upper left side
+        for(int i=row-1, j=col-1; i>=0 && j>=0; i--, j--){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/51H.%20N-Queens.py)
+```
+'''
+Method:
+1. Create a board. board = [list('.'*n) for i in range(n)]
+   Note: we convert a string to a list, because the string doesn't support item assignment in Python.
+2. Save a valid solution.
+   Res = []
+   for r in board:
+       Res.append(''.join(deepcopy(r)))
+       Res.append(''.join(list(r)))  # this also works and is faster than deepcopy()
+   res.append(Res)
+   Note: need to first deepcopy the result, otherwise it will be kept modifying the element values
+         also need to convert the list back to the string. Using ''.join(list).
+'''
+class Solution(object):
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        res = []
+        board = [list('.'*n) for i in range(n)]
+        def isValid(board, row, col):
+            for i in range(len(board)):
+                if board[i][col]=='Q':
+                    return False
+            i, j = row-1, col+1
+            while i>=0 and j<len(board):
+                if board[i][j]=='Q':
+                    return False
+                i -= 1
+                j += 1
+            i, j = row-1, col-1
+            while i>=0 and j>=0:
+                if board[i][j]=='Q':
+                    return False
+                i -= 1
+                j -= 1
+            return True
+        
+        def backtrack(board, row):
+            if row == len(board):
+                Res = []
+                for r in board:
+                    Res.append(''.join(list(r)))
+                res.append(Res)
+                return
+            for col in range(len(board[0])):
+                if isValid(board, row, col):
+                    board[row][col] = 'Q'
+                    backtrack(board, row+1)
+                    board[row][col] = '.'
+        
+        backtrack(board, 0)
+        return res
+```
+
+## 52H. N-Queens II
+
+
+## 489H. Robot Room Cleaner
+## 37H. Sudoku Solver
+## 77M. Combinations
+## 78M. Subsets
+## 46M. Permutations
+## 47M. Permutations II
+## 17M. Letter Combinations of a Phone Number
+## 698M. Partition to K Equal Sum Subsets
+
 
 # 6. Divide and Conquer vs Backtracking
 1. Often the case, the divide-and-conquer problem has a sole solution, while the backtracking problem has unknown number of solutions. For example, when we apply the merge sort algorithm to sort a list, we obtain a single sorted list, while there are many solutions to place the queens for the N-queen problem.
