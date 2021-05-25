@@ -2,6 +2,7 @@
 <!-- GFM-TOC -->
 * [Leetcode Recursion](#Recursion)
     * [1. Introduction to Recursion](#1-Introduction-to-Recursion)
+       * [100. Same Tree](#100-Same-Tree) 
        * [344. Reverse String](#344-Reverse-String)
        * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
        * [206. Reverse Linked List](#206-Reverse-Linked-List)
@@ -10,6 +11,7 @@
        * [21. Merge Two Sorted Lists](#21-Merge-Two-Sorted-Lists)
        * [779M. K-th Symbol in Grammar](#779M-Kth-Symbol-in-Grammar)
        * [95M. Unique Binary Search Trees II](#95M-Unique-Binary-Search-Trees-II)
+       * [33. Search in Rotated Sorted Array](#33-Search-in-Rotated-Sorted-Array)
     * [2. Memoization](#2-Memoization)
        * [509. Fibonacci Number](#509-Fibonacci-Number)
        * [70. Climbing Stairs](#70-Climbing-Stairs)
@@ -22,7 +24,23 @@
        * [50M. Pow(x, n)](#50M-Powx-n)
        * [104. Maximum Depth of Binary Tree](#104-Maximum-Depth-of-Binary-Tree)
     * [4. Divide and Conquer](#4-Divide-and-Conquer)
+       * [912M. Sort an Array](#912M-Sort-an-Array)
+       * [98M. Validate Binary Search Tree](#98M-Validate-Binary-Search-Tree)
+       * [240M. Search a 2D Matrix II](#240M-Search-a-2D-Matrix-II)
+       * [215M. Kth Largest Element in an Array](#215M-Kth-Largest-Element-in-an-Array)
+       * [241. Different Ways to Add Parentheses](#241-Different-Ways-to-Add-Parentheses)
     * [5. Backtracking](#5-Backtracking)
+       * [22M. Generate Parentheses](#22M-Generate-Parentheses)
+       * [51H. N-Queens](#51H-NQueens)
+       * [52H. N-Queens II](#52H-NQueens-II)
+       * [489H. Robot Room Cleaner](#489H-Robot-Room-Cleaner)
+       * [37H. Sudoku Solver](#37H-Sudoku-Solver)
+       * [77M. Combinations](#77M-Combinations)
+       * [78M. Subsets](#78M-Subsets)
+       * [46M. Permutations](#46M-Permutations)
+       * [47M. Permutations II](#46M-Permutations-II)
+       * [17M. Letter Combinations of a Phone Number](#17M-Letter-Combinations-of-a-Phone-Number)
+       * [698M. Partition to K Equal Sum Subsets](#698M-Partition-to-K-Equal-Sum-Subsets)
     * [6. Divide and Conquer vs Backtracking](#6-Divide-and-Conquer-vs-Backtracking)
     * [7. Unfold Recursion to Iteration](#7-Unfold-Recursion-to-Iteration)
 <!-- GFM-TOC -->
@@ -31,6 +49,108 @@
 A recursive function should have the following properties so that it does not result in an infinite loop:
 1. A simple base case (or cases) — a terminating scenario that does not use recursion to produce an answer.
 2. A set of rules, also known as recurrence relation that reduces all other cases towards the base case.
+
+## 100. Same Tree
+Tree, Depth-first Search\
+**Description:**\
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.\
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/100.%20Same%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q==NULL){
+            return true;
+        }
+        if(p==NULL || q==NULL){
+            return false;
+        }
+        if(p->val != q->val){
+            return false;
+        }
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    }
+};
+
+// Method 2: Iterative approach
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        queue<TreeNode*> qP, qQ;
+        qP.push(p); qQ.push(q);
+        TreeNode *cur1, *cur2;
+        while(qP.size()>0 && qQ.size()>0){
+            cur1 = qP.front(); qP.pop();
+            cur2 = qQ.front(); qQ.pop();
+            if(!isValid(cur1, cur2)){
+                return false;
+            }
+            if(cur1 != NULL){
+                if(!isValid(cur1->left, cur2->left)){
+                    return false;
+                }
+                if(cur1->left != NULL){
+                    qP.push(cur1->left);
+                    qQ.push(cur2->left);
+                }
+                if(!isValid(cur1->right, cur2->right)){
+                    return false;
+                }
+                if(cur1->right != NULL){
+                    qP.push(cur1->right);
+                    qQ.push(cur2->right);
+                }
+            }
+        }
+        return true;
+    }
+    bool isValid(TreeNode* n1, TreeNode* n2){
+        if(n1==NULL && n2==NULL){
+            return true;
+        }
+        if(n1==NULL || n2==NULL){
+            return false;
+        }
+        if(n1->val != n2->val){
+            return false;
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/100.%20Same%20Tree.py)
+```
+class Solution(object):
+    def isSameTree(self, p, q):
+        dp = collections.deque()
+        dq = collections.deque()
+        dp.append(p)
+        dq.append(q)
+        
+        def isValid(n1, n2):
+            if n1==None and n2==None:
+                return True
+            if n1==None or n2==None:
+                return False
+            if n1.val != n2.val:
+                return False
+            return True
+        
+        while len(dp)>0:
+            n1 = dp.popleft()
+            n2 = dq.popleft()
+            if not isValid(n1, n2):
+                return False
+            if n1 is not None:
+                dp.append(n1.left)
+                dp.append(n1.right)
+                dq.append(n2.left)
+                dq.append(n2.right)
+        return True
+```
+
 
 ## 344. Reverse String
 Two Pointers, String\
@@ -503,6 +623,130 @@ class Solution(object):
         return recurGen(1, n)
 ```
 
+## 33M. Search in Rotated Sorted Array
+Array, Binary Search\
+**Description:**\
+There is an integer array nums sorted in ascending order (with distinct values).\
+Prior to being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is \[nums\[k\], nums\[k+1\], ..., nums\[n-1\], nums\[0\], nums\[1\], ..., nums\[k-1\]\] (0-indexed).\
+For example, \[0,1,2,4,5,6,7\] might be rotated at pivot index 3 and become \[4,5,6,7,0,1,2\].\
+Given the array nums after the rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\
+**Method:**\
+We can still use the conventional binary search approach. \
+Notice, if the mid is less than right, then the right part is an ascending sequence. Otherwise, the left part is.\
+Comparing to the conventional binary search, there are four scenarios we need to consider.\
+Also note, since mid = left+(right-left)/2, mid could be equal to left. We need to consider this scenario as well.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/33M.%20Search%20in%20Rotated%20Sorted%20Array.cpp)
+```
+// Solution 1: Compare mid to right
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution 2: Compare mid to left
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] >= nums[left]){
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }else{
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution: Iterative approach
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    right = mid - 1;
+                }else{
+                    left = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/33M.%20Search%20in%20Rotated%20Sorted%20Array.py)
+```
+class Solution(object):
+    def search(self, nums, target):
+        def binarySearch(nums, left, right, target):
+            if left <= right:
+                mid = int(left + (right-left)/2)
+                if nums[mid] == target:
+                    return mid
+                if nums[mid] < nums[right]:
+                    if nums[mid]<target and target<=nums[right]:
+                        return binarySearch(nums, mid+1, right, target)
+                    else:
+                        return binarySearch(nums, left, mid-1, target)
+                else:
+                    if nums[left]<=target and target<nums[mid]:
+                        return binarySearch(nums, left, mid-1, target)
+                    else:
+                        return binarySearch(nums, mid+1, right, target)
+            return -1
+        return binarySearch(nums, 0, len(nums)-1, target)
+```
 
 # 2. Memoization
 In some cases, we may encounter the duplicate calculations problem where some intermediate results are calculated multiple times.\
@@ -769,6 +1013,401 @@ There are in general three steps that one can follow in order to solve the probl
 1. Divide. Divide the problem S into a set of subproblems: {S_1, S_2, ... S_n} where n>=2, i.e. there are usually more than one subproblem.
 2. Conquer. Solve each subproblem recursively. 
 3. Combine. Combine the results of each subproblem.
+
+## 912M. Sort an Array
+**Description:**\
+Given an array of integers nums, sort the array in ascending order.\
+**Method:**\
+Here, we just apply merge sort method which is a typical example of using divide and conquer method.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/912M.%20Sort%20an%20Array.cpp)
+```
+class Solution {
+public:
+    int pivot;
+    vector<int> sortArray(vector<int>& nums) {
+        if(nums.size()<2){
+            return nums;
+        }
+        vector<int> left, right;
+        // Choose the middle value as a pivot
+        pivot = nums.size()/2;
+        for(int i=0; i<pivot; i++){
+            left.push_back(nums[i]);
+        }
+        for(int i=pivot; i<nums.size();i++){
+            right.push_back(nums[i]);
+        }
+        // Sort left array and right array first, and then merge them
+        return merge(sortArray(left), sortArray(right));
+    }
+    vector<int> merge(vector<int> left, vector<int> right){
+        int l = 0, r = 0;
+        vector<int> res;
+        while(l<left.size() && r<right.size()){
+            if(left[l]<=right[r]){
+                res.push_back(left[l]);
+                l++;
+            }else{
+                res.push_back(right[r]);
+                r++;
+            }
+        }
+        if(l==left.size()){
+            for(int i=r;r<right.size(); r++){
+                res.push_back(right[r]);
+            }
+        }
+        if(r==right.size()){
+            for(int i=l; l<left.size(); l++){
+                res.push_back(left[l]);
+            }
+        }
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/912M.%20Sort%20an%20Array.py)
+```
+class Solution(object):
+    def sortArray(self, nums):
+        if len(nums)==1:
+            return nums
+        pivot = int(len(nums)/2)
+        return self.mergeSort(self.sortArray(nums[0:pivot]), self.sortArray(nums[pivot:]))
+    
+    def mergeSort(self, left, right):
+        l, r = 0, 0
+        res = []
+        while l<len(left) and r<len(right):
+            if left[l] <= right[r]:
+                res.append(left[l])
+                l += 1
+            else:
+                res.append(right[r])
+                r += 1
+        res.extend(left[l:])
+        res.extend(right[r:])
+        return res
+```
+
+## 98M. Validate Binary Search Tree
+Tree, Depth-first Search, Recursion\
+**Description:**\
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).\
+A valid BST is defined as follows:\
+1. The left subtree of a node contains only nodes with keys less than the node's key.
+2. The right subtree of a node contains only nodes with keys greater than the node's key.
+3. Both the left and right subtrees must also be binary search trees.
+
+**Method:**\
+The base case is when the node is null. 
+Note the last node is not necessary a valid BST, it can be greater its root.
+There are four conditions to be satisfied:
+1. root->val > minVal. 
+   For the left subtree, the minVal is just the INT_MIN.
+   For the right subtree, the minVal is the root->val.
+2. root->val < maxVal. 
+   For the left subtree, the maxVal is the root->val.
+   For the right subtree, the maxVal is INT_MAX.
+3. root->left and root->right are both valid BST.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/98M.%20Validate%20Binary%20Search%20Tree.cpp)
+```
+// Method 1: Recursive approach
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        long minVal = INT64_MIN, maxVal = INT64_MAX;
+        return helper(root, minVal, maxVal);
+    }
+    bool helper(TreeNode* root, long minVal, long maxVal){
+        if(root==NULL){
+            return true;
+        }
+        if(root->val > minVal && root->val < maxVal && helper(root->left, minVal, root->val) 
+           && helper(root->right, root->val, maxVal)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
+
+// Method 2: Iterative approach, use in-order traverse method
+class Solution {
+public:
+    vector<int> res;
+    bool isValidBST(TreeNode* root) {
+        traverse(root);
+        for(int i=0; i<res.size()-1; i++){
+            if(res[i]>=res[i+1]){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /* 
+       If we don't use a global variable, we can define the function like:
+       void traverse(TreeNode* root, vector<int>& res)
+       Note: it must be the reference of res.
+    */
+    void traverse(TreeNode* root){
+        if(root==NULL){
+            return;
+        }
+        traverse(root->left);
+        res.push_back(root->val);
+        traverse(root->right);
+        return;
+    }
+    
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/98M.%20Validate%20Binary%20Search%20Tree.py)
+```
+class Solution(object):
+    def isValidBST(self, root):
+        return self.helper(root, float('-inf'), float('inf'))
+    
+    def helper(self, root, low, high):
+        if root is None:
+            return True
+        if root.val > low and root.val < high and self.helper(root.left, low, root.val) and self.helper(root.right, root.val, high):
+            return True
+        else:
+            return False
+```
+
+
+## 240M. Search a 2D Matrix II
+Binary Search, Divide and Conquer\
+**Description:**\
+Write an efficient algorithm that searches for a target value in an m x n integer matrix. \
+The matrix has the following properties:\
+Integers in each row are sorted in ascending from left to right.\
+Integers in each column are sorted in ascending from top to bottom.\
+**Method:**\
+The solution of this problem is a little tricky.\
+We start the search from the top right corner. If the target is less than the current value, we move to the left. If the target is greater than the current value, we move below.\
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/240M.%20Search%20a%202D%20Matrix%20II.cpp)
+```
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int row = 0, col = matrix[0].size()-1;
+        while(row<matrix.size() && col>=0){
+            if(matrix[row][col]==target){
+                return true;
+            }
+            if(matrix[row][col]>target){
+                col--;
+            }else{
+                row++;
+            }
+        }
+        return false;
+    }
+}
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/240M.%20Search%20a%202D%20Matrix%20II.py)
+```
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        row, col = len(matrix), len(matrix[0])
+        r, c = 0, col-1
+        while r<row and c>=0:
+            print(matrix[r][c])
+            if matrix[r][c] == target:
+                return True
+            if matrix[r][c] < target:
+                r += 1
+            else:
+                c -= 1
+        return False
+```
+
+## 215M. Kth Largest Element in an Array
+Divide and Conquer, Heap\
+**Description:**\
+Given an integer array nums and an integer k, return the kth largest element in the array.\
+Note that it is the kth largest element in the sorted order, not the kth distinct element.\
+**Method:**\
+Quickselect approach\
+Instead of sweeping the vector from left, we sweep the vector from right.\
+At the end of partition function, we should swap nums\[++i\] and nums\[pivot_index\] to ensure all the values on the right side of pivot are greater than it.\
+In this script, we select the most rightmost value as the pivot. The run time is about 40 ms.\
+If we select a random pivot, we can increase the run time to 4-8 ms.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/215M.Kth%20Largest%20Element%20in%20an%20Array.cpp)
+```
+// Method 1:
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        return quickSelect(nums, 0, nums.size()-1, k);
+    }
+    int quickSelect(vector<int>& nums, int left, int right, int k){
+        // if(k<=right-left+1){
+        if(right>=left){ 
+            int pivot_index = partition(nums, left, right);
+            if(right - pivot_index == k-1){
+                return nums[pivot_index];
+            }
+            if(right - pivot_index > k-1){
+                return quickSelect(nums, pivot_index+1, right, k);
+            }else{
+                return quickSelect(nums, left, pivot_index-1, k-(right-pivot_index+1));
+            }
+        }
+        return -1;
+    }
+    int partition(vector<int>& nums, int left, int right){
+        int pivot = nums[right];
+        int pivot_index = right-1;
+        for(int i=right-1; i>=left; i--){
+            if(nums[i] >= pivot){
+                swap(nums[i], nums[pivot_index]);
+                pivot_index--;
+            }
+        }
+        swap(nums[++pivot_index], nums[right]);
+        return pivot_index;
+    }
+};
+
+/*
+Method 2: In this script, we randomly select the pivot.
+          Note, we need to record the new position of the pivot.
+          To generate a random number between a and a+b-1, we use rand()% b + a.
+          The run time is about 4-8 ms.
+*/
+int partition(vector<int>& nums, int left, int right){
+    if(right==left){
+        return left;
+    }
+    int pivot_index = rand() % (right-left+1) + left;
+    int pivot = nums[pivot_index];
+    int i = right;
+    for(int j=right;j>=left;j--){
+        if(nums[j]>=pivot){
+            swap(nums[j], nums[i]);
+            if(j==pivot_index){
+                pivot_index = i;
+            }
+            i--;
+        }
+    }
+    swap(nums[++i], nums[pivot_index]);
+    return i;
+}
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/215M.Kth%20Largest%20Element%20in%20an%20Array.py)
+```
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        def partition(nums, left, right):
+            pivot_index = randint(left, right)
+            pivot = nums[pivot_index]
+            i = right
+            for j in range(right, left-1, -1):
+                if nums[j]>=pivot:
+                    nums[j], nums[i] = nums[i], nums[j]
+                    if j==pivot_index:
+                        pivot_index = i
+                    i -= 1
+            i += 1
+            nums[i], nums[pivot_index] = nums[pivot_index], nums[i]
+            return i
+        def quickSelect(nums, left, right, k):
+            if left<=right:
+                index = partition(nums, left, right)
+                if right - index == k - 1:
+                    return nums[index]
+                if right - index > k - 1:
+                    return quickSelect(nums, index+1, right, k)
+                else:
+                    return quickSelect(nums, left, index-1, k-(right-index+1))
+            return -1
+        return quickSelect(nums, 0, len(nums)-1, k)
+```
+
+
+## 241. Different Ways to Add Parentheses
+Divide and Conquer\
+**Description:**\
+Given a string expression of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. \
+You may return the answer in any order.\
+**Method:**\
+Given an example: 2-1-1. The two possible solutions are:\
+(2-1) - (1) = 0\
+(2) - (1-1) = 2\
+We can see we seperate the equation at the any operator.\
+The final solution is the combination of the result from the left and that from the right.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/241M.%20Different%20Ways%20to%20Add%20Parentheses.cpp)
+```
+class Solution {
+public:
+    vector<int> diffWaysToCompute(string expression) {
+        vector<int> res;
+        for(int i=0; i<expression.size(); i++){
+            char c = expression[i];
+          
+            // If there is an operator, we seperate the expression into left part and right part.
+            if(c=='+'||c=='-'||c=='*'){
+                // Both left and right part contains all possible results.
+                vector<int> left = diffWaysToCompute(expression.substr(0, i));
+                vector<int> right = diffWaysToCompute(expression.substr(i+1));
+                
+                // We then combine the results from left and right based on the operator.
+                for(auto vl:left){
+                    for(auto vr:right){
+                        if(c=='+'){
+                            res.push_back(vl+vr);
+                        }else if(c=='-'){
+                            res.push_back(vl-vr);
+                        }else if(c=='*'){
+                            res.push_back(vl*vr);
+                        }
+                    }
+                }
+            }
+        }
+        
+        /* This part defines the base case.
+           If there is nothing added to the res, it means there is no operator.
+           It means the expression only contains a sinlge number.
+        */
+        if(res.empty()){
+            res.push_back(stoi(expression));
+        }
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/241M.%20Different%20Ways%20to%20Add%20Parentheses.py)
+```
+class Solution(object):
+    def diffWaysToCompute(self, expression):
+        res = []
+        for i in range(len(expression)):
+            c = expression[i]
+            if c=='+' or c=='-' or c=='*':
+                left = self.diffWaysToCompute(expression[:i])
+                right = self.diffWaysToCompute(expression[i+1:])
+                for vl in left:
+                    for vr in right:
+                        if c=='+':
+                            res.append(vl+vr)
+                        elif c=='-':
+                            res.append(vl-vr)
+                        elif c=='*':
+                            res.append(vl*vr)
+            
+        if len(res)==0:
+            res.append(int(expression))
+        return res
+```
 
 
 # 5. Backtracking
