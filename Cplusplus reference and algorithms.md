@@ -1,6 +1,7 @@
 ## C++ and Python Reference and Algorithms
 * [int vs unsigned int](#int-vs-unsigned-int)
 * [Max and min int](#Max-and-min-int)
+* [Generate Random Number](#Generate-Random-Number)
 * [Convert between char and int](#Convert-between-char-and-int)
 * [Stack and Queue](#Stack-and-Queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
@@ -38,6 +39,19 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 # Max and min int
 For C++: INT_MAX, INT_MIN
 For Python: float('inf'), float('-inf')
+
+
+# Generate Random Number
+In C++
+```
+// Generate a random variable between i and j, including j
+rand() % (j - i + 1) + i;
+```
+In Python
+```
+randint(i, j)
+```
+
 
 # Convert between char and int
 For C++
