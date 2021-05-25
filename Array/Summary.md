@@ -36,6 +36,7 @@
        * [66. Plus One](#66-Plus-One)
        * [724. Find Pivot Index](#724-Find-Pivot-Index)
        * [977. Squares of a Sorted Array](#977-Squares-of-a-Sorted-Array)
+       * [84H. Largest Rectangle in Histogram](#84H-Largest-Rectangle-in-Histogram)
 <!-- GFM-TOC -->
 
 ## 1. Introduction to Array
@@ -918,4 +919,6 @@ def sortedSquares(self, A):
 
      return ans
 ```
+
+### 84H. Largest Rectangle in Histogram
 
