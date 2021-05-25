@@ -792,7 +792,7 @@ class Solution(object):
 ```
 
 
-## 1.3 Post Order Traversal
+## 1.3 Postorder Traversal
 Post-order traversal is to traverse the left subtree first. Then traverse the right subtree. Finally, visit the root.\
 <pre>
           F
