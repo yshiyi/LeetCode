@@ -8,6 +8,7 @@
     * [2. Template I Basic](#2-Template-I-Basic)
        * [69. Sqrt(x)](#69-Sqrtx)
        * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
+       * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -187,6 +188,133 @@ class Solution(object):
             if guess(mid)==-1:
                 right = mid - 1
 ```
+
+## 33M. Search in Rotated Sorted Array
+**Description:**\
+There is an integer array nums sorted in ascending order (with distinct values).\
+Prior to being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is \[nums\[k\], nums\[k+1\], ..., nums\[n-1\], nums\[0\], nums\[1\], ..., nums\[k-1\]\] (0-indexed).\
+For example, \[0,1,2,4,5,6,7\] might be rotated at pivot index 3 and become \[4,5,6,7,0,1,2\].\
+Given the array nums after the rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\
+**Method:**\
+We can still use the conventional binary search approach. \
+Notice, if the mid is less than right, then the right part is an ascending sequence. Otherwise, the left part is.\
+Comparing to the conventional binary search, there are four scenarios we need to consider.\
+Also note, since mid = left+(right-left)/2, mid could be equal to left. We need to consider this scenario as well.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.cpp)
+```
+// Solution 1: Compare mid to right
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution 2: Compare mid to left
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        // cout << left << " " << right << endl;
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            // cout << nums[mid] << endl;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] >= nums[left]){
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }else{
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution: Iterative approach
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    right = mid - 1;
+                }else{
+                    left = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.py)
+```
+class Solution(object):
+    def search(self, nums, target):
+        def binarySearch(nums, left, right, target):
+            if left <= right:
+                mid = int(left + (right-left)/2)
+                if nums[mid] == target:
+                    return mid
+                if nums[mid] < nums[right]:
+                    if nums[mid]<target and target<=nums[right]:
+                        return binarySearch(nums, mid+1, right, target)
+                    else:
+                        return binarySearch(nums, left, mid-1, target)
+                else:
+                    if nums[left]<=target and target<nums[mid]:
+                        return binarySearch(nums, left, mid-1, target)
+                    else:
+                        return binarySearch(nums, mid+1, right, target)
+            return -1
+        return binarySearch(nums, 0, len(nums)-1, target)
+```
+
 
 
 
