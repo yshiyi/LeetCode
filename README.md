@@ -5,6 +5,6 @@
 * [Hash Table](https://github.com/yshiyi/LeetCode/blob/main/Hash%20Table/Summary.md)
 * [Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/Linked%20List.md)
 * [Binary Tree](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/Summary.md)
-* [Recursion](https://github.com/yshiyi/LeetCode/blob/main/Cplusplus%20reference%20and%20algorithms.md#2-Quick-Sort)
+* [Recursion](https://github.com/yshiyi/LeetCode/blob/main/Recursion/Summary.md)
 * [C++ and Python Reference](https://github.com/yshiyi/LeetCode/blob/main/Cplusplus%20reference%20and%20algorithms.md)
 <!-- GFM-TOC -->
