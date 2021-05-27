@@ -7,18 +7,14 @@ class Solution(object):
         """
         self.res = []
         ans = []
-        check = [0]*(n+1)
-        def backtrack(n, k, ans, start, check):
+        def backtrack(n, k, ans, start):
             if len(ans)==k:
                 self.res.append(deepcopy(ans))
                 return
             for i in range(start, n+1):
-                if check[i]==0:
-                    ans.append(i)
-                    check[i]=1
-                    backtrack(n, k, ans, i+1, check)
-                    check[i]=0
-                    ans.pop()
-        
-        backtrack(n, k, ans, 1, check)
+                ans.append(i)
+                backtrack(n, k, ans, i+1)
+                ans.pop()
+
+        backtrack(n, k, ans, 1)
         return self.res
