@@ -9,6 +9,7 @@
        * [69. Sqrt(x)](#69-Sqrtx)
        * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
        * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
+    * [3. Template II Access Right Neighbor](#3-Template-II-Access-Right-Neighbor)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -88,6 +89,12 @@ Template #1 is the most basic and elementary form of Binary Search. It is used t
 1. Most basic and elementary form of Binary Search
 2. Search Condition can be determined without comparing to the element's neighbors (or use specific elements around it)
 3. No post-processing required because at each step, you are checking to see if the element has been found. If you reach the end, then you know the element is not found
+
+**Distinguishing Syntax:**\
+Initial Condition: left = 0, right = length-1\
+Termination: left > right\
+Searching Left: right = mid-1\
+Searching Right: left = mid+1\
 
 ## 69. Sqrt(x)
 **Description:**\
@@ -315,7 +322,41 @@ class Solution(object):
         return binarySearch(nums, 0, len(nums)-1, target)
 ```
 
+# 3. Template II Access Right Neighbor
+Template #2 is an advanced form of Binary Search. It is used to search for an element or condition which requires accessing the current index and its immediate right neighbor's index in the array.\
+**Key Attributes:**\
+1. An advanced way to implement Binary Search.
+2. Search Condition needs to access element's immediate right neighbor
+3. Use element's right neighbor to determine if condition is met and decide whether to go left or right
+4. Gurantees Search Space is at least 2 in size at each step
+5. Post-processing required. Loop/Recursion ends when you have 1 element left. Need to assess if the remaining element meets the condition.
 
+**Distinguishing Syntax:**\
+Initial Condition: left = 0, right = length
+Termination: left == right
+Searching Left: right = mid
+Searching Right: left = mid+1
+
+```
+int binarySearch(vector<int>& nums, int target){
+  if(nums.size() == 0)
+    return -1;
+
+  int left = 0, right = nums.size();
+  while(left < right){
+    // Prevent (left + right) overflow
+    int mid = left + (right - left) / 2;
+    if(nums[mid] == target){ return mid; }
+    else if(nums[mid] < target) { left = mid + 1; }
+    else { right = mid; }
+  }
+
+  // Post-processing:
+  // End Condition: left == right
+  if(left != nums.size() && nums[left] == target) return left;
+  return -1;
+}
+```
 
 
 
