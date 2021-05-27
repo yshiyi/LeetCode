@@ -1615,9 +1615,160 @@ class Solution(object):
 ```
 
 ## 52H. N-Queens II
-
+**Description:**\
+The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\
+Given an integer n, return the number of distinct solutions to the n-queens puzzle.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/52H.%20N-Queens%20II.cpp)
+```
+class Solution {
+public:
+    int res=0;
+    int totalNQueens(int n) {
+        vector<string> board(n, string(n, '.'));
+        backtrack(board, 0);
+        return res;
+    }
+    void backtrack(vector<string>& board, int row){
+        if(row==board.size()){
+            ++res;
+            return;
+        }
+        for(int col=0; col<board[0].size(); col++){
+            if(isValid(board, row, col)){
+                board[row][col] = 'Q';
+                backtrack(board, row+1);
+                board[row][col] = '.';
+            }
+        }
+    }
+    bool isValid(vector<string>& board, int row, int col){
+        for(int i=0; i<board.size(); i++){
+            if(board[i][col]=='Q'){
+                return false;
+            }
+        }
+        for(int i=row-1, j=col+1; i>=0 && j<board.size(); i--, j++){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+        for(int i=row-1, j=col-1; i>=0 && j>=0; i--, j--){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/52H.%20N-Queens%20II.py)
+```
+class Solution(object):
+    def totalNQueens(self, n):
+        self.res = 0
+        board = [list('.'*n) for i in range(n)]
+        def isValid(board, row, col):
+            for i in range(len(board)):
+                if board[i][col]=='Q':
+                    return False
+            i, j = row-1, col+1
+            while i>=0 and j<len(board):
+                if board[i][j]=='Q':
+                    return False
+                i -= 1
+                j += 1
+            i, j = row-1, col-1
+            while i>=0 and j>=0:
+                if board[i][j]=='Q':
+                    return False
+                i -= 1
+                j -= 1
+            return True
+        
+        def backtrack(board, row):
+            if row == len(board):
+                self.res += 1
+                return
+            for col in range(len(board[0])):
+                if isValid(board, row, col):
+                    board[row][col] = 'Q'
+                    backtrack(board, row+1)
+                    board[row][col] = '.'
+        
+        backtrack(board, 0)
+        return self.res
+```
 
 ## 489H. Robot Room Cleaner
+**Description:**\
+Given a robot cleaner in a room modeled as a grid.\
+Each cell in the grid can be empty or blocked.\
+The robot cleaner with 4 given APIs can move forward, turn left or turn right. Each turn it made is 90 degrees.\
+When it tries to move into a blocked cell, its bumper sensor detects the obstacle and it stays on the current cell.\
+Design an algorithm to clean the entire room using only the 4 given APIs shown below.
+```
+interface Robot {
+  // returns true if next cell is open and robot moves into the cell.
+  // returns false if next cell is obstacle and robot stays on the current cell.
+  boolean move();
+  // Robot will stay on the same cell after calling turnLeft/turnRight.
+  // Each turn will be 90 degrees.
+  void turnLeft();
+  void turnRight();
+  // Clean the current cell.
+  void clean();
+}
+```
+**Method:**\
+As usual, three things need to be concerned.
+1. The base case. In this case, we don't have the map, so we don't have any ending condition.
+2. The path. We need to mark the cell as visited when the robot passes by.
+3. Create four directions. For each direction, we try to move the robot.
+   If the next cell has been visited or it is blocked/boundary, we try the next direction.
+
+Note: we need to move the robot back to the previous position after backtracking.
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/489H.%20Robot%20Room%20Cleaner.cpp)
+```
+class Solution {
+public:
+    // Define movements in four different directions: left, up, right and down
+    // -1, 0, 1 represent the changes in the row or column
+    vector<vector<int>> dirs{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    void cleanRoom(Robot& robot) {
+        // Define a set to record the cells that are visited
+        unordered_set<string> visited;
+        backtrack(robot, 0, 0, 0, visited);
+    }
+    void backtrack(Robot& robot, int x, int y, int dir, unordered_set<string>& visited) {
+        // When enter a cell, the robot cleans it
+        robot.clean();
+        // Record this cell and mark it as cleaned
+        visited.insert(to_string(x) + "-" + to_string(y));
+        // Try different four directions
+        for (int i = 0; i < 4; ++i) {
+            // This is a tricky part. The current the direction is the direction of the movement from the last cell.
+            // In this solution, i=0 represent the current direction.
+            int cur = (i + dir) % 4, newX = x + dirs[cur][0], newY = y + dirs[cur][1];
+            
+            // Use .count() to check if we have visited this cell
+            // Use robot.move() to check if the next is open or an obstacle.
+            if (!visited.count(to_string(newX) + "-" + to_string(newY)) && robot.move()) {
+                backtrack(robot, newX, newY, cur, visited);
+              
+                // The following lines of command make the robot move back the last cell.
+                robot.turnRight();
+                robot.turnRight();
+                robot.move();
+                robot.turnLeft();
+                robot.turnLeft();
+            }
+            // If the next cell has been visited or is an obstacle, the robot simply turns right and trys next direction.
+            robot.turnRight();
+        }
+    }
+};
+```
+
 ## 37H. Sudoku Solver
 ## 77M. Combinations
 ## 78M. Subsets
