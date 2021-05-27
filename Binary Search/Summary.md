@@ -9,7 +9,7 @@
        * [69. Sqrt(x)](#69-Sqrtx)
        * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
        * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
-    * [3. Template II Access Right Neighbor](#3-Template-II-Access-Right-Neighbor)
+    * [3. Template II Access Neighbor](#3-Template-II-Access-Neighbor)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -322,7 +322,7 @@ class Solution(object):
         return binarySearch(nums, 0, len(nums)-1, target)
 ```
 
-# 3. Template II Access Right Neighbor
+# 3. Template II Access Neighbor
 Template #2 is an advanced form of Binary Search. It is used to search for an element or condition which requires accessing the current index and its immediate right neighbor's index in the array.\
 **Key Attributes:**\
 1. An advanced way to implement Binary Search.
@@ -332,10 +332,10 @@ Template #2 is an advanced form of Binary Search. It is used to search for an el
 5. Post-processing required. Loop/Recursion ends when you have 1 element left. Need to assess if the remaining element meets the condition.
 
 **Distinguishing Syntax:**\
-Initial Condition: left = 0, right = length
-Termination: left == right
-Searching Left: right = mid
-Searching Right: left = mid+1
+Initial Condition: left = 0, right = length\
+Termination: left == right\
+Searching Left: right = mid\
+Searching Right: left = mid+1\
 
 ```
 int binarySearch(vector<int>& nums, int target){
