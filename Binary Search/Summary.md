@@ -7,6 +7,7 @@
        * [704. Binary Search](#704-Binary-Search) 
     * [2. Template I Basic](#2-Template-I-Basic)
        * [69. Sqrt(x)](#69-Sqrtx)
+       * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -138,3 +139,69 @@ class Solution(object):
                 left = mid+1
         return -1
 ```
+
+## 374. Guess Number Higher or Lower
+**Description:**\
+We are playing the Guess Game. The game is as follows:\
+I pick a number from 1 to n. You have to guess which number I picked.\
+Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.\
+You call a pre-defined API int guess(int num), which returns 3 possible results:\
+-1: The number I picked is lower than your guess (i.e. pick < num).\
+1: The number I picked is higher than your guess (i.e. pick > num).\
+0: The number I picked is equal to your guess (i.e. pick == num).\
+Return the number that I picked.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.cpp)
+```
+class Solution {
+public:
+    int guessNumber(int n) {
+        int left = 0, right = n;
+        while(left <= right){
+            // Note: left + right can exceed the limit of int
+            int mid = left+(right-left)/2;
+            if(guess(mid)==0){
+                return mid;
+            }
+            if(guess(mid)==1){
+                left = mid + 1;
+            }
+            if(guess(mid)==-1){
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.py)
+```
+class Solution(object):
+    def guessNumber(self, n):
+        left, right = 0, n
+        while left<=right:
+            mid = int(left+right)/2
+            if guess(mid)==0:
+                return mid
+            if guess(mid)==1:
+                left = mid + 1
+            if guess(mid)==-1:
+                right = mid - 1
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
