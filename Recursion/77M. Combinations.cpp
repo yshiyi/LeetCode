@@ -30,34 +30,47 @@ Similar Questions:
 Combination Sum - Medium
 Permutations - Medium
 */
+
+// Solution:
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> ans;
+        backtrack(ans, 1, n, k);
+        return res;
+    }
+    void backtrack(vector<int>&ans, int start, int end, int k){
+        if(ans.size()==k){
+            res.push_back(ans);
+            return;
+        }
+        for(int i=start; i<=end; i++){
+            ans.push_back(i);
+            backtrack(ans, i+1, end, k);
+            ans.pop_back();
+        }
+    }
+};
+
 // Method 1:
 class Solution {
 public:
     vector<vector<int>> res;
-    set<set<int>> res_s;
     vector<vector<int>> combine(int n, int k) {
-        set<int> ans;
+        vector<int> ans;
         backtrack(ans, 1, n, k);
         return res;
     }
-    void backtrack(set<int>&ans, int start, int end, int k){
+    void backtrack(vector<int>&ans, int start, int end, int k){
         if(ans.size()==k){
-            if(res_s.find(ans)==res_s.end()){
-                res_s.insert(ans);
-                vector<int> ans_;
-                for(auto v:ans){
-                    ans_.push_back(v);
-                }
-                res.push_back(ans_);
-            }
+            res.push_back(ans);
             return;
         }
         for(int i=start; i<=end; i++){
-            if(ans.find(i)==ans.end()){
-                ans.insert(i);
-                backtrack(ans, i+1, end, k);
-                ans.erase(i);
-            }
+            ans.push_back(i);
+            backtrack(ans, i+1, end, k);
+            ans.pop_back();
         }
     }
 };
