@@ -20,3 +20,26 @@ Constraints:
 0 <= x <= 231 - 1
 
 */
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x<2){
+            return x;
+        }
+        int left = 0, right = x;
+        while(left<=right){
+            int mid = (right+left)/2;
+            if(mid<=x/mid && (mid+1)>x/(mid+1)){
+                return mid;
+            }
+            if(mid>x/mid){
+                right = mid-1;
+            }
+            if(mid<x/mid){
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
