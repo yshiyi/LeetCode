@@ -1770,12 +1770,681 @@ public:
 ```
 
 ## 37H. Sudoku Solver
+**Description:**\
+Write a program to solve a Sudoku puzzle by filling the empty cells.\
+A sudoku solution must satisfy all of the following rules:\
+1. Each of the digits 1-9 must occur exactly once in each row.
+2. Each of the digits 1-9 must occur exactly once in each column.
+3. Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+
+The '.' character indicates empty cells.
+**Example:**\
+Input: board = \[\["5","3",".",".","7",".",".",".","."\],\
+                \["6",".",".","1","9","5",".",".","."\],\
+                \[".","9","8",".",".",".",".","6","."\],\
+                \["8",".",".",".","6",".",".",".","3"\],\
+                \["4",".",".","8",".","3",".",".","1"\],\
+                \["7",".",".",".","2",".",".",".","6"\],\
+                \[".","6",".",".",".",".","2","8","."\],\
+                \[".",".",".","4","1","9",".",".","5"\],\
+                \[".",".",".",".","8",".",".","7","9"\]\]\
+**Method:**\
+The backtracking function needs to return a boolean value so as to determine if the solution is correct.
+1. The base case is when we reach to the end of the board (i.e., row==board.size()).
+   This means we have obtained a valid solution, then return true.
+2. Check if the current cell has been filled. If so, move to next cell.
+3. If the current cell is empty, we try to fill in with number 1 - 9.
+   After filling in each number, we check the next cell via the recursion function.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/37H.%20Sudoku%20Solver.cpp)
+```
+// Using vector<vector<int>>, positions represent the value. 0 means not appeared, and 1 means appeared.
+// Runtime is about 3 - 4 ms.
+class Solution {
+public:
+    vector<vector<int>> v_row, v_col, v_box; 
+    void solveSudoku(vector<vector<char>>& board) {
+        // The size of each sub-vector is 10, because it includes 0 - 9.
+        v_row = vector<vector<int>>(9, vector<int>(10));
+        v_col = vector<vector<int>>(9, vector<int>(10));
+        v_box = vector<vector<int>>(9, vector<int>(10));
+        for(int i=0; i<board.size();i++){
+            for(int j=0; j<board[0].size(); j++){
+                if(board[i][j]!='.'){
+                    int box_index = i/3 * 3 + j/3;
+                    int num = board[i][j] - '0';
+                    v_row[i][num] = 1;
+                    v_col[j][num] = 1;
+                    v_box[box_index][num] = 1;
+                }
+            }
+        }
+        backtrack(board, 0, 0);
+    }
+    bool backtrack(vector<vector<char>>& board, int row, int col){
+        if(row==board.size()){
+            return true;
+        }
+        
+        // Get the next column number, which varies between 0 - 8
+        int col_n = (col + 1) % 9;
+        // When col == 0, it means we move to the next row. Then we increase row by 1.
+        int row_n = (col_n==0) ? row+1 : row;
+        if(board[row][col]!='.'){
+            return backtrack(board, row_n, col_n);
+        }
+        
+        for(char i='1'; i<='9'; i++){
+            int box_index = row/3*3+col/3;
+            int num = i - '0';
+            if(v_row[row][num]==0 && v_col[col][num]==0 && v_box[box_index][num]==0){
+                v_row[row][num] = 1;
+                v_col[col][num] = 1;
+                v_box[box_index][num] = 1;
+                board[row][col] = i;
+                if(backtrack(board, row_n, col_n)){
+                    return true;
+                }
+                board[row][col] = '.';
+                v_row[row][num] = 0;
+                v_col[col][num] = 0;
+                v_box[box_index][num] = 0;
+            }
+        }
+        return false;
+    }    
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/37H.%20Sudoku%20Solver.py)
+```
+class Solution(object):
+    def solveSudoku(self, board):
+        self.v_row = [[0]*10 for i in range(9)]
+        self.v_col = [[0]*10 for i in range(9)]
+        self.v_box = [[0]*10 for i in range(9)]
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] != '.':
+                    box_i = i//3*3 + j//3
+                    n = int(board[i][j])
+                    self.v_row[i][n] = 1
+                    self.v_col[j][n] = 1
+                    self.v_box[box_i][n] = 1
+        
+        def backtrack(board, row, col):
+            if row == len(board):
+                return True
+            col_n = (col + 1) % 9
+            if col_n == 0:
+                row_n = row + 1
+            else:
+                row_n = row
+            
+            if board[row][col] != '.':
+                return backtrack(board, row_n, col_n)
+            
+            for i in range(1, 10):
+                box_id = row//3 * 3 + col//3
+                n = int(i)
+                if self.v_row[row][n]==0 and self.v_col[col][n]==0 and self.v_box[box_id][n]==0:
+                    self.v_row[row][n] = 1
+                    self.v_col[col][n] = 1
+                    self.v_box[box_id][n] = 1
+                    board[row][col] = chr(i+48)
+                    if backtrack(board, row_n, col_n):
+                        return True
+                    board[row][col] = '.'
+                    self.v_row[row][n] = 0
+                    self.v_col[col][n] = 0
+                    self.v_box[box_id][n] = 0
+            return False
+        
+        backtrack(board, 0, 0)
+```
+
 ## 77M. Combinations
+**Description:**\
+Given two integers n and k, return all possible combinations of k numbers out of the range \[1, n\].\
+You may return the answer in any order.\
+**Example:**\
+Input: n = 4, k = 2\
+Output:\
+\[\[2,4\],\
+  \[3,4\],\
+  \[2,3\],\
+  \[1,2\],\
+  \[1,3\],\
+  \[1,4\],\]
+**Method:**\
+This is a typical problem of backtracking.\
+One feature of combination is that there are no duplicates and the order of numbers does not matter. In other words, \[2, 4\] and \[4, 2\] are the same.\
+For the given example, we can see that we need to consider 2, 3 and 4 for 1. We only need to consider 3 and 4 for 2.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/77M.%20Combinations.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> ans;
+        backtrack(ans, 1, n, k);
+        return res;
+    }
+    void backtrack(vector<int>&ans, int start, int end, int k){
+        if(ans.size()==k){
+            res.push_back(ans);
+            return;
+        }
+        for(int i=start; i<=end; i++){
+            ans.push_back(i);
+            backtrack(ans, i+1, end, k);
+            ans.pop_back();
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/77M.%20Combinations.py)
+```
+class Solution(object):
+    def combine(self, n, k):
+        self.res = []
+        ans = []
+        def backtrack(n, k, ans, start):
+            if len(ans)==k:
+                self.res.append(deepcopy(ans))
+                return
+            for i in range(start, n+1):
+                ans.append(i)
+                backtrack(n, k, ans, i+1)
+                ans.pop()
+
+        backtrack(n, k, ans, 1)
+        return self.res
+```
+
 ## 78M. Subsets
+**Description:**\
+Given an integer array nums of unique elements, return all possible subsets (the power set).\
+The solution set must not contain duplicate subsets. Return the solution in any order.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/78M.%20Subsets.cpp)
+```
+/*
+Method 1: Backtracking
+          Image that all possible subsets can construct a tree:
+                                 []
+                    /            |           \
+                  [1]           [2]           [3]
+                 /   \           |
+            [1,2]     [1,3]   [2, 3]
+              |
+          [1, 2, 3]
+          We just simply traverse this tree.
+*/
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> temp;
+        backtrack(nums, 0, temp);
+        return res;
+    }
+    void backtrack(vector<int>& nums, int start, vector<int>& temp){
+        res.push_back(temp);
+        for(int i=start; i<nums.size(); i++){
+            temp.push_back(nums[i]);
+            backtrack(nums, i+1, temp);
+            temp.pop_back();
+        }
+    }
+};
+
+
+/*
+Method 2: Iterative approach
+          Let's try some examples.
+          The subsets of [1] is [[], [1]].
+          The subsets of [1, 2] is [[], [1], [2], [1, 2]].
+          We can see that the subsets of [1, 2] is just the combination of subsets of [1] and each subset of [1] add 2.
+*/
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        res.push_back(temp);
+        for(auto v:nums){
+            int n = res.size();
+            for(int i=0; i<n; i++){
+                temp = res[i];
+                temp.push_back(v);
+                res.push_back(temp);
+            }
+        }
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/78M.%20Subsets.py)
+```
+class Solution(object):
+    def subsets(self, nums):
+        res = [[]]
+        for num in nums:
+            n = len(res)
+            for i in range(n):
+                temp = list(res[i])
+                temp.append(num)
+                res.append(temp)
+        
+        return res
+```
+
 ## 46M. Permutations
+**Description:**\
+Given an array nums of distinct integers, return all the possible permutations. \
+You can return the answer in any order.\
+**Example:**\
+Input: nums = \[1,2,3\]\
+Output: \[\[1,2,3\],\[1,3,2\],\[2,1,3\],\[2,3,1\],\[3,1,2\],\[3,2,1\]\]\
+**Method:**\
+Compared to 77M.Combinations, we need to consider the order of the numbers in this problem.\
+Therefore, we need to iterate through the whole array in each call of recursive function.\
+We then need a vector to check if the number has been added into the temp ans.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/46M.%20Permutations.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<int> temp;
+        vector<int> check(nums.size(), 0);
+        backtrack(nums, check, temp);
+        return res;
+    }
+    void backtrack(vector<int>& nums, vector<int>& check, vector<int>& temp){
+        if(temp.size()==nums.size()){
+            res.push_back(temp);
+            return;
+        }
+        for(int i=0; i<nums.size(); i++){
+            if(check[i]==0){
+                check[i] = 1;
+                temp.push_back(nums[i]);
+                backtrack(nums, check, temp);
+                temp.pop_back();
+                check[i] = 0;
+            }
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/46M.%20Permutations.py)
+```
+class Solution(object):
+    def permute(self, nums):
+        res = []
+        temp = []
+        
+        def backtrack(nums, temp):
+            if len(temp) == len(nums):
+                res.append(list(temp))
+                return
+            for num in nums:
+                if num not in temp:
+                    temp.append(num)
+                    backtrack(nums, temp)
+                    temp.pop()
+                    
+        backtrack(nums, temp)
+        return res
+```
+
 ## 47M. Permutations II
+**Description:**\
+Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.\
+**Example:**\
+Input: nums = \[1,1,2\]\
+Output: \[\[1,1,2\], \[1,2,1\], \[2,1,1\]\]\
+**Method:**\
+Similar to 46M.Permutations\
+However, since there exist duplicate elements, we must consider one more condition.\
+We need to sort the nums first. \
+Then, if nums\[i\] is the same as nums\[i-1\], and check\[i-1\]==0, then we pass nums\[i\].\
+Note: check\[i-1\] == 0 means nums\[i-1\] has been checked and returned back to 0.\
+      It doesn't mean that nums\[i-1\] hasn't been checked yet.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/47M.%20Permutations%20II.cpp)
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<int> temp;
+        vector<int> check(nums.size(), 0);
+        sort(nums.begin(), nums.end());
+        backtrack(nums, check, temp);
+        return res;
+    }
+    void backtrack(vector<int>& nums, vector<int>& check, vector<int>& temp){
+        if(temp.size()==nums.size()){
+            res.push_back(temp);
+            return;
+        }
+        for(int i=0; i<nums.size(); i++){
+            if(isValid(nums, check, i)){
+                check[i] = 1;
+                temp.push_back(nums[i]);
+                backtrack(nums, check, temp);
+                temp.pop_back();
+                check[i] = 0;
+            }
+        }
+    }
+    bool isValid(vector<int>& nums, vector<int>& check, int i){
+        if(check[i]==1){
+            return false;
+        }
+        if(i>0 && nums[i]==nums[i-1] && check[i-1]==0){
+            return false;
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/47M.%20Permutations%20II.py)
+```
+class Solution(object):
+    def permuteUnique(self, nums):
+        res = []
+        temp = []
+        check = [0]*len(nums)
+        
+        def isValid(nums, check, i):
+            if check[i]==1:
+                return False
+            if i>0 and nums[i]==nums[i-1] and check[i-1]==0:
+                return False
+            return True
+        
+        def backtrack(nums, check, temp):
+            if len(temp) == len(nums):
+                res.append(list(temp))
+                return
+            for i in range(len(nums)):
+                if isValid(nums, check, i):
+                    check[i] = 1
+                    temp.append(nums[i])
+                    backtrack(nums, check, temp)
+                    temp.pop()
+                    check[i] = 0
+                    
+        backtrack(sorted(nums), check, temp)
+        return res
+```
+
 ## 17M. Letter Combinations of a Phone Number
+**Description:**\
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. \
+Return the answer in any order.\
+A mapping of digit to letters (just like on the telephone buttons) is given below. \
+Note that 1 does not map to any letters.\
+**Method:**\
+Recursive approach - backtracking\
+The input digits are between 2 and 9. \
+We need to first create a map to hold the digits and the corresponding letters.\
+Define a variable, "count", to go through the input string.\
+For each digit, we determine the corresponding letters using the map.\
+Then using backtracking method to find out all possible combinations.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/17M.Letter%20Combinations%20of%20a%20Phone%20Number.cpp)
+```
+class Solution {
+public:
+    vector<string> res;
+    vector<string> letterCombinations(string digits) {
+        if(digits.size()==0){
+            return res;
+        }
+        map<char, string> m ={{'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"}, 
+                              {'8', "tuv"}, {'9', "wxyz"}};
+        string temp;
+        backtrack(digits, m, temp, 0);
+        return res;
+    }
+    void backtrack(string& digits, map<char, string>& m, string& temp, int count){
+        if(count==digits.size()){
+            res.push_back(temp);
+            return;
+        }
+        string str = m[digits[count]];
+        for(int i=0; i<str.size(); i++){
+            temp = temp + str[i];
+            backtrack(digits, m, temp, count+1);
+            temp.pop_back();
+        }
+    }
+};
+
+
+/*
+Method 2: Iterative approach
+          Imagine each digit is a node in a tree. 
+          Each letter contained in the first digit connects to each letter contained in the second digit.
+          e.g., 
+                    a          b          c
+                 /  |  \    /  |  \    /  |  \
+                d   e   f  d   e   f  d   e   f
+          To find out all possible combinations is like to using breadth-first search to traverse the tree.
+          Hence, we need to use queue to store all combinations.
+          For each string currently stored in the queue, we connect it to all possible children.
+          And save the new combinations back to the queue.
+*/
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> res;
+        if(digits.size()==0){
+            return res;
+        }
+        map<char, string> m ={{'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"}, 
+                              {'8', "tuv"}, {'9', "wxyz"}};
+        
+        string temp;
+        queue<string> q;
+        string letters = m[digits[0]];
+        // Initially, we save all the letters contained in the first digit to the queue.
+        for(int i=0; i<letters.size(); i++){
+            // Note: the queue is supposed to store strings.
+            //       to save char, we need string(1, char) to convert a char to string.
+            q.push(string(1, letters[i]));
+        }
+        
+        // We then loop through all the rest of digits.
+        for(int i=1; i<digits.size(); i++){
+            letters = m[digits[i]];
+            // Obtain the current size of the queue
+            int count = q.size();
+            // We can't use q.size() as a condition, because we keep inserting new string to the queue.
+            while(count){
+                temp = q.front(); q.pop();
+                // Take out the first string and add it to all possible letters contained in the next digit.
+                for(int j=0; j<letters.size(); j++){
+                    temp += letters[j];
+                    q.push(temp);
+                    temp.pop_back();
+                }
+                --count;
+            } 
+        }
+        
+        while(q.size()){
+            res.push_back(q.front());
+            q.pop();
+        }
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/17M.Letter%20Combinations%20of%20a%20Phone%20Number.py)
+```
+class Solution(object):
+    def letterCombinations(self, digits):
+        if len(digits)==0:
+            return ""
+        self.map = {'2':"abc", '3':"def", '4':"ghi", '5':"jkl", '6':"mno", '7':"pqrs", '8':"tuv", '9':"wxyz"}
+        res = []
+        temp = ""
+        def backtrack(digits, temp, count):
+            if count == len(digits):
+                res.append(temp)
+                return
+            str = self.map[digits[count]]
+            for i in range(len(str)):
+                temp += str[i]
+                backtrack(digits, temp, count+1)
+                temp = temp[:-1]
+        
+        backtrack(digits, temp, 0)
+        return res
+```
+
 ## 698M. Partition to K Equal Sum Subsets
+**Description:**\
+Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/698M.%20Partition%20to%20K%20Equal%20Sum%20Subsets.cpp)
+```
+/*
+Method 1: Backtracking
+          There are two different backtracking approaches for this questions.
+          In this method, we define k buckests and iterate through the values in nums.
+          For each number, we determine the correct bucket.
+          To improve the computational efficiency, we sort nums in descending order first.
+*/
+class Solution {
+public:
+    // Declare this static predicate to sort nums in descending order
+    static bool myCompare(int num1, int num2){
+        return num1 > num2;
+    }
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = 0;
+        for(auto v:nums){
+            sum += v;
+        }
+        // Check the reminder of sum/k, if it is non-zero, we can't divide nums into k subsets 
+        if(sum%k!=0){
+            return false;
+        }
+        int target = sum/k;
+        // Create k subsets
+        vector<int> bucket(k, 0);
+        sort(nums.begin(), nums.end(), myCompare);
+        return backtrack(nums, 0, bucket, target);
+    }
+    bool backtrack(vector<int>& nums, int index, vector<int>& bucket, int target){
+        // When we reach to the end of nums, we need to check if the sum of each subset is equal to target
+        if(index == nums.size()){
+            for(int i=0; i<bucket.size();i++){
+                if(bucket[i]!=target){
+                    return false;
+                }
+            }
+            return true;
+        }
+        // Iterate through all subsets
+        for(int i=0; i<bucket.size(); i++){
+            // If the sum of the subset is less than target, we can add this number to buckest[i]
+            if(bucket[i]+nums[index]<=target){
+                bucket[i] += nums[index];
+                if(backtrack(nums, index+1, bucket, target)){
+                    return true;
+                }
+                bucket[i] -= nums[index];
+            }
+        }
+        return false;
+    }
+};
+
+/*
+Method 2: Backtracking
+          There are two steps in this method:
+          1. Determine if the current number should be put into the bucket i.
+          2. If the sum of the numbers in buckets i reaches to target, we then move to bucket i+1 and repeat step 1.
+          This approach is much faster than method 1.
+*/
+class Solution {
+public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = 0;
+        for(auto v:nums){
+            sum += v;
+        }
+        if(sum%k!=0){
+            return false;
+        }
+        int target = sum/k;
+        // This vector is used to check if the value has been put into a bucket.
+        vector<int> used(nums.size(), 0);
+        int bucket_sum = 0;
+        return backtrack(nums, 0, k, bucket_sum, used, target);
+    }
+    bool backtrack(vector<int>& nums, int start, int k, int bucket_sum, vector<int>& used, int target){
+        // When k==0, it means all buckets have been successfully filled in.
+        if(k==0){
+            return true;
+        }
+        // If the sum of the bucket is equal to target, we then move on to the next bucket.
+        if(bucket_sum==target){
+            return backtrack(nums, 0, k-1, 0, used, target);
+        }
+        // Iterate through all values in nums.
+        // Start from start to improve the computational efficiency
+        for(int i=start; i<nums.size(); i++){
+            if(used[i]==1){
+                continue;
+            }
+            if(nums[i]+bucket_sum>target){
+                continue;
+            }
+            bucket_sum += nums[i];
+            used[i] = 1;
+            if(backtrack(nums, i+1, k, bucket_sum, used, target)){
+                return true;
+            }
+            used[i] = 0;
+            bucket_sum -= nums[i];
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/698M.%20Partition%20to%20K%20Equal%20Sum%20Subsets.py)
+```
+class Solution(object):
+    def canPartitionKSubsets(self, nums, k):
+       if sum(nums)%k != 0:
+            return False
+        target = sum(nums)/k
+        used = [0]*len(nums)
+        
+        def backtrack(nums, start, k, bucket_sum, used, target):
+            if k==0:
+                return True
+            if bucket_sum == target:
+                return backtrack(nums, 0, k-1, 0, used, target)
+            for i in range(start, len(nums)):
+                if used[i]==1:
+                    continue
+                if bucket_sum + nums[i] > target:
+                    continue
+                bucket_sum += nums[i]
+                used[i] = 1
+                if backtrack(nums, i+1, k, bucket_sum, used, target):
+                    return True
+                used[i] = 0
+                bucket_sum -= nums[i]
+            return False
+        
+        return backtrack(nums, 0, k, 0, used, target)
+```
 
 
 # 6. Divide and Conquer vs Backtracking
