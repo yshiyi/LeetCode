@@ -27,7 +27,7 @@ Similar Questions:
 Search in a Sorted Array of Unknown Size - Medium
 */
 
-
+// Template I
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
@@ -45,6 +45,30 @@ public:
             return binarySearch(nums, target, left, mid-1);
         }else{
             return binarySearch(nums, target, mid+1, right);
+        }
+    }
+};
+
+// Template II
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid]>target){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        if(nums[left]==target){
+            return left;
+        }else{
+            return -1;
         }
     }
 };
