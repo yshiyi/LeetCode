@@ -37,6 +37,7 @@
        * [37H. Sudoku Solver](#37H-Sudoku-Solver)
        * [77M. Combinations](#77M-Combinations)
        * [78M. Subsets](#78M-Subsets)
+       * [90M. Subsets II](#90M-Subsets-II)
        * [46M. Permutations](#46M-Permutations)
        * [47M. Permutations II](#46M-Permutations-II)
        * [17M. Letter Combinations of a Phone Number](#17M-Letter-Combinations-of-a-Phone-Number)
@@ -2038,6 +2039,86 @@ class Solution(object):
                 temp.append(num)
                 res.append(temp)
         
+        return res
+```
+
+## 90M. Subsets II
+**Description:**\
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).\
+The solution set must not contain duplicate subsets. Return the solution in any order.\
+**Example:**\
+Input: nums = \[1,2,2\]\
+Output: \[\[\],\[1\],\[1,2\],\[1,2,2\],\[2\],\[2,2\]\]\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Recursion/90M.%20Subsets%20II.cpp)
+```
+/*
+Solution: Similar to 47M. Permutations II
+          Sort the array first so as to put duplicates together.
+          Since there are duplicated values in the array, we need a vector "check" to check if the value has been added. 
+*/
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int> temp;
+        vector<int> check(nums.size(), 0);
+        sort(nums.begin(), nums.end());
+        backtrack(nums, temp, check, 0);
+        return res;
+    }
+    void backtrack(vector<int>& nums, vector<int>& temp, vector<int>& check, int start){
+        res.push_back(temp);
+        for(int i=start; i<nums.size(); ++i){
+            if(isValid(nums, check, i)){
+                temp.push_back(nums[i]);
+                check[i] = 1;
+                backtrack(nums, temp, check, i+1);
+                check[i] = 0;
+                temp.pop_back();
+            }
+        }
+    }
+    bool isValid(vector<int>& nums, vector<int>& check, int& i){
+        if(check[i]==1){
+            return false;
+        }
+        if(i>0 && nums[i]==nums[i-1] && check[i-1]==0){
+            return false;
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Recursion/90M.%20Subsets%20II.py)
+```
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        temp = []
+        check = [0]*len(nums)
+        nums.sort()
+        
+        def isValid(nums, check, i):
+            if check[i]==1:
+                return False
+            if i>0 and nums[i]==nums[i-1] and check[i-1]==0:
+                return False
+            return True
+        
+        def backtrack(nums, res, temp, check, start):
+            res.append(list(temp))
+            for i in range(start, len(nums)):
+                if isValid(nums, check, i):
+                    check[i]=1
+                    temp.append(nums[i])
+                    backtrack(nums, res, temp, check, i+1)
+                    temp.pop()
+                    check[i]=0
+        backtrack(nums, res, temp, check, 0)
         return res
 ```
 
