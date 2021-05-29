@@ -35,16 +35,16 @@ public:
         vector<int> temp;
         vector<int> check(nums.size(), 0);
         sort(nums.begin(), nums.end());
-        subsets(nums, temp, check, 0);
+        backtrack(nums, temp, check, 0);
         return res;
     }
-    void subsets(vector<int>& nums, vector<int>& temp, vector<int>& check, int start){
+    void backtrack(vector<int>& nums, vector<int>& temp, vector<int>& check, int start){
         res.push_back(temp);
         for(int i=start; i<nums.size(); ++i){
             if(isValid(nums, check, i)){
                 temp.push_back(nums[i]);
                 check[i] = 1;
-                subsets(nums, temp, check, i+1);
+                backtrack(nums, temp, check, i+1);
                 check[i] = 0;
                 temp.pop_back();
             }
