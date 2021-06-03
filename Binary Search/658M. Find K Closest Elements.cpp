@@ -30,8 +30,13 @@ Find K-th Smallest Pair Distance - Hard
 */
 
 /*
-Method 1: Binary Search
+Method 1: Binary Search to find left bound
           Time complexity is O(log(N-k) + k). Take O(log(N-k)) to search for the left bound and O(k) to build the final answer.
+          The basic idea is that we use binary search method to determine the position of the left bound.
+          First of all, the biggest index the left bound could be is arr.size()-k. Suppose arr.size() = 5, k = 3
+          0 1 2 3 4, the biggest index of the left bound is 2.
+          Then, we consider arr[mid] and arr[mid+k]. Notice that only one of them could be in a final answer.
+          If arr[mid] is closer than arr[mid+k], it means we don't need to consider all the values to the right of arr[mid+k] as well as arr[mid+k]. We should move the right pointer to avoid considering them.
 */
 class Solution {
 public:
