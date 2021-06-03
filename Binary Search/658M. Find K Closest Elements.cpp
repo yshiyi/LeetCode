@@ -47,6 +47,12 @@ public:
             if(x-arr[mid]>arr[mid+k]-x){
                 left = mid + 1;
             }else{
+                /* 
+                    Why don't we use right = mid - 1?
+                    If we use right = mid - 1, the condition of while loop should be left<=right.
+                    Hence, we will check the condition when left == right.
+                    However, we are not supposed to check arr[right], because arr[right+k] is out of array.
+                */
                 right = mid;
             }
         }
