@@ -12,6 +12,7 @@
     * [3. Template II Access Neighbor](#3-Template-II-Access-Neighbor)
        * [278. First Bad Version](#278-First-Bad-Version)
     * [4. Template III Access Both Neighbors](#4-Template-III-Access-Both-Neighbors)
+    * [5. Binary Search Template Analysis](#5-Binary-Search-Template-Analysis)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -492,6 +493,31 @@ int binarySearch(vector<int>& nums, int target){
     return -1;
 }
 ```
+
+
+# 5. Binary Search Template Analysis
+**Template I (left<=right):**\
+1. Most basic and elementary form of Binary Search
+2. Search Condition can be determined without comparing to the element's neighbors (or use specific elements around it)
+3. No post-processing required because at each step, you are checking to see if the element has been found. If you reach the end, then you know the element is not found
+
+**Template II (left<right):**\
+1. An advanced way to implement Binary Search.
+2. Search Condition needs to access element's immediate right neighbor
+3. Use element's right neighbor to determine if condition is met and decide whether to go left or right
+4. Gurantees Search Space is at least 2 in size at each step
+5. Post-processing required. Loop/Recursion ends when you have 1 element left. Need to assess if the remaining element meets the condition.
+
+**Template III (left+1<right):**\
+1. An alternative way to implement Binary Search
+2. Search Condition needs to access element's immediate left and right neighbors
+3. Use element's neighbors to determine if condition is met and decide whether to go left or right
+4. Gurantees Search Space is at least 3 in size at each step
+5. Post-processing required. Loop/Recursion ends when you have 2 elements left. Need to assess if the remaining elements meet the condition.
+
+**Time and Space Complexity:**\
+1. Runtime: O(log N) -- logorithmic time (base 2)
+2. Space: O(1) -- constant space
 
 
 
