@@ -37,8 +37,11 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 ```
 
 # Max and min int
-For C++: INT_MAX, INT_MIN
-For Python: float('inf'), float('-inf')
+**INT:**\
+For C++: INT_MAX, INT_MIN\
+For Python: float('inf'), float('-inf')\
+**Double:**\
+For C++: numeric_limits<double>::max() 
 
 
 # Generate Random Number
