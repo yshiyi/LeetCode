@@ -652,6 +652,30 @@ Hash Table, Two Pointers, Binary Search, Sort\
 |:-- |:-- |
 |<pre>vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {<br>        vector\<int\> result;<br>        result.resize(min(nums1.size(), nums2.size()));<br>        sort(nums1.begin(), nums1.end());<br>        sort(nums2.begin(), nums2.end());<br>        vector<int>::iterator it = set_intersection(nums1.begin(), nums1.end(), nums2.begin(), nums2.end(), result.begin());<br>        // Note: it points to the position next to the last intersected element.<br>        //       If it is pointing to result.end(), there must be zeros. We need to remove those zeros.<br>        if (it != result.end()) {<br>            while(it!= result.end()) {<br>                result.erase(it);<br>            }<br>        }<br>        return result;<br>    } </pre>|<pre>def intersect(self, nums1, nums2):<br>        '''<br>        Method 1: Using set(A).intersection() to extract the common elements in both nums1 and nums2<br>                  Convert the intersection into a list.<br>                  For each element in the list, we find the minimum number of that element contained in both nums1 and nums2.<br>                  Extend the result list by that number of that element.<br>        '''<br>        common=list(set(nums1).intersection(nums2))<br>        result = []<br>        for x in common:<br>            result.extend([x]*min(nums1.count(x),nums2.count(x)))<br>        return result<br>        '''<br>        Method 2: Sort both nums1 and nums2 at first.<br>                  Count the minimum number of shared elements.<br>        '''<br>        nums1 = sorted(nums1)<br>        nums2 = sorted(nums2)<br>        result = []<br>        i = 0<br>        while i < len(nums1):<br>            if nums1[i] in nums2:<br>                result.extend([nums1[i]]*min(nums1.count(nums1[i]), nums2.count(nums1[i])))<br>                i += nums1.count(nums1[i])<br>            else:<br>                i += 1<br>        return result </pre>|
 
+```
+/*
+Method: Using Hashtable
+        Traverse nums1, record the values and their appearances.
+        Then sweep through nums2. 
+        If the value is in the map and its value is greater than 0, then save it to res and reduce its value in map by 1.
+*/
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> m;
+        vector<int> res;
+        for (auto a : nums1) ++m[a];
+        for (auto a : nums2) {
+            if (m[a] > 0){
+                res.push_back(a);
+                m[a]--;
+            }
+        }
+        return res;
+    }
+};
+```
+
 ### 36M. Valid Sudoku
 **Description:**\
 Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
