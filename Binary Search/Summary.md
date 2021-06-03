@@ -345,7 +345,7 @@ int binarySearch(vector<int>& nums, int target){
   if(nums.size() == 0)
     return -1;
 
-  int left = 0, right = nums.size();
+  int left = 0, right = nums.size() - 1;
   while(left < right){
     // Prevent (left + right) overflow
     int mid = left + (right - left) / 2;
@@ -359,6 +359,25 @@ int binarySearch(vector<int>& nums, int target){
   if(left != nums.size() && nums[left] == target) return left;
   return -1;
 }
+
+int binarySearch(vector<int>& nums, int target){
+  if(nums.size() == 0)
+    return -1;
+   
+  // If we initialize right = nums.size(), then we don't need any post-process
+  // Because, when left == right, it means the target doesn't exist
+  int left = 0, right = nums.size();
+  while(left < right){
+    // Prevent (left + right) overflow
+    int mid = left + (right - left) / 2;
+    if(nums[mid] == target){ return mid; }
+    else if(nums[mid] < target) { left = mid + 1; }
+    else { right = mid; }
+  }
+
+  return -1;
+}
+
 ```
 
 ## 278. First Bad Version
