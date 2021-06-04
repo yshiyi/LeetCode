@@ -13,6 +13,12 @@
        * [278. First Bad Version](#278-First-Bad-Version)
     * [4. Template III Access Both Neighbors](#4-Template-III-Access-Both-Neighbors)
     * [5. Binary Search Template Analysis](#5-Binary-Search-Template-Analysis)
+    * [6. Summary](#6-Summary)
+       * [6.1 Find the value equal to target](#61-Find-the-value-equal-to-target)
+       * [6.2 Find the first value greater than or equal to target](#62-Find-the-first-value-greater-than-or-equal-to-target)
+       * [6.3 Find the first value greater than target](#63-Find-the-first-value-greater-than-target)
+       * [6.4 Use subfunction to determine the relation](#64-Use-subfunction-to-determine-the-relation)
+       * [6.5 Others](#65-Others)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -539,8 +545,73 @@ int binarySearch(vector<int>& nums, int target){
 2. Space: O(1) -- constant space
 
 
+# 6. Summary
+## 6.1 Find the value equal to target
+This is the typical problem of binary search. For example, nums = \[2, 3, 4, 6, 8\], target = 4.\
+The code is:
+```
+int find(vector<int>& nums, int target) {
+    int left = 0, right = nums.size();
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) return mid;
+        else if (nums[mid] < target) left = mid + 1;
+        else right = mid;
+    }
+    return -1;
+}
+```
+There are four places that we can modify:
+1. The initial value of right. right = nums.size() or right = nums.size()-1
+2. The relation between left and right. left < right or left <= right
+3. Update of right. right = mid or right = mid - 1
+4. The return value. left, right or -1
+
+If we initialize right = nums.size(), then the condition for while loop must be left < right. Because left can't be equal to right which is out of boundary, it is not possible to calculate mid. In addition, right = mid. Because nums\[mid\]!=target, and we need to check the value before mid.\
+If we initialize right = nums.size()-1, then the condition for while loop must be left<=right. In this case, left can be equal to right. In addition, right = mid - 1.
 
 
+## 6.2 Find the first value greater than or equal to target
+Or find the last value less than target.\
+This is another typical problem of binary search. The difference between 6.2 and 6.1 is that the target may or may not be in nums. Or target is not unique in nums.\
+In this case, nums\[mid\]==target is not necessary. \
+For example, nums = \[2, 4, 5, 6, 9\], target = 3 or nums = \[0, 1, 1, 1, 1\], target = 1.
+```
+int find(vector<int>& nums, int target) {
+    int left = 0, right = nums.size();
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] < target) left = mid + 1;
+        else right = mid;
+    }
+    return right;
+}
+```
+Since we have already found the first value which is greater than or equal to the target, the one before it is then the last value which is less than the target. We only need to return right - 1.
+
+## 6.3 Find the first value greater than target
+Or find the last value which is not greater than target.\
+This problem is very similar to 6.2. We only need to change the if statement to nums\[mid\]<=target. Then the return value will be strictly greater than the target.
+```
+int find(vector<int>& nums, int target) {
+    int left = 0, right = nums.size();
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] <= target) left = mid + 1;
+        else right = mid;
+    }
+    return right;
+}
+```
+To find the last value which is not greater than target, we only need to return right - 1.
+
+## 6.4 Use subfunction to determine the relation
+This type of problem is tough. Because the comparing step (nums\[mid\] and target) is excuted by using a subfunction.
+
+## 6.5 Others
+In this type of problem, the value of target is not fixed.\
+For example, [162M. Find Peak Element](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp).\
+In this problem, we need to compare two adjacent values, i.e., nums\[mid\] and nums\[mid+1\]. Hence, right = nums.size()-1. If right = nums.size(), mid can be out of boundary. In addition, the condition of while loop must be left<right.
 
 
 
