@@ -18,9 +18,9 @@ Explanation: The square root of 8 is 2.82842..., and since the decimal part is t
 
 Constraints:
 0 <= x <= 231 - 1
-
 */
 
+// Method 1:
 class Solution {
 public:
     int mySqrt(int x) {
@@ -41,5 +41,25 @@ public:
             }
         }
         return -1;
+    }
+};
+
+// Method 2:
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x<2){
+            return x;
+        }
+        int left = 0, right = x;
+        while(left<right){
+            int mid = (right+left)/2;
+            if(mid<=x/mid){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left-1;
     }
 };
