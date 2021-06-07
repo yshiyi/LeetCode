@@ -6,5 +6,6 @@
 * [Linked List](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/Linked%20List.md)
 * [Binary Tree](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/Summary.md)
 * [Recursion](https://github.com/yshiyi/LeetCode/blob/main/Recursion/Summary.md)
+* [Binary Search](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/Summary.md)
 * [C++ and Python Reference](https://github.com/yshiyi/LeetCode/blob/main/Cplusplus%20reference%20and%20algorithms.md)
 <!-- GFM-TOC -->
