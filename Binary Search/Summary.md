@@ -7,7 +7,6 @@
        * [704. Binary Search](#704-Binary-Search) 
     * [2. Template I Basic](#2-Template-I-Basic)
        * [69. Sqrt(x)](#69-Sqrtx)
-       * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
     * [3. Template II Access Neighbor](#3-Template-II-Access-Neighbor)
     * [4. Template III Access Both Neighbors](#4-Template-III-Access-Both-Neighbors)
     * [5. Binary Search Template Analysis](#5-Binary-Search-Template-Analysis)
@@ -16,14 +15,23 @@
           * [153M. Find Minimum in Rotated Sorted Array](#153M-Find-Minimum-in-Rotated-Sorted-Array)
           * [154H. Find Minimum in Rotated Sorted Array II](#154H-Find-Minimum-in-Rotated-Sorted-Array-II)
           * [278. First Bad Version](#278-First-Bad-Version)
-          * [287M. Find the Duplicate Number](#287M-Find-the-Duplicate-Number)
           * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
+          * [349. Intersection of Two Arrays](#349-Intersection-of-Two-Arrays)
+          * [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
+          * [35. Search Insert Position](#35-Search-Insert-Position)
+          * [367. Valid Perfect Square](#367-Valid-Perfect-Square)
+          * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
        * [6.2 Find the first value greater than or equal to target](#62-Find-the-first-value-greater-than-or-equal-to-target)
+          * [34M. Find First and Last Position of Element in Sorted Array](#34M-Find-First-and-Last-Position-of-Element-in-Sorted-Array)
+          * [35. Search Insert Position](#35-Search-Insert-Position)
        * [6.3 Find the first value greater than target](#63-Find-the-first-value-greater-than-target)
-          * [162M. Find Peak Element](#162M-Find-Peak-Element)
-       * [6.4 Use subfunction to determine the relation](#64-Use-subfunction-to-determine-the-relation)
-       * [6.5 Others](#65-Others)
           * [270. Closest Binary Search Tree Value](#270-Closest-Binary-Search-Tree-Value)
+       * [6.4 Use subfunction to determine the relation](#64-Use-subfunction-to-determine-the-relation)
+          * [287M. Find the Duplicate Number](#287M-Find-the-Duplicate-Number)
+          * [378M. Kth Smallest Element in a Sorted Matrix](#378M-Kth-Smallest-Element-in-a-Sorted-Matrix)
+          * [410H. Split Array Largest Sum](#410H-Split-Array-Largest-Sum)
+       * [6.5 Others](#65-Others)
+          * [162M. Find Peak Element](#162M-Find-Peak-Element)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -160,54 +168,6 @@ class Solution(object):
             else:
                 left = mid+1
         return -1
-```
-
-## 374. Guess Number Higher or Lower
-**Description:**\
-We are playing the Guess Game. The game is as follows:\
-I pick a number from 1 to n. You have to guess which number I picked.\
-Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.\
-You call a pre-defined API int guess(int num), which returns 3 possible results:\
--1: The number I picked is lower than your guess (i.e. pick < num).\
-1: The number I picked is higher than your guess (i.e. pick > num).\
-0: The number I picked is equal to your guess (i.e. pick == num).\
-Return the number that I picked.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.cpp)
-```
-class Solution {
-public:
-    int guessNumber(int n) {
-        int left = 0, right = n;
-        while(left <= right){
-            // Note: left + right can exceed the limit of int
-            int mid = left+(right-left)/2;
-            if(guess(mid)==0){
-                return mid;
-            }
-            if(guess(mid)==1){
-                left = mid + 1;
-            }
-            if(guess(mid)==-1){
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.py)
-```
-class Solution(object):
-    def guessNumber(self, n):
-        left, right = 0, n
-        while left<=right:
-            mid = int(left+right)/2
-            if guess(mid)==0:
-                return mid
-            if guess(mid)==1:
-                left = mid + 1
-            if guess(mid)==-1:
-                right = mid - 1
 ```
 
 
@@ -499,51 +459,6 @@ class Solution(object):
             return left
 ```
 
-### 287M. Find the Duplicate Number
-**Description:**\
-Given an array of integers nums containing n + 1 integers where each integer is in the range \[1, n\] inclusive.\
-There is only one repeated number in nums, return this repeated number.\
-You must solve the problem without modifying the array nums and uses only constant extra space.\
-**Method:**\
-If we want to distribute n+1 objects to n boxes, there must be one box that contains more than one object.\
-Using this idea, let mid = (left + right)/2, and compare each value in nums with mid.\
-If the number of values that are less than or equal to mid is greater than mid, then the duplicate value must be less than or equal to mid.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/287M.%20Find%20the%20Duplicate%20Number.cpp)
-```
-class Solution {
-public:
-    int findDuplicate(vector<int>& nums) {
-        int left = 1, right = nums.size();
-        while (left < right){
-            int mid = left + (right - left) / 2, cnt = 0;
-            for (int num : nums) {
-                if (num <= mid) ++cnt;
-            }
-            if (cnt <= mid) left = mid + 1;
-            else right = mid;
-        }    
-        return right;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/287M.%20Find%20the%20Duplicate%20Number.py)
-```
-class Solution(object):
-    def findDuplicate(self, nums):
-        left, right = 1, len(nums)
-        while left < right:
-            mid = (right+left)//2
-            count = 0
-            for v in nums:
-                if v<=mid:
-                    count += 1
-            if count <= mid:
-                left = mid + 1
-            else:
-                right = mid
-        return left
-```
-
 ## 33M. Search in Rotated Sorted Array
 **Description:**\
 There is an integer array nums sorted in ascending order (with distinct values).\
@@ -670,6 +585,226 @@ class Solution(object):
         return binarySearch(nums, 0, len(nums)-1, target)
 ```
 
+### 349. Intersection of Two Arrays
+**Method:**\
+As long as the question requires to search for a particular value, we should consider to use binary search.\
+In this problem, we can sort nums2. For each value in nums1, we apply binary search to nums2.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/349.%20Intersection%20of%20Two%20Arrays.cpp)
+```
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        set<int> s;
+        sort(nums2.begin(), nums2.end());
+        for(auto& val:nums1){
+            if(binarySearch(nums2, val)){
+                s.insert(val);
+            }
+        }
+        return vector<int> (s.begin(), s.end());
+    }
+    bool binarySearch(vector<int>& nums, int target){
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left+(right-left)/2;
+            if(nums[mid]==target){
+                return true;
+            }
+            if(nums[mid]>target){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+};
+```
+
+### 350. Intersection of Two Arrays II
+**Method:**\
+This is a solution using binary search method.\
+Different from 349. Intersection of Two Arrays, we need to record the appearances of the value as many times as it shows.\
+To avoid to save duplicates, we have to remove the value that is saved to the result.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/350.%20Intersection%20of%20Two%20Arrays%20II.cpp)
+```
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        sort(nums2.begin(), nums2.end());
+        for(auto& val:nums1){
+            int pos = binarySearch(nums2, val);
+            if(pos!=-1){
+                res.push_back(val);
+                // vec.erase() takes a position iterator.
+                nums2.erase(nums2.begin()+pos);
+            }
+        }
+        return res;
+    }
+    int binarySearch(vector<int>& nums, int target){
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left+(right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid]>target){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+
+### 35. Search Insert Position
+**Description:**|
+Given a sorted array of distinct integers and a target value, return the index if the target is found. \
+If not, return the index where it would be if it were inserted in order.\
+You must write an algorithm with O(log n) runtime complexity.\
+**Method:**\
+The standard template of binary search can return the position of the target, if the target exists. If the target doesn't exist, the template returns the first value that is greater than the target.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/35.%20Search%20Insert%20Position.cpp)
+```
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int left = 0, right = nums.size();
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid]>target){
+                right = mid;
+            }else{
+                left = mid+1;
+            }
+        }
+        return left;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/35.%20Search%20Insert%20Position.py)
+```
+class Solution(object):
+    def searchInsert(self, nums, target):
+        left, right = 0, len(nums)
+        while left < right:
+            mid = (left + right)//2
+            if nums[mid]==target:
+                return mid
+            if nums[mid]>target:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+```
+
+### 367. Valid Perfect Square
+**Description:**\
+Given a positive integer num, write a function which returns True if num is a perfect square else False.\
+Follow up: Do not use any built-in library function such as sqrt.\
+**Method:**\
+When the problem asks us to search for a particular value, we should consider to apply binary search.\
+We can apply binary search to 1 - num.\
+Both right=num and right=num/2 work. We compare mid^2 with num. If mid^2>num, we move left. Otherwise, we move right.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/367.%20Valid%20Perfect%20Square.cpp)
+```
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        if(num==1){
+            return true;
+        }
+        int left = 1, right = num/2;
+        while(left <= right){
+            int mid = left + (right-left)/2;
+            // Note: num/mid return an int, e.g., 5/2 -> 2. We need to convert the result to double.
+            if((double)num/mid==mid){
+                return true;
+            }
+            if(mid>num/mid){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/367.%20Valid%20Perfect%20Square.py)
+```
+class Solution(object):
+    def isPerfectSquare(self, num):
+        if num==1:
+            return True
+        left, right = 1, num//2
+        while left <= right:
+            mid = (right+left)//2
+            if mid**2==num:
+                return True
+            if mid**2>num:
+                right = mid-1
+            else:
+                left = mid+1
+        return False
+```
+
+## 374. Guess Number Higher or Lower
+**Description:**\
+We are playing the Guess Game. The game is as follows:\
+I pick a number from 1 to n. You have to guess which number I picked.\
+Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.\
+You call a pre-defined API int guess(int num), which returns 3 possible results:\
+-1: The number I picked is lower than your guess (i.e. pick < num).\
+1: The number I picked is higher than your guess (i.e. pick > num).\
+0: The number I picked is equal to your guess (i.e. pick == num).\
+Return the number that I picked.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.cpp)
+```
+class Solution {
+public:
+    int guessNumber(int n) {
+        int left = 0, right = n;
+        while(left <= right){
+            // Note: left + right can exceed the limit of int
+            int mid = left+(right-left)/2;
+            if(guess(mid)==0){
+                return mid;
+            }
+            if(guess(mid)==1){
+                left = mid + 1;
+            }
+            if(guess(mid)==-1){
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/374.%20Guess%20Number%20Higher%20or%20Lower.py)
+```
+class Solution(object):
+    def guessNumber(self, n):
+        left, right = 0, n
+        while left<=right:
+            mid = int(left+right)/2
+            if guess(mid)==0:
+                return mid
+            if guess(mid)==1:
+                left = mid + 1
+            if guess(mid)==-1:
+                right = mid - 1
+```
+
+
 
 ## 6.2 Find the first value greater than or equal to target
 Or find the last value less than target.\
@@ -689,6 +824,98 @@ int find(vector<int>& nums, int target) {
 ```
 Since we have already found the first value which is greater than or equal to the target, the one before it is then the last value which is less than the target. We only need to return right - 1.
 
+### 34M. Find First and Last Position of Element in Sorted Array
+**Description:**\
+Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+If target is not found in the array, return \[-1, -1\].\
+You must write an algorithm with O(log n) runtime complexity.\
+**Method:**\
+To search for the range of the duplicated value, we need to determine the first and last position of that value.\
+In other words, we need to run binary search twice.\
+In the first run, we can determine the left bound of the range.\
+If there exists the target value, we run another time of binary search to determine the right bound.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/34M.%20Find%20First%20and%20Last%20Position%20of%20Element%20in%20Sorted%20Array.cpp)
+```
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res(2, -1);
+        if(nums.size()==0){
+            return res;
+        }
+        int left = 0, right = nums.size()-1;
+        // First run, determine the left bound
+        while(left<right){
+            int mid = left + (right-left)/2;
+            // Only when nums[mid]<target, we move to the right
+            if(nums[mid]<target){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        // We need to check if nums[left] is equal to target
+        if(nums[left]!=target){
+            return res;
+        }
+        res[0] = left;
+        right = nums.size()-1;
+        // Second run, determine the right bound
+        while(left<right){
+            int mid = left + (right-left)/2;
+            // If nums[mid]==target, we also move to the right.
+            if(nums[mid]<=target){
+                left = mid  + 1;
+            }else{
+                right = mid;
+            }
+        }
+        // Finally, we need to check if nums[right] is equal to the target.
+        if(nums[right]==target){
+            res[1]=right;
+        }else{
+            res[1]=right-1;
+        }
+
+        return res;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/34M.%20Find%20First%20and%20Last%20Position%20of%20Element%20in%20Sorted%20Array.py)
+```
+class Solution(object):
+    def searchRange(self, nums, target):
+        res = [-1, -1]
+        if len(nums)==0:
+            return res
+        left, right = 0, len(nums)-1
+        while left < right:
+            mid = (right+left)//2
+            if nums[mid]<target:
+                left = mid+1;
+            else:
+                right = mid
+        if nums[left]!=target:
+            return res
+        res[0]=left
+        right = len(nums)-1
+        while left < right:
+            mid = (left+right)//2
+            if nums[mid]<=target:
+                left = mid + 1
+            else:
+                right = mid
+        if nums[right]==target:
+            res[1] = right
+        else:
+            res[1] = right - 1
+        return res
+
+```
+
+
+
+
 ## 6.3 Find the first value greater than target
 Or find the last value which is not greater than target.\
 This problem is very similar to 6.2. We only need to change the if statement to nums\[mid\]<=target. Then the return value will be strictly greater than the target.
@@ -704,60 +931,6 @@ int find(vector<int>& nums, int target) {
 }
 ```
 To find the last value which is not greater than target, we only need to return right - 1.
-
-### 162M. Find Peak Element
-**Description:**\
-A peak element is an element that is strictly greater than its neighbors.\
-Given an integer array nums, find a peak element, and return its index. \
-If the array contains multiple peaks, return the index to any of the peaks.\
-You may imagine that nums\[-1\] = nums\[n\] = -∞.\
-You must write an algorithm that runs in O(log n) time.\
-**Method:**\
-Compare nums\[mid\] to nums\[mid + 1\], move left to mid+1, if nums\[mid\] is small or equal to next one. Otherwise, move right to mid.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp)
-```
-class Solution {
-public:
-    int findPeakElement(vector<int>& nums) {
-        int left = 0, right = nums.size()-1;
-        while(left < right){
-            int mid = left + (right-left)/2;
-            if(nums[mid]>nums[mid+1]){
-                right = mid;
-            }else{
-                left = mid + 1;
-            }
-        }
-        return left;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.py)
-```
-class Solution(object):
-    def findPeakElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        left, right = 0, len(nums)-1
-        while left < right:
-            mid = int(left + (right-left)/2)
-            if nums[mid] > nums[mid+1]:
-                right = mid
-            else:
-                left = mid+1
-        return left
-```
-
-## 6.4 Use subfunction to determine the relation
-This type of problem is tough. Because the comparing step (nums\[mid\] and target) is excuted by using a subfunction.
-
-
-## 6.5 Others
-In this type of problem, the value of target is not fixed.\
-For example, [162M. Find Peak Element](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp).\
-In this problem, we need to compare two adjacent values, i.e., nums\[mid\] and nums\[mid+1\]. Hence, right = nums.size()-1. If right = nums.size(), mid can be out of boundary. In addition, the condition of while loop must be left<right.
 
 ### 270. Closest Binary Search Tree Value
 **Description:**\
@@ -870,6 +1043,277 @@ public:
     }
 }
 ```
+
+
+## 6.4 Use subfunction to determine the relation
+This type of problem is tough. Because the comparing step (nums\[mid\] and target) is excuted by using a subfunction.\
+First of all, we need to first determine the value of left and that of right. Normally, left is the smallest value and right is the largest one.\
+mid = (right+left)/2 as usual, but we need a subfunction or a tricky method to determine the direction of movement.\
+
+### 287M. Find the Duplicate Number
+**Description:**\
+Given an array of integers nums containing n + 1 integers where each integer is in the range \[1, n\] inclusive.\
+There is only one repeated number in nums, return this repeated number.\
+You must solve the problem without modifying the array nums and uses only constant extra space.\
+**Method:**\
+In this problem, mid is not the target the number. The number of values less than mid is the target number.\
+If we want to distribute n+1 objects to n boxes, there must be one box that contains more than one object.\
+Using this idea, let mid = (left + right)/2, and compare each value in nums with mid.\
+If the number of values that are less than or equal to mid is greater than mid, then the duplicate value must be less than or equal to mid.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/287M.%20Find%20the%20Duplicate%20Number.cpp)
+```
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int left = 1, right = nums.size();
+        while (left < right){
+            int mid = left + (right - left) / 2, cnt = 0;
+            for (int num : nums) {
+                if (num <= mid) ++cnt;
+            }
+            if (cnt <= mid) left = mid + 1;
+            else right = mid;
+        }    
+        return right;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/287M.%20Find%20the%20Duplicate%20Number.py)
+```
+class Solution(object):
+    def findDuplicate(self, nums):
+        left, right = 1, len(nums)
+        while left < right:
+            mid = (right+left)//2
+            count = 0
+            for v in nums:
+                if v<=mid:
+                    count += 1
+            if count <= mid:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+```
+
+### 378M. Kth Smallest Element in a Sorted Matrix
+**Description:**\
+Given an n x n matrix where each of the rows and columns are sorted in ascending order, return the kth smallest element in the matrix.\
+Note that it is the kth smallest element in the sorted order, not the kth distinct element.\
+**Method:**\
+This problem is similar to 287M. Find the Duplicate Number. mid is just a number, and we need to determine the number of values less than mid.\
+At first, we need to determine the range of search. \
+In this problem, left is the smallest value in the matrix which is the first one in the first row.\
+Right is the largest value which is the last one in the last row.\
+We use binary search to find the first value that is greater than or equal to k.\
+The tricky part is to determine the number of values that are not greater than mid.\
+We can first compare the last value in each row. If mid is greater than that, then count += n.\
+Otherwise, we need to compare the first value in each row. If mid is greater, then we enter that row.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/378M.%20Kth%20Smallest%20Element%20in%20a%20Sorted%20Matrix.cpp)
+```
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int left = matrix[0].front(), right = matrix.back().back();
+        return binarySearch(matrix, left, right, k);
+    }
+    int binarySearch(vector<vector<int>>& matrix, int left, int right, int k){
+        int n = matrix.size();
+        while(left < right){
+            int mid = left + (right-left)/2;
+            int count = 0;
+            // Calculate # of values less 
+            for(int i=0; i<n; ++i){
+                if(matrix[i].back()<=mid){
+                    count += n;
+                }else{
+                    if(matrix[i].front()>mid){
+                        break;
+                    }else{
+                        for(int j=0; j<n; ++j){
+                            if(matrix[i][j]<=mid){
+                                ++count;
+                            }else{
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+          if(count<k){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/378M.%20Kth%20Smallest%20Element%20in%20a%20Sorted%20Matrix.py)
+```
+class Solution(object):
+    def kthSmallest(self, matrix, k):
+        left, right = matrix[0][0], matrix[-1][-1]
+        
+        def search_less_equal(matrix, target):
+            n = len(matrix)
+            i, j, res = n-1, 0, 0
+            while i>=0 and j<n:
+                if matrix[i][j]<=target:
+                    res += i + 1
+                    j += 1
+                else:
+                    i -= 1
+            return res
+        
+        while left < right:
+            mid = (right+left)//2
+            count = search_less_equal(matrix, mid)
+            if count < k:
+                left = mid+1
+            else:
+                right = mid
+        return left
+```
+
+### 410H. Split Array Largest Sum
+**Description:**\
+Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.\
+Write an algorithm to minimize the largest sum among these m subarrays.\
+**Method:**\
+At first, we need to determine the value of left and that of right.\
+The value of left should be the largest value in nums. Because that is the smallest sum of a subarray.\
+The value of right should be the sum of nums, as it is the largest sum of a subarray.\
+For mid=(right+left)/2, we need to check if it is a valid sum. In other words, if the sum of each single subarray is less than or equal to mid, we need to check if the total number of subarray is m.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/410H.%20Split%20Array%20Largest%20Sum.cpp)
+```
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int m) {
+        long left = 0, right = 0;
+        // Determine the value of left and that of right
+        for(int i=0; i<nums.size(); ++i){
+            left = max(left, (long)nums[i]);
+            right += nums[i];
+        }
+        while(left < right){
+            long long mid = left + (right-left)/2;
+            // Define a subfunction to determine if the array can be splitted into m subarrays
+            if(can_split(nums, m, mid)){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+    
+    bool can_split(vector<int>& nums, long m, long sum){
+        long count = 1, curSum = 0;
+        for(int i=0; i<nums.size(); ++i){
+            // Add the current value to curSum
+            curSum += nums[i];
+            if(curSum > sum){
+                // If curSum > sum, it means we have filled enough numbers into one subarray
+                // The first number of the next subarray should be nums[i]
+                curSum = nums[i];
+                // Increase the number of subarray
+                ++count;
+                // Check if the total number of subarray is greater than m
+                if(count > m){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/410H.%20Split%20Array%20Largest%20Sum.py)
+```
+class Solution(object):
+    def splitArray(self, nums, m):
+        left, right = 0, 0
+        for num in nums:
+            left = max(num, left)
+            right += num
+        
+        def binarySearch(nums, targetSum, m):
+            curSum, n = 0, 1
+            for i in range(len(nums)):
+                curSum += nums[i]
+                if curSum > targetSum:
+                    curSum = nums[i]
+                    n += 1
+                    if n > m:
+                        return False
+            return True
+        
+        while left < right:
+            mid = (right + left)//2
+            if binarySearch(nums, mid, m):
+                right = mid
+            else:
+                left = mid + 1
+        return left
+```
+
+## 6.5 Others
+In this type of problem, the value of target is not fixed.\
+For example, [162M. Find Peak Element](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp).\
+In this problem, we need to compare two adjacent values, i.e., nums\[mid\] and nums\[mid+1\]. Hence, right = nums.size()-1. If right = nums.size(), mid can be out of boundary. In addition, the condition of while loop must be left<right.
+
+
+### 162M. Find Peak Element
+**Description:**\
+A peak element is an element that is strictly greater than its neighbors.\
+Given an integer array nums, find a peak element, and return its index. \
+If the array contains multiple peaks, return the index to any of the peaks.\
+You may imagine that nums\[-1\] = nums\[n\] = -∞.\
+You must write an algorithm that runs in O(log n) time.\
+**Method:**\
+Compare nums\[mid\] to nums\[mid + 1\], move left to mid+1, if nums\[mid\] is small or equal to next one. Otherwise, move right to mid.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp)
+```
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int left = 0, right = nums.size()-1;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]>nums[mid+1]){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.py)
+```
+class Solution(object):
+    def findPeakElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        left, right = 0, len(nums)-1
+        while left < right:
+            mid = int(left + (right-left)/2)
+            if nums[mid] > nums[mid+1]:
+                right = mid
+            else:
+                left = mid+1
+        return left
+```
+
+
+
+
 
 
 
