@@ -6,32 +6,40 @@
        * [1.2 3 Parts of a Successful Binary Search](#12-3-Parts-of-a-Successful-Binary-Search)
        * [704. Binary Search](#704-Binary-Search) 
     * [2. Template I Basic](#2-Template-I-Basic)
-       * [69. Sqrt(x)](#69-Sqrtx)
     * [3. Template II Access Neighbor](#3-Template-II-Access-Neighbor)
     * [4. Template III Access Both Neighbors](#4-Template-III-Access-Both-Neighbors)
     * [5. Binary Search Template Analysis](#5-Binary-Search-Template-Analysis)
     * [6. Summary](#6-Summary)
        * [6.1 Find the value equal to target](#61-Find-the-value-equal-to-target)
+          * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
+          * [81M. Search in Rotated Sorted Array II](#81M-Search-in-Rotated-Sorted-Array-II)
           * [153M. Find Minimum in Rotated Sorted Array](#153M-Find-Minimum-in-Rotated-Sorted-Array)
           * [154H. Find Minimum in Rotated Sorted Array II](#154H-Find-Minimum-in-Rotated-Sorted-Array-II)
           * [278. First Bad Version](#278-First-Bad-Version)
-          * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
           * [349. Intersection of Two Arrays](#349-Intersection-of-Two-Arrays)
           * [350. Intersection of Two Arrays II](#350-Intersection-of-Two-Arrays-II)
           * [35. Search Insert Position](#35-Search-Insert-Position)
           * [367. Valid Perfect Square](#367-Valid-Perfect-Square)
           * [374. Guess Number Higher or Lower](#374-Guess-Number-Higher-or-Lower)
+          * [702M. Search in a Sorted Array of Unknown Size](#702M-Search-in-a-Sorted-Array-of-Unknown-Size)
+          * [74M. Search a 2D Matrix](#74M-Search-a-2D-Matrix)
        * [6.2 Find the first value greater than or equal to target](#62-Find-the-first-value-greater-than-or-equal-to-target)
           * [34M. Find First and Last Position of Element in Sorted Array](#34M-Find-First-and-Last-Position-of-Element-in-Sorted-Array)
           * [35. Search Insert Position](#35-Search-Insert-Position)
        * [6.3 Find the first value greater than target](#63-Find-the-first-value-greater-than-target)
           * [270. Closest Binary Search Tree Value](#270-Closest-Binary-Search-Tree-Value)
+          * [69. Sqrt(x)](#69-Sqrtx)
        * [6.4 Use subfunction to determine the relation](#64-Use-subfunction-to-determine-the-relation)
           * [287M. Find the Duplicate Number](#287M-Find-the-Duplicate-Number)
           * [378M. Kth Smallest Element in a Sorted Matrix](#378M-Kth-Smallest-Element-in-a-Sorted-Matrix)
           * [410H. Split Array Largest Sum](#410H-Split-Array-Largest-Sum)
+          * [4H. Median of Two Sorted Arrays](#4H-Median-of-Two-Sorted-Arrays)
+          * [658M. Find K Closest Elements](#658M-Find-K-Closest-Elements)
+          * [719H. Find Kth Smallest Pair Distance](#719H-Find-Kth-Smallest-Pair-Distance)
        * [6.5 Others](#65-Others)
           * [162M. Find Peak Element](#162M-Find-Peak-Element)
+          * [744. Find Smallest Letter Greater Than Target](#744-Find-Smallest-Letter-Greater-Than-Target)
+          * [852. Peak Index in a Mountain Array](#852-Peak-Index-in-a-Mountain-Array)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Search
@@ -117,58 +125,6 @@ Initial Condition: left = 0, right = length-1\
 Termination: left > right\
 Searching Left: right = mid-1\
 Searching Right: left = mid+1\
-
-## 69. Sqrt(x)
-**Description:**\
-Given a non-negative integer x, compute and return the square root of x.\
-Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.\
-Note: You are not allowed to use any built-in exponent function or operator, such as pow(x, 0.5) or x ** 0.5.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/69.%20Sqrt(x).cpp)
-```
-class Solution {
-public:
-    int mySqrt(int x) {
-        if(x<2){
-            return x;
-        }
-        int left = 0, right = x;
-        while(left<=right){
-            int mid = (right+left)/2;
-            if(mid<=x/mid && (mid+1)>x/(mid+1)){
-                return mid;
-            }
-            if(mid>x/mid){
-                right = mid-1;
-            }
-            if(mid<x/mid){
-                left = mid + 1;
-            }
-        }
-        return -1;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/69.%20Sqrt(x).py)
-```
-class Solution(object):
-    def mySqrt(self, x):
-        """
-        :type x: int
-        :rtype: int
-        """
-        if x<2:
-            return x
-        left, right = 0, x
-        while left <= right:
-            mid = int(left+right)/2
-            if mid*mid<=x and (mid+1)*(mid+1)>x:
-                return mid
-            if mid*mid>x:
-                right = mid-1
-            else:
-                left = mid+1
-        return -1
-```
 
 
 
@@ -321,6 +277,175 @@ If we initialize right = nums.size(), then the condition for while loop must be 
 If we initialize right = nums.size()-1, then the condition for while loop must be left<=right. In this case, left can be equal to right. In addition, right = mid - 1.
 
 
+## 33M. Search in Rotated Sorted Array
+**Description:**\
+There is an integer array nums sorted in ascending order (with distinct values).\
+Prior to being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is \[nums\[k\], nums\[k+1\], ..., nums\[n-1\], nums\[0\], nums\[1\], ..., nums\[k-1\]\] (0-indexed).\
+For example, \[0,1,2,4,5,6,7\] might be rotated at pivot index 3 and become \[4,5,6,7,0,1,2\].\
+Given the array nums after the rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\
+**Method:**\
+We can still use the conventional binary search approach. \
+Notice, if the mid is less than right, then the right part is an ascending sequence. Otherwise, the left part is.\
+Comparing to the conventional binary search, there are four scenarios we need to consider.\
+Also note, since mid = left+(right-left)/2, mid could be equal to left. We need to consider this scenario as well.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.cpp)
+```
+// Solution 1: Compare mid to right
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution 2: Compare mid to left
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(nums, 0, nums.size()-1, target);
+    }
+    int binarySearch(vector<int>& nums, int left, int right, int target){
+        // cout << left << " " << right << endl;
+        if (left <= right){
+            int mid = left + (right-left)/2;
+            // cout << nums[mid] << endl;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] >= nums[left]){
+                if(target<nums[mid] && target>=nums[left]){
+                    return binarySearch(nums, left, mid-1, target);
+                }else{
+                    return binarySearch(nums, mid+1, right, target);
+                }
+            }else{
+                if(target>nums[mid] && target<=nums[right]){
+                    return binarySearch(nums, mid+1, right, target);
+                }else{
+                    return binarySearch(nums, left, mid-1, target);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+// Solution: Iterative approach
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            if(nums[mid] < nums[right]){
+                if(target>nums[mid] && target<=nums[right]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
+            }else{
+                if(target<nums[mid] && target>=nums[left]){
+                    right = mid - 1;
+                }else{
+                    left = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.py)
+```
+class Solution(object):
+    def search(self, nums, target):
+        def binarySearch(nums, left, right, target):
+            if left <= right:
+                mid = int(left + (right-left)/2)
+                if nums[mid] == target:
+                    return mid
+                if nums[mid] < nums[right]:
+                    if nums[mid]<target and target<=nums[right]:
+                        return binarySearch(nums, mid+1, right, target)
+                    else:
+                        return binarySearch(nums, left, mid-1, target)
+                else:
+                    if nums[left]<=target and target<nums[mid]:
+                        return binarySearch(nums, left, mid-1, target)
+                    else:
+                        return binarySearch(nums, mid+1, right, target)
+            return -1
+        return binarySearch(nums, 0, len(nums)-1, target)
+```
+
+### 81M. Search in Rotated Sorted Array II
+**Description:**\
+There is an integer array nums sorted in non-decreasing order (not necessarily with distinct values).\
+Before being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is \[nums\[k\], nums\[k+1\], ..., nums\[n-1\], nums\[0\], nums\[1\], ..., nums\[k-1\]\] (0-indexed). For example, \[0,1,2,4,4,4,5,6,6,7\] might be rotated at pivot index 5 and become \[4,5,6,6,7,0,1,2,4,4\].\
+Given the array nums after the rotation and an integer target, return true if target is in nums, or false if it is not in nums.\
+You must decrease the overall operation steps as much as possible.\
+**Method:**\
+Similar to 33M. Search in Rotated Sorted Array\
+The only difference is there exist duplicates in this question.\
+Hence, other than two conditions that we check in 33M, there is one more condition we need to check.\
+It is when nums\[mid\]==nums\[right\]. In this case, we can simply move right to the left by 1, --right.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/81M.%20Search%20in%20Rotated%20Sorted%20Array%20II.cpp)
+```
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]==target){
+                return true;
+            }
+            if(nums[mid]<nums[right]){
+                if(nums[mid]<target && target<=nums[right]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
+            // We can't check nums[mid]>nums[left]
+            }else if(nums[mid]>nums[right]){
+                if(nums[left]<=target && target<nums[mid]){
+                    right = mid - 1;
+                }else{
+                    left = mid + 1;
+                }
+            }else{
+                --right;
+            }
+        }
+        return false;
+    }
+};
+```
 
 ### 153M. Find Minimum in Rotated Sorted Array
 **Description:**\
@@ -457,132 +582,6 @@ class Solution(object):
                 right = mid
         if left==right and isBadVersion(left):
             return left
-```
-
-## 33M. Search in Rotated Sorted Array
-**Description:**\
-There is an integer array nums sorted in ascending order (with distinct values).\
-Prior to being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array is \[nums\[k\], nums\[k+1\], ..., nums\[n-1\], nums\[0\], nums\[1\], ..., nums\[k-1\]\] (0-indexed).\
-For example, \[0,1,2,4,5,6,7\] might be rotated at pivot index 3 and become \[4,5,6,7,0,1,2\].\
-Given the array nums after the rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\
-**Method:**\
-We can still use the conventional binary search approach. \
-Notice, if the mid is less than right, then the right part is an ascending sequence. Otherwise, the left part is.\
-Comparing to the conventional binary search, there are four scenarios we need to consider.\
-Also note, since mid = left+(right-left)/2, mid could be equal to left. We need to consider this scenario as well.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.cpp)
-```
-// Solution 1: Compare mid to right
-class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        return binarySearch(nums, 0, nums.size()-1, target);
-    }
-    int binarySearch(vector<int>& nums, int left, int right, int target){
-        if (left <= right){
-            int mid = left + (right-left)/2;
-            if(nums[mid]==target){
-                return mid;
-            }
-            if(nums[mid] < nums[right]){
-                if(target>nums[mid] && target<=nums[right]){
-                    return binarySearch(nums, mid+1, right, target);
-                }else{
-                    return binarySearch(nums, left, mid-1, target);
-                }
-            }else{
-                if(target<nums[mid] && target>=nums[left]){
-                    return binarySearch(nums, left, mid-1, target);
-                }else{
-                    return binarySearch(nums, mid+1, right, target);
-                }
-            }
-        }
-        return -1;
-    }
-};
-
-// Solution 2: Compare mid to left
-class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        return binarySearch(nums, 0, nums.size()-1, target);
-    }
-    int binarySearch(vector<int>& nums, int left, int right, int target){
-        // cout << left << " " << right << endl;
-        if (left <= right){
-            int mid = left + (right-left)/2;
-            // cout << nums[mid] << endl;
-            if(nums[mid]==target){
-                return mid;
-            }
-            if(nums[mid] >= nums[left]){
-                if(target<nums[mid] && target>=nums[left]){
-                    return binarySearch(nums, left, mid-1, target);
-                }else{
-                    return binarySearch(nums, mid+1, right, target);
-                }
-            }else{
-                if(target>nums[mid] && target<=nums[right]){
-                    return binarySearch(nums, mid+1, right, target);
-                }else{
-                    return binarySearch(nums, left, mid-1, target);
-                }
-            }
-        }
-        return -1;
-    }
-};
-
-// Solution: Iterative approach
-class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        int left = 0, right = nums.size()-1;
-        while(left<=right){
-            int mid = left + (right-left)/2;
-            if(nums[mid]==target){
-                return mid;
-            }
-            if(nums[mid] < nums[right]){
-                if(target>nums[mid] && target<=nums[right]){
-                    left = mid + 1;
-                }else{
-                    right = mid - 1;
-                }
-            }else{
-                if(target<nums[mid] && target>=nums[left]){
-                    right = mid - 1;
-                }else{
-                    left = mid + 1;
-                }
-            }
-        }
-        return -1;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/33M.%20Search%20in%20Rotated%20Sorted%20Array.py)
-```
-class Solution(object):
-    def search(self, nums, target):
-        def binarySearch(nums, left, right, target):
-            if left <= right:
-                mid = int(left + (right-left)/2)
-                if nums[mid] == target:
-                    return mid
-                if nums[mid] < nums[right]:
-                    if nums[mid]<target and target<=nums[right]:
-                        return binarySearch(nums, mid+1, right, target)
-                    else:
-                        return binarySearch(nums, left, mid-1, target)
-                else:
-                    if nums[left]<=target and target<nums[mid]:
-                        return binarySearch(nums, left, mid-1, target)
-                    else:
-                        return binarySearch(nums, mid+1, right, target)
-            return -1
-        return binarySearch(nums, 0, len(nums)-1, target)
 ```
 
 ### 349. Intersection of Two Arrays
@@ -802,6 +801,115 @@ class Solution(object):
                 left = mid + 1
             if guess(mid)==-1:
                 right = mid - 1
+```
+
+### 702M. Search in a Sorted Array of Unknown Size
+**Description:**\
+Given an integer array sorted in ascending order, write a function to search target in nums. \ 
+If target exists, then return its index, otherwise return -1. \
+However, the array size is unknown to you. \
+You may only access the array using an ArrayReader interface, where ArrayReader.get(k) returns the element of the array at index k (0-indexed).\
+You may assume all integers in the array are less than 10000, and if you access the array out of bounds, ArrayReader.get will return 2147483647. \
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/702M.%20Search%20in%20a%20Sorted%20Array%20of%20Unknown%20Size.cpp)
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+class ArrayReader{
+private:
+    vector<int> v;
+public:
+    ArrayReader(vector<int> &v){
+        this->v = v;
+    }
+    int get(int i){
+
+        return i < v.size() ? v[i]:2147483647;
+    }
+};
+class Solution {
+public:
+    int search(ArrayReader& reader, int target) {
+        int left = 0, right = INT_MAX;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int x = reader.get(mid);
+            if (x == target)
+                return mid;
+            if (x > target) {
+                right = mid;
+            }
+            else
+                left = mid + 1;
+        }
+//        if(right!=INT_MAX && reader.get(right)==target){
+//            return right;
+//        }
+        return -1;
+    }
+};
+
+int main(){
+    Solution ob;
+    vector<int> v = {-1,0,3,5,9,12};
+    ArrayReader reader(v);
+    cout<<(ob.search(reader, 12));
+    return 0;
+}
+```
+
+### 74M. Search a 2D Matrix
+**Description:**\
+Write an efficient algorithm that searches for a value in an m x n matrix. \
+This matrix has the following properties:\
+Integers in each row are sorted from left to right.\
+The first integer of each row is greater than the last integer of the previous row.\
+**Method:**\
+Binary Search\
+If a question ask us to search for a particular value, then the first choice of method is Binary Search.\
+From the description of the question, we can see that the first value in each row is greater than the last one in the previous row.\
+Hence, we can apply binary search on the first column and find the first the value that is greater than target.\
+Then target must be in the previoud row.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/74M.%20Search%20a%202D%20Matrix.cpp)
+```
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(target<matrix[0][0]){
+            return false;
+        }
+        // Apply Binary Search on the first column and determine the row that target lies in
+        int left = 0, right = matrix.size();
+        while(left<right){
+            int mid = left + (right-left)/2;
+            if(matrix[mid].front()==target){
+                return true;
+            }
+            if(matrix[mid].front()<target){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        int row = left - 1;
+
+        // Search for target in the particular row
+        int lr = 0, rr = matrix[row].size();
+        while(lr < rr){
+            int mid = lr + (rr-lr)/2;
+            if(matrix[row][mid]==target){
+                return true;
+            }
+            if(matrix[row][mid]<target){
+                lr = mid + 1;
+            }else{
+                rr = mid;
+            }
+        }
+        
+        return false;
+    }
+};
 ```
 
 
@@ -1044,6 +1152,58 @@ public:
 }
 ```
 
+### 69. Sqrt(x)
+**Description:**\
+Given a non-negative integer x, compute and return the square root of x.\
+Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.\
+Note: You are not allowed to use any built-in exponent function or operator, such as pow(x, 0.5) or x ** 0.5.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/69.%20Sqrt(x).cpp)
+```
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x<2){
+            return x;
+        }
+        int left = 0, right = x;
+        while(left<=right){
+            int mid = (right+left)/2;
+            if(mid<=x/mid && (mid+1)>x/(mid+1)){
+                return mid;
+            }
+            if(mid>x/mid){
+                right = mid-1;
+            }
+            if(mid<x/mid){
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/69.%20Sqrt(x).py)
+```
+class Solution(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if x<2:
+            return x
+        left, right = 0, x
+        while left <= right:
+            mid = int(left+right)/2
+            if mid*mid<=x and (mid+1)*(mid+1)>x:
+                return mid
+            if mid*mid>x:
+                right = mid-1
+            else:
+                left = mid+1
+        return -1
+```
+
 
 ## 6.4 Use subfunction to determine the relation
 This type of problem is tough. Because the comparing step (nums\[mid\] and target) is excuted by using a subfunction.\
@@ -1260,6 +1420,218 @@ class Solution(object):
         return left
 ```
 
+### 4H. Median of Two Sorted Arrays
+**Description:**
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+The overall run time complexity should be O(log (m+n)).\
+**Method:**\
+The median value is the mean of (m+n+1)/2 and (m+n+2)/2. We can use binary search to find those two values in nums1 and nums2.\
+To find Kth value in nums1 and nums2, we can search for the K/2th value in nums1 and nums2.\
+If the K/2th in nums1 is greater than the K/2th in nums2, then we move left in nums2 by K/2.\
+[C++](https://github.com/yshiyi/LeetCode/edit/main/Binary%20Search/4H.%20Median%20of%20Two%20Sorted%20Arrays.cpp)
+```
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        // Get the length of nums1 and that of nums2
+        int m = nums1.size(), n = nums2.size();
+        // Target values 
+        int left = (m+n+1)/2, right = (m+n+2)/2;
+        return (findKth(nums1, 0, nums2, 0, left) + findKth(nums1, 0, nums2, 0, right))/2.0;
+    }
+    // i and j are two pointers in nums1 and nums2, respectively
+    int findKth(vector<int>& nums1, int i, vector<int>& nums2, int j, int k){
+        // Corner cases, if i reaches the end of nums1, then kth value must be in nums2
+        if(i>=nums1.size()){return nums2[j+k-1];}
+        if(j>=nums2.size()){return nums1[i+k-1];}
+        // If k==1, then return the minimum value of nums1[i] and nums[j]
+        if(k==1){return min(nums1[i], nums2[j]);}
+        // Find the k/2th value in nums1 and nums2. If it doesn't exist, then assign INT_MAX
+        int midVal1 = (i+k/2-1 < nums1.size()) ? nums1[i+k/2-1] : INT_MAX;
+        int midVal2 = (j+k/2-1 < nums2.size()) ? nums2[j+k/2-1] : INT_MAX;
+        // Compare midVal1 and midVal2. Move the pointer in the one that has smaller midVal
+        if(midVal1 < midVal2){
+            return findKth(nums1, i+k/2, nums2, j, k-k/2);
+        }else{
+            return findKth(nums1, i, nums2, j+k/2, k-k/2);
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/4H.%20Median%20of%20Two%20Sorted%20Arrays.py)
+```
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        m, n = len(nums1), len(nums2)
+        left, right = (m+n+1)//2, (m+n+2)//2
+        
+        def findKth(nums1, i, nums2, j, k):
+            if i>=len(nums1):
+                return nums2[j+k-1]
+            if j>=len(nums2):
+                return nums1[i+k-1]
+            if k==1:
+                return min(nums1[i], nums2[j])
+            if (i+k//2-1)>=len(nums1):
+                minVal1 = float('inf')
+            else:
+                minVal1 = nums1[i+k//2-1]
+            if (j+k//2-1)>=len(nums2):
+                minVal2 = float('inf')
+            else:
+                minVal2 = nums2[j+k//2-1]
+            if minVal1 < minVal2:
+                return findKth(nums1, i+k//2, nums2, j, k-k//2)
+            else:
+                return findKth(nums1, i, nums2, j+k//2, k-k//2)
+            
+        
+        return (findKth(nums1, 0, nums2, 0, left) + findKth(nums1, 0, nums2, 0, right))/2.0
+```
+
+
+### 658M. Find K Closest Elements
+**Description:**\
+Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. \
+The result should also be sorted in ascending order.\
+An integer a is closer to x than an integer b if:
+```
+|a - x| < |b - x|, or
+|a - x| == |b - x| and a < b
+```
+**Method:**\
+Binary Search to find left bound\
+Time complexity is O(log(N-k) + k). Take O(log(N-k)) to search for the left bound and O(k) to build the final answer.\
+The basic idea is that we use binary search method to determine the position of the left bound.\
+First of all, the biggest index the left bound could be is arr.size()-k. Suppose arr.size() = 5, k = 3\
+0 1 2 3 4, the biggest index of the left bound is 2.\
+Then, we consider arr\[mid\] and arr\[mid+k\]. Notice that only one of them could be in a final answer.\
+If arr\[mid\] is closer than arr\[mid+k\], it means we don't need to consider all the values to the right of arr\[mid+k\] as well as arr\[mid+k\]. We should move the right pointer to avoid considering them.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/658M.%20Find%20K%20Closest%20Elements.cpp)
+```
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int left = 0, right = arr.size()-k;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(x-arr[mid]>arr[mid+k]-x){
+                left = mid + 1;
+            }else{
+                /* 
+                    Why don't we use right = mid - 1?
+                    If we use right = mid - 1, the condition of while loop should be left<=right.
+                    Hence, we will check the condition when left == right.
+                    However, we are not supposed to check arr[right], because arr[right+k] is out of array.
+                */
+                right = mid;
+            }
+        }
+        return vector<int>(arr.begin()+left, arr.begin()+left+k);
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/658M.%20Find%20K%20Closest%20Elements.py)
+```
+class Solution(object):
+    def findClosestElements(self, arr, k, x):
+        left, right = 0, len(arr)-k
+        while left < right:
+            mid = (left+right)//2
+            if x - arr[mid] <= arr[mid+k] - x:
+                right = mid
+            else:
+                left = mid + 1
+        return arr[left:left+k]
+```
+
+### 719H. Find Kth Smallest Pair Distance
+**Description:**\
+The distance of a pair of integers a and b is defined as the absolute difference between a and b.
+Given an integer array nums and an integer k, return the kth smallest distance among all the pairs nums\[i\] and nums\[j\] where 0 <= i < j < nums.length.\
+**Example:**\
+Input: nums = \[1,3,1\], k = 1\
+Output: 0\
+Explanation: Here are all the pairs:\
+(1,3) -> 2\
+(1,1) -> 0\
+(3,1) -> 2\
+Then the 1st smallest distance pair is (1,1), and its distance is 0.\
+**Method:**\
+Binary Search.\
+We don't search a particular value in nums. Instead, we search for the particular value of distance that satisfies the question requirement.\
+We sort the vector first.\
+The minimum distance is 0, and the maximum distance is the distance between the last and the first element.\
+Then we will search for the answer within this range.\
+mid = left+(right-left)/2 as usual. Then for this value of distance, we need to traverse nums and find out the number of distance that is less than or equal to mid.\
+If the number is greater or equal to k, it means the value of mid is large, and we need to move right pointer. Otherwise, we move left pointer.\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/719H.%20Find%20K-th%20Smallest%20Pair%20Distance.cpp)
+```
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int left = 0, right = nums.back()-nums[0];
+        while(left<right){
+            int mid = left + (right-left)/2;
+            int count = 0, j = 0;
+            
+            /*
+            In this method, we use two pointers technique.
+            The second pointer keeps moving, if nums[j] - nums[i] <= mid.
+            The tricky part is that for the next iteration of i, we don't need to reset j back to i+1.
+            Because we have sorted the array, if nums[5] - nums[0] < mid, then nums[5] - nums[1] must be less than mid too.
+            */
+            for(int i=0; i<nums.size()-1; ++i){
+                while(j<nums.size() && nums[j]-nums[i]<=mid){
+                    ++j;
+                }
+                count += j - i - 1;
+            }
+            
+            /*
+            This method is little faster than the previous one.
+            In this method, we use i to traverse nums.
+            We keep moving i until nums[i] - nums[start] > mid.
+            Then we count the difference between i and start, and move start forward by 1.
+            */
+            // int mid = left + (right - left) / 2, count = 0, start = 0;
+            // for (int i = 0; i < nums.size(); ++i) {
+            //     while (start < nums.size() && nums[i] - nums[start] > mid) ++start;
+            //     count += i - start;
+            // }
+            
+            if(count>=k){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/719H.%20Find%20K-th%20Smallest%20Pair%20Distance.py)
+```
+class Solution(object):
+    def smallestDistancePair(self, nums, k):
+        nums.sort()
+        left, right = 0, nums[-1]-nums[0]
+        while left<right:
+            mid = (right+left)//2
+            count, j = 0, 1
+            for i in range(len(nums)):
+                while j<len(nums) and nums[j]-nums[i]<=mid:
+                    j += 1
+                count += j-i-1
+            if count >=k:
+                right = mid
+            else:
+                left = mid+1
+        return left
+```
+
+
 ## 6.5 Others
 In this type of problem, the value of target is not fixed.\
 For example, [162M. Find Peak Element](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/162M.%20Find%20Peak%20Element.cpp).\
@@ -1311,10 +1683,89 @@ class Solution(object):
         return left
 ```
 
+### 744. Find Smallest Letter Greater Than Target
+**Description:**\
+Given a characters array letters that is sorted in non-decreasing order and a character target, return the smallest character in the array that is larger than target.\
+Note that the letters wrap around. For example, if target == 'z' and letters == \['a', 'b'\], the answer is 'a'.\
+**Method:**\
+Similar to 162M. Find Peak Element.\
+If target>=letters.back(), we can simply return letters\[0\].\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/744.%20Find%20Smallest%20Letter%20Greater%20Than%20Target.cpp)
+```
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        if(letters.back()<=target){
+            return letters[0];
+        }
+        int left = 0, right = letters.size()-1;  // In this problem, right=letters.size() also works.
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(letters[mid]>target){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return letters[left];
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/744.%20Find%20Smallest%20Letter%20Greater%20Than%20Target.py)
+```
+class Solution(object):
+    def nextGreatestLetter(self, letters, target):
+        left, right = 0, len(letters)
+        while left < right:
+            mid = (right+left)//2
+            if letters[mid]<=target:
+                left = mid + 1
+            else:
+                right = mid
+        return letters[left%len(letters)]
+```
 
-
-
-
+### 852. Peak Index in a Mountain Array
+**Description:**\
+Let's call an array arr a mountain if the following properties hold:\
+arr.length >= 3\
+There exists some i with 0 < i < arr.length - 1 such that:\
+arr\[0\] < arr\[1\] < ... arr\[i-1\] < arr\[i\]\
+arr\[i\] > arr\[i+1\] > ... > arr\[arr.length - 1\]\
+Given an integer array arr that is guaranteed to be a mountain, return any i such that arr\[0\] < arr\[1\] < ... arr\[i - 1\] < arr\[i\] > arr\[i + 1\] > ... > arr\[arr.length - 1\].\
+**Method:**\
+Exact same as 162M. Find Peak Element\
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/852.%20Peak%20Index%20in%20a%20Mountain%20Array.cpp)
+```
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int left = 0, right = nums.size()-1;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]<=nums[mid+1]){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/852.%20Peak%20Index%20in%20a%20Mountain%20Array.py)
+```
+class Solution(object):
+    def findPeakElement(self, nums):
+        left, right = 0, len(nums)-1
+        while left < right:
+            mid = int(left + (right-left)/2)
+            if nums[mid] > nums[mid+1]:
+                right = mid
+            else:
+                left = mid+1
+        return left
+```
 
 
 
