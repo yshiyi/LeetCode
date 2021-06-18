@@ -5,6 +5,7 @@
        * [1.1 How to represent a Trie](#11-How-to-represent-a-Trie)
        * [1.2 Insertion in Trie](#12-Insertion-in-Trie)
        * [1.3 Search in Trie](#13-Search-in-Trie)
+       * [1.4 Complexity Analysis](#14-Complexity-Analysis)
 <!-- GFM-TOC -->
 
 
@@ -94,7 +95,12 @@ You might also want to know how to search for a specific word rather than a pref
 Hint: A boolean flag in each node might work.
 
 
+## 1.4 Complexity Analysis
+**Time complexity:** O(m), where m is the key length.\
+In each iteration of the algorithm, we either examine or create a node in the trie till we reach the end of the key. This takes only mm operations.\
 
+**Space complexity:** O(m).\
+In the worst case newly inserted key doesn't share a prefix with the the keys already inserted in the trie. We have to add mm new nodes, which takes us O(m)O(m) space.
 
 
 
