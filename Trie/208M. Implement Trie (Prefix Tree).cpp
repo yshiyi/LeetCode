@@ -39,3 +39,78 @@ Implement Magic Dictionary - Medium
 Implement Trie II (Prefix Tree) - Medium
 */
 
+/*
+Solution: We first need to define a struct of TrieNode which is similar to what we define a TreeNode.
+          We can define next as an array or a hashmap.
+          Note: when we must initialize the array like next[26]={}. Hence, there are 26 0s in the array.
+*/
+class Trie {
+private:
+    struct TrieNode{
+        // Using array
+        TrieNode* next[26] = {};
+      
+        // Using hashmap
+        map<int, TrieNode*> next;
+      
+        bool is_word;
+        TrieNode(){
+            is_word = false;
+            // for(auto n:next){
+            //     n = nullptr;
+            // }
+        }
+    };
+    TrieNode* root;
+public:
+    /** Initialize your data structure here. */
+    Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        TrieNode* node = root;
+        for(auto ch:word){
+            int i = ch - 'a';
+            if(!node->next[i]){node->next[i]=new TrieNode();}
+          
+            // Using hashmap, this way also works
+            // if(!node->next.count(i){node->next[i]=new TrieNode();}
+            node = node->next[i];
+        }
+        node->is_word = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        TrieNode* node = root;
+        for(auto ch:word){
+            int i = ch - 'a';
+            if(!node->next[i]){return false;}
+            node = node->next[i];
+        }
+        return node->is_word;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        TrieNode* node = root;
+        for(auto ch:prefix){
+            int i = ch - 'a';
+            if(!node->next[i]){return false;}
+            node = node->next[i];
+        }
+        return true;
+    }
+
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+
