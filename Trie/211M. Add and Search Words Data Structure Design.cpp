@@ -1,5 +1,5 @@
 /*
-211M. Design Add and Search Words Data Structure
+211M. Add and Search Words Data Structure Design
 
 Description:
 Design a data structure that supports adding new words and finding if a string matches any previously added string.
