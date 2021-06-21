@@ -4,6 +4,7 @@
 * [Generate Random Number](#Generate-Random-Number)
 * [Convert between char and int](#Convert-between-char-and-int)
 * [Stack and Queue](#Stack-and-Queue)
+  * [Priority queue](#Priority-queue)
 * [Sorting Algorithm](#Sorting-Algorithm)
   * [1. Bubble Sort](#1-Bubble-Sort)
   * [2. Quick Sort](#2-Quick-Sort)
@@ -39,10 +40,15 @@ for (unsigned int i = v.size()-1; i > -1; --i)
 # Max and min int
 **INT:**\
 For C++: INT_MAX, INT_MIN\
-For Python: float('inf'), float('-inf')\
+For Python: 
+```
+float('inf'), float('-inf')
+```
 **Double:**\
-For C++: numeric_limits<double>::max() 
-
+For C++: 
+```
+numeric_limits<double>::max()
+```
 
 # Generate Random Number
 In C++
@@ -115,6 +121,59 @@ q = collections.deque()
 q.append(1)
 q[0]
 q.popleft()
+```
+
+## Priority queue
+A priority_queue keeps internally a comparing function and a container object as data.
+```
+#include <iostream>       // std::cout
+#include <queue>          // std::priority_queue
+
+int main ()
+{
+  std::priority_queue<int> mypq;
+
+  mypq.push(30);
+  mypq.push(100);
+  mypq.push(25);
+  mypq.push(40);
+
+  std::cout << "Popping out elements...";
+  while (!mypq.empty())
+  {
+     std::cout << ' ' << mypq.top();
+     mypq.pop();
+  }
+  std::cout << '\n';
+
+  return 0;
+}
+
+Output:
+Popping out elements... 100 40 30 25
+```
+We can also use operator overloading to define the priority. So that priority_queue can decide how to store the structure object.
+```
+struct Person {
+    int age;
+    float height;
+
+    // this will used to initialize the variables
+    // of the structure
+    Person(int age, float height): age(age), height(height){}
+};
+
+// this is an structure which implements the
+// operator overloading
+struct CompareHeight {
+    bool operator()(Person const& p1, Person const& p2)
+    {
+        // return "true" if "p1" is ordered
+        // before "p2", for example:
+        return p1.height < p2.height;
+    }
+};
+priority_queue<Person, vector<Person>, CompareHeight> Q;
 ```
 
 # Sorting Algorithm
