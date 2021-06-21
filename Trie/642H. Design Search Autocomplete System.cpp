@@ -73,6 +73,7 @@ using namespace std;
 
 class AutocompleteSystem{
 private:
+    // Define a trienode
     struct TrieNode{
         map<char, TrieNode*> children;
         bool is_word;
@@ -80,7 +81,10 @@ private:
         string str;
         TrieNode(){is_word = false; counts = 0; str = "";}
     };
-
+    
+    // Overload operator () for priority_queue
+    // Reverse the order of priority_queue
+    // Compare counts. If counts are equal, compare string 
     struct cmp{
         bool operator()(pair<string, int>& p1, pair<string, int>& p2){
             return p1.second < p2.second || (p1.second==p2.second && p1.first > p2.first);
@@ -88,9 +92,13 @@ private:
     };
 
     TrieNode* root;
+    // Declare a string to hold the inputs
     string rec;
+    // Declare a priority_queue to hold recommended strings
+    // Remember, this is the default structure of a priority_queue with a user-defined operator
     priority_queue<pair<string, int>, vector<pair<string, int>>, cmp> q;
 public:
+    
     AutocompleteSystem(vector<string> sentences, vector<int> times){
         root = new TrieNode();
         for(int i=0; i<sentences.size(); ++i){
@@ -98,7 +106,8 @@ public:
         }
         rec = "";
     }
-
+    
+    // Add sentences to a trie
     void add(string sentence, int times){
         TrieNode* node = root;
         for(auto letter:sentence){
@@ -113,19 +122,26 @@ public:
     }
 
     vector<string> input(char c){
+        // If the input is #, it means the user has finished sending the input
+        // We need to add the saved string to the trie
+        // Clear rec and return {}
         if(c=='#'){
             add(rec, 1);
             rec.clear();
             return {};
         }
-
+        
+        // Add the new input to rec
         rec += c;
         TrieNode* node = root;
+        
+        // Search the trie until the last input character
         for(auto letter:rec){
             node = node->children[letter];
             if(!node){return {};}
         }
-
+        
+        // Use dfs to search each single subtree
         search(node);
         vector<string> res;
         int n = 3;
@@ -134,16 +150,23 @@ public:
             q.pop();
             --n;
         }
+        
+        // Keep in mind, we need to clear the queue after each input
+        // Otherwise, it will keep the recommended string from last run
         while(!q.empty()){q.pop();}
         return res;
 
 
     }
-
+    
+    // This is an implementation of dfs
     void search(TrieNode* node){
+        // When we reach the end of a subtree, 
+        // we push the string and counts that are saved at the end trienode to queue
         if(node->is_word){
             q.push(make_pair(node->str, node->counts));
         }
+        // Search each single child node
         for(auto child:node->children){
             search(child.second);
         }
