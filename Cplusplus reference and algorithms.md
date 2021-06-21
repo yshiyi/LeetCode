@@ -154,26 +154,13 @@ Popping out elements... 100 40 30 25
 ```
 We can also use operator overloading to define the priority. So that priority_queue can decide how to store the structure object.
 ```
-struct Person {
-    int age;
-    float height;
-
-    // this will used to initialize the variables
-    // of the structure
-    Person(int age, float height): age(age), height(height){}
-};
-
 // this is an structure which implements the
 // operator overloading
-struct CompareHeight {
-    bool operator()(Person const& p1, Person const& p2)
-    {
-        // return "true" if "p1" is ordered
-        // before "p2", for example:
-        return p1.height < p2.height;
-    }
-};
-priority_queue<Person, vector<Person>, CompareHeight> Q;
+struct cmp()(pair<string, int> &p1, pair<string, int> &p2){
+    return (p1.second > p2.second) || (p1.second==p2.second && p1.first<p2.first)
+}
+
+priority_queue<pair<string, int>, vector<pair<string, int>>, cmp> q;
 ```
 
 # Sorting Algorithm
