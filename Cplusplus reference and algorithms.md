@@ -124,10 +124,17 @@ q.popleft()
 ```
 
 ## Priority queue
-A priority_queue keeps internally a comparing function and a container object as data.
+A priority_queue keeps internally a comparing function and a container object as data. Newly added elements are placed ahead of all the elements held in lower priority.
 ```
 #include <iostream>       // std::cout
 #include <queue>          // std::priority_queue
+
+struct cmp{
+  bool operator()(int i1, int i2){
+     // In this case, the smaller value has higher priority and is saved on top.
+     return i1 > i2;
+  }
+};
 
 int main ()
 {
@@ -145,12 +152,22 @@ int main ()
      mypq.pop();
   }
   std::cout << '\n';
-
+  
+  std::priority_queue<int, vector<int>, cmp> newq;
+  newq.push(30); newq.push(100); newq.push(25); newq.push(40);
+  std::cout << "Popping out elements...";
+  while (!newq.empty())
+  {
+     std::cout << ' ' << newq.top();
+     newq.pop();
+  }
+  
   return 0;
 }
 
 Output:
 Popping out elements... 100 40 30 25
+Popping out elements... 25 30 40 100
 ```
 We can also use operator overloading to define the priority. So that priority_queue can decide how to store the structure object.
 ```
