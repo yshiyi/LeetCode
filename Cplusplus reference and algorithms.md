@@ -12,6 +12,7 @@
 * [Two Pointers](#Two-Pointers)
 * [Sliding Window](#Sliding-Window)
 * [Return {} Statement](#Return--Statement)
+* [Special Functions](#Special-Functions)
 
 
 # int vs unsigned int
@@ -536,7 +537,31 @@ std::string get_string() {
 }
 ```
 
+# Special Functions
+In this part, some special functions in C++ are introduced.
+## isalpha()
+Checks whether c is an alphabetic letter.
+```
+#include <ctype.h>
 
+char str[]="C++";
+while(str[i]){
+    isalpha(str[i])
+}
+// C is true, + is false
+```
+## tolower()
+Converts c to its lowercase equivalent if c is an uppercase letter and has a lowercase equivalent. If no such conversion is possible, the value returned is c unchanged.
+```
+#include <ctype.h>
+char str[]="Test String.\n";
+while (str[i])
+{
+  c=str[i];
+  putchar (tolower(c));
+}
+// "test string."
+```
 
 
 
