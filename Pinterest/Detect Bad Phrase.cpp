@@ -1,6 +1,6 @@
 /*
 Description:
-3.	bad_phrases = [
+bad_phrases = [
     "i like violence",
     "i like violence too",
     "gore",
