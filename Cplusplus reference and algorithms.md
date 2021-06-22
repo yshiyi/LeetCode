@@ -124,7 +124,10 @@ q.popleft()
 ```
 
 ## Priority queue
-A priority_queue keeps internally a comparing function and a container object as data. Newly added elements are placed ahead of all the elements held in lower priority.
+A priority_queue keeps internally a comparing function and a container object as data. Newly added elements are placed ahead of all the elements held in lower priority.\
+1. When pushing a new value to a priority_queue, if i1 > i2, then the top value is the minimum.
+2. If i1 < i2, then the top value is the maximum.
+
 ```
 #include <iostream>       // std::cout
 #include <queue>          // std::priority_queue
