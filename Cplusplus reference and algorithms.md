@@ -13,10 +13,9 @@
 * [Sliding Window](#Sliding-Window)
 * [Return {} Statement](#Return--Statement)
 * [Special Functions](#Special-Functions)
-  * [isalpha()](#isalpha())
-  * [tolower()](#tolower())
+  * [isalpha()](#isalpha)
+  * [tolower()](#tolower)
   * [max element](#max-element)
-
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
