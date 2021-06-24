@@ -13,6 +13,9 @@
 * [Sliding Window](#Sliding-Window)
 * [Return {} Statement](#Return--Statement)
 * [Special Functions](#Special-Functions)
+  * [isalpha()](#isalpha())
+  * [tolower()](#tolower())
+  * [max element](#max-element)
 
 
 # int vs unsigned int
@@ -562,6 +565,9 @@ while (str[i])
 }
 // "test string."
 ```
+
+## max element
+\*max_element() returns the maximum value of a 1D vector.
 
 
 
