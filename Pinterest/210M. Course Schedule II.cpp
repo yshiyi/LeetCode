@@ -47,7 +47,7 @@ Parallel Courses - Medium
 
 /*
 Method: Similar to 207M. Course Schedule
-        We only need to recorde the sequence of the courses.
+        We only need to record the sequence of the courses.
 */
 class Solution {
 public:
