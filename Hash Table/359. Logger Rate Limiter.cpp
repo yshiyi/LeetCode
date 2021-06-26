@@ -28,9 +28,23 @@ logger.shouldPrintMessage(11,"foo"); returns true;
 //
 #include<iostream>
 #include<map>
+#include<algorithm>
 using namespace std;
 
 class Solution{
+public:
+    map<string, int> myMap_;
+    bool shouldPrintMessage(string& message, int timestamp){
+        if(myMap_.count(message) && timestamp-myMap_[message] < 10){
+            return false;
+        }else{
+            myMap_[message] = timestamp;
+            return true;
+        }
+    }
+};
+
+class Solution1{
 public:
     static bool shouldPrintMessage(string& message, int timestamp){
         if(myMap_.find(message)==myMap_.end() || timestamp - myMap_[message] >= 10){
@@ -45,7 +59,7 @@ public:
 };
 Solution::myMap Solution::myMap_;
 
-class Solution2{
+class Solution3{
 public:
     bool shouldPrintMessage(string& message, int timestamp){
         if(myMap_.find(message)==myMap_.end() || timestamp - myMap_[message] >= 10){
