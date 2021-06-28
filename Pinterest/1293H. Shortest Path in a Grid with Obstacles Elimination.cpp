@@ -55,6 +55,8 @@ Method: BFS
         We need to create an extra array to record the value of k.
         The larger k the cell has, the more possible that cell is on the optimal path.
         In other words, if we have a larger k, then we have more options to eliminate obstacles in the future.
+        Time complexity: O(m*n*k)
+        Space complexity: O(m*n*k)
 */
 class Solution {
 public:
