@@ -91,6 +91,9 @@ Method 2: Logical Deduction
           
           Using this idea, we iterate over all people and narrow down to one single person.
           Finally, we check if this person is the celebrity.
+          
+          Time complexity: O(n)
+          Space complexity: O(1)
 */
 class Solution{
 private:
