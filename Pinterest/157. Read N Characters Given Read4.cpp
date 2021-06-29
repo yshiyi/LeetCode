@@ -115,3 +115,22 @@ public:
         return copiedChars;
     }
 };
+
+
+//Method 2:
+class Solution {
+public:
+    int read(char *buf, int n) {
+        int copiedChars = 0, readChars = 4;
+        
+        while (copiedChars < n && readChars == 4) {
+            readChars = read4(buf + copiedChars);
+            copiedChars += readChars;
+        }
+        return min(n, copiedChars);
+    }
+};
+
+
+
+
