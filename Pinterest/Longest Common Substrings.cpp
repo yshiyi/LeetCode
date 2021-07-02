@@ -38,6 +38,9 @@ Method: This is a typical 2D dp problem.
         z 0 0 0 0 0 0 3
         It is easily seen that if str1[i]==str2[j], then dp[i][j] = dp[i-1][j-1] + 1.
         At the end, we return the maximum value in dp.
+        
+        Time Complexity: O(mn), where m and n are the size of string1 and that of string2, respectively. 
+        Space Space: O(mn)
 */
 #include <iostream>
 #include <vector>
