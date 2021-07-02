@@ -15,12 +15,15 @@
  *     e.g., for a pair of nodes {1, 4}, m2[1].insert(4).
  * S3. For every pair of values, we need to check if the parent node has any parents and if the child node has
  *     any children.
- *
+ * S4. For Q3, we use BFS. We first create a map. The key of the map is the current node, and the corresponding
+ *     values are its direct parents.
+ *     Then we apply BFS method. For each parent, we add distance by 1.
  * */
 #include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <queue>
 using namespace std;
 
 class Solution{
@@ -76,14 +79,35 @@ public:
         }
         return -1;
     }
+    
+    int find_furthest_parent(vector<vector<int>> vec, int i){
+        unordered_map<int, unordered_set<int>> parents;
+        for(auto v:vec){
+            parents[v[1]].insert(v[0]);
+        }
+        unordered_set<int> visited;
+        int res, distance = 0;
+        queue<pair<int, int>> q;
+        q.push(make_pair(i, 0));
+        while(q.size()){
+            auto node = q.front(); q.pop();
+            if(node.second > distance){
+                distance = node.second;
+                res = node.first;
+            }
+            if(!parents.count(node.first)){
+                continue;
+            }
+            for(auto val:parents[node.first]){
+                if(visited.count(val)){
+                    continue;
+                }
+                q.push(make_pair(val, node.second+1));
+                visited.insert(val);
 
-    int find_furthest_parent(int i){
-        // For each parent of i, check the number of parents that it has
-        for(auto val:m1[i]){
-            if(m1[val].size()==1){
-                return *m1[val].begin();
             }
         }
+        return res;
     }
 };
 
@@ -92,7 +116,9 @@ int main(){
     Solution *obj = new Solution();
 
     vector<int> res = obj->oneOrnoParent(vec);
+
     cout << obj->find_common_parent(7, 9) << endl;
-    cout << obj->find_furthest_parent(9) << endl;
+
+    cout << obj->find_furthest_parent(vec, 5) << endl;
 }
 
