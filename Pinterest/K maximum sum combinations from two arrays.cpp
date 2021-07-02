@@ -29,6 +29,8 @@ Output : 13   // (A : 5) + (B : 8)
 Method: Brute Force. Using priority queue.
         Iterate over two arrays, and save the sum into the priority queue.
         Maintain the size of the queue as k.
+        
+        Time complexity: O(N^2)
 */
 #include <iostream>
 #include <vector>
