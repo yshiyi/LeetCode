@@ -44,9 +44,10 @@ public:
         for(int i=0; i<row; i++){
             for(int j=0; j<col; j++){
                 if(nums1[i]==nums2[j]){
-                    ++dp[i][j];
                     if(i>=1 && j>=1){
-                        dp[i][j] += dp[i-1][j-1];
+                        dp[i][j] = dp[i-1][j-1] + 1;
+                    }else{
+                        ++dp[i][j];
                     }
                 }
             }
