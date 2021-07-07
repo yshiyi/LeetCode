@@ -61,9 +61,11 @@ private:
         map<char, TrieNode*> children;
         bool is_word;
         int count;
+        int count_pre;
         TrieNode(){
             is_word = false;
             count = 0;
+            count_pre = 0;
         }
     };
     TrieNode* root;
@@ -79,6 +81,7 @@ public:
                 node->children[letter] = new TrieNode();
             }
             node = node->children[letter];
+            ++node->count_pre;
         }
         node->is_word = true;
         ++node->count;
@@ -100,23 +103,11 @@ public:
         TrieNode* node = root;
         for(auto letter:prefix){
             if(!node->children[letter]){
-                cout << prefix << "#" << endl;
                 return 0;
             }
             node = node->children[letter];
         }
-        int total_num = 0;
-        return search(node, total_num, prefix);
-    }
-
-    int search(TrieNode* node, int total_num, string prefix){
-        if(node->is_word){
-            return node->count;
-        }
-        for(auto child:node->children){
-            total_num += search(child.second, total_num, prefix);
-        }
-        return total_num;
+        return node->count_pre;
     }
 
     void erase(string word){
@@ -126,6 +117,7 @@ public:
                 return;
             }
             node = node->children[letter];
+            --node->count_pre;
         }
         if(node->count>0){
             --node->count;
