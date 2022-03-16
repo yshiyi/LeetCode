@@ -28,6 +28,23 @@ class Solution(object):
         """
         
         '''
+        New method:
+        '''
+        l = len(arr)
+        i = 0
+        zeros = []
+        while i < l:
+            if arr[i] == 0:
+                zeros.append(i)
+                l -= 1
+            i += 1
+        if len(zeros)==0:
+            return arr
+        for j in range(len(zeros)):
+            arr.insert(zeros[j]+j, 0)
+            arr.pop()
+        
+        '''
         Method 1: Sweep the array from the beginning.
                   If there is a zero, we shift the rest of the array to the right by 1.
         '''
