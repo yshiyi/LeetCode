@@ -90,3 +90,24 @@ class Solution(object):
         for j in range(len(arr)):
             nums1[j] = arr[j]
         return nums1
+    
+        '''
+        Method 3:
+        '''
+        ans = []
+        pt1, pt2 = 0, 0
+        while pt1 < m and pt2 < n:
+            if nums1[pt1] <= nums2[pt2]:
+                ans.append(nums1[pt1])
+                pt1 += 1
+            else:
+                ans.append(nums2[pt2])
+                pt2 += 1
+        if pt1 < m:
+            for i in range(pt1, m, 1):
+                ans.append(nums1[i])
+        else:
+            for j in range(pt2, n, 1):
+                ans.append(nums2[j])
+        for k in range(len(ans)):
+            nums1[k] = ans[k]
