@@ -13,7 +13,7 @@ class Solution(object):
         return ans[:-1]
 
 '''
-Method 2:
+Method 2: Two pointers
 '''
 class Solution(object):
     def reverseWords(self, s):str
