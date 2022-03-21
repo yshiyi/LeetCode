@@ -12,6 +12,7 @@
        * [28. Implement strStr()](#28-Implement-strStr)
        * [344. Reverse String](#344-Reverse-String)
        * [9. Palindrome Number](#9-Palindrome-Number)
+       * [151M. Reverse Words in a String](#151M-Reverse-Words-in-a-String)
        * [167. Two Sum II](#167-Two-Sum-II)
        * [209M. Minimum Size Subarray Sum](#209M-Minimum-Size-Subarray-Sum)
     * [4. Hash Table](#4-Hash-Table)
@@ -23,7 +24,6 @@
        * [696. Count Binary Substrings](#696-Count-Binary-Substrings)
        * [561. Array Partition I](#561-Array-Partition-I)
        * [119. Pascal's Triangle II](#119-Pascals-Triangle-II)
-       * [151M. Reverse Words in a String](#151M-Reverse-Words-in-a-String)
        * [557. Reverse Words in a String III](#557-Reverse-Words-in-a-String-III)
 <!-- GFM-TOC -->
 
@@ -429,6 +429,96 @@ class Solution(object):
         xs = str(x)
         return xs[::-1]==xs
 ```
+
+## 151M. Reverse Words in a String
+**Description:**\
+Given an input string s, reverse the order of the words.\
+A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.\
+Return a string of the words in reverse order concatenated by a single space.\
+Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.\
+**Example:**\
+Input: s = "the sky is blue"\
+Output: "blue is sky the"\
+**Method:**\
+Note:\
+For C++, use isspace() to check if the character is a space.\
+For Python, use string.split() to retrieve the words within the string.\
+There are two scenarios that need to be considered:
+1. If s\[i\] is not a space, then we save it to a string, word;
+2. If s\[i\] is a space, then we need to check the size of word.
+   If word.size() is not 0, it means we have save a complete word and we save it to a vector.\
+   If we reach the end of string and the last character is not a space, we need to save the last word to the vector.\
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/151M.%20Reverse%20Words%20in%20a%20String.cpp)
+```
+class Solution {
+public:
+    string reverseWords(string s) {
+        vector<string> v;
+        int right=0;
+        string word="";
+        while(right<s.size()){
+            if(!isspace(s[right])){
+                word += s[right];
+                if(right==s.size()-1){
+                    v.push_back(word);
+                }
+            }else{
+                if(word.size()!=0){
+                    v.push_back(word);
+                    word = "";
+                }
+            }
+            right++;
+        }
+
+        string ans;
+        for(int i=v.size()-1;i>-1;i--){
+            ans += v[i] +" ";
+        }
+        ans.pop_back();
+        return ans;
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Array/151M.%20Reverse%20Words%20in%20a%20String.py)
+```
+# Method: using string.split()
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        sl = s.split()
+        ans = ""
+        for i in range(len(sl)-1, -1, -1):
+            ans += sl[i] + " "
+
+        return ans[:-1]
+        
+        
+        # Method: Two pointers
+        left, right = 0, 0
+        words = []
+        while right < len(s):
+            if s[right]==' ' and right!=left:
+                words.append(s[left:right])
+                left = right + 1
+            elif s[right]==' ' and s[left]== ' ':
+                left += 1
+            elif right == len(s)-1:
+                words.append(s[left:right+1])
+            right += 1
+        
+        ans = ''
+        for i in range(len(words)-1, 0, -1):
+            ans = ans + words[i] + ' '
+            
+        return ans + words[0]
+```
+
+
 
 ## 167. Two Sum II
 **Description:**\
@@ -883,74 +973,6 @@ class Solution(object):
                 ans[j] = ans[j] + ans[j-1]
         
         return ans
-```
-
-## 151M. Reverse Words in a String
-**Description:**\
-Given an input string s, reverse the order of the words.\
-A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.\
-Return a string of the words in reverse order concatenated by a single space.\
-Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.\
-**Example:**\
-Input: s = "the sky is blue"\
-Output: "blue is sky the"\
-**Method:**\
-Note:\
-For C++, use isspace() to check if the character is a space.\
-For Python, use string.split() to retrieve the words within the string.\
-There are two scenarios that need to be considered:
-1. If s\[i\] is not a space, then we save it to a string, word;
-2. If s\[i\] is a space, then we need to check the size of word.
-   If word.size() is not 0, it means we have save a complete word and we save it to a vector.\
-   If we reach the end of string and the last character is not a space, we need to save the last word to the vector.\
-
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Array/151M.%20Reverse%20Words%20in%20a%20String.cpp)
-```
-class Solution {
-public:
-    string reverseWords(string s) {
-        vector<string> v;
-        int right=0;
-        string word="";
-        while(right<s.size()){
-            if(!isspace(s[right])){
-                word += s[right];
-                if(right==s.size()-1){
-                    v.push_back(word);
-                }
-            }else{
-                if(word.size()!=0){
-                    v.push_back(word);
-                    word = "";
-                }
-            }
-            right++;
-        }
-
-        string ans;
-        for(int i=v.size()-1;i>-1;i--){
-            ans += v[i] +" ";
-        }
-        ans.pop_back();
-        return ans;
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Array/151M.%20Reverse%20Words%20in%20a%20String.py)
-```
-# Method: using string.split()
-class Solution(object):
-    def reverseWords(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        sl = s.split()
-        ans = ""
-        for i in range(len(sl)-1, -1, -1):
-            ans += sl[i] + " "
-
-        return ans[:-1]
 ```
 
 ## 557. Reverse Words in a String III
