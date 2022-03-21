@@ -21,7 +21,6 @@ Method 2: Recursive approach
 '''
 Pascal = defaultdict(list)
 class Solution(object):
-    
     def getRow(self, rowIndex):
         """
         :type rowIndex: int
