@@ -51,4 +51,27 @@ class Solution(object):
         for num in L_word:
             L_str += str(num)
         return L_str
+      
+      
+    '''
+    Another way
+    '''
+    def groupStrings(self, strs):
+        Dic = defaultdict(list)
+        for str in strs:
+            if len(str)==1:
+                Dic[0].append(str)
+            else:
+                key = self.getKey(str)
+                Dic[key].append(str)
+        return Dic.values()
+
+    def getKey(self, s):
+        k = ''
+        for i in range(len(s)):
+            v = ord(s[i]) - ord(s[0])
+            if v < 0:
+                v += 26
+            k += chr(v)
+        return k
     
