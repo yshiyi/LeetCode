@@ -11,3 +11,27 @@ class Solution(object):
             ans += sl[i] + " "
 
         return ans[:-1]
+
+'''
+Method 2:
+'''
+class Solution(object):
+    def reverseWords(self, s):str
+        """
+        left, right = 0, 0
+        words = []
+        while right < len(s):
+            if s[right]==' ' and right!=left:
+                words.append(s[left:right])
+                left = right + 1
+            elif s[right]==' ' and s[left]== ' ':
+                left += 1
+            elif right == len(s)-1:
+                words.append(s[left:right+1])
+            right += 1
+        
+        ans = ''
+        for i in range(len(words)-1, 0, -1):
+            ans = ans + words[i] + ' '
+            
+        return ans + words[0]
