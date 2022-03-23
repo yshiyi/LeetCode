@@ -106,5 +106,20 @@ class Solution(object):
             fast = fast.next
         return slow
         
+        # ''''''
+        fast, slow = head, head
+        while fast is not None and fast.next is not None:
+            fast = fast.next.next
+            slow = slow.next
+            if fast==slow:
+                counter = 0
+                p1, p2 = head, fast
+                while p1 != p2:
+                    p1 = p1.next
+                    p2 = p2.next
+                    counter += 1
+                return p1
+        return None
+        
         
 
