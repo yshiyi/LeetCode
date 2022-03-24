@@ -77,5 +77,16 @@ class Solution(object):
         odd.next = even_head
         return head
         
+        # -------- #
+        oddHead, evenHead = head, head.next
+        odd, even = oddHead, evenHead
+        while even and even.next:
+            odd.next = odd.next.next
+            odd = odd.next
+            even.next = even.next.next
+            even = even.next
+        odd.next = evenHead
+        return oddHead
+        
         
         
