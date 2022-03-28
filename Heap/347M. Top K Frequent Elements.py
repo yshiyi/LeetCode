@@ -67,6 +67,20 @@ class Solution(object):
                   heapq.heapreplace(l, 2)  # print(list(l)) -> [2, 5, 9, 10, 7]
                   
         """
+        count = collections.Counter(nums)
+        q = []
+        heapq.heapify(q)
+        for key in count.keys():
+            heapq.heappush(q, (count[key], key))
+            if len(q) > k:
+                heapq.heappop(q)
+        ans = []
+        for i in range(-1, -k-1, -1):
+            val, key = q[i]
+            ans.append(key)
+        return ans
+        # --------------------------------------------------#
+        
         # O(1) time 
         if k == len(nums):
             return nums
