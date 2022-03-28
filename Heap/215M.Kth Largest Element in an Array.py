@@ -28,6 +28,17 @@ Find Subsequence of Length K With the Largest Sum - Easy
 K Highest Ranked Items Within a Price Range - Medium
 '''
 
+# Solution: Heap
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        q = []
+        heapq.heapify(q)
+        for num in nums:
+            heapq.heappush(q, num)
+            if len(q)>k:
+                heapq.heappop(q)
+        return q[0]
+
 # Solution
 class Solution(object):
     def findKthLargest(self, nums, k):
