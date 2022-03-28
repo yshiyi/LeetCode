@@ -63,4 +63,16 @@ class Solution(object):
             else:
                 right = mid
         return left
+  
+# Solution: Heap
+class Solution(object):
+    def kthSmallest(self, matrix, k):
+        q = []
+        heapq.heapify(q)
+        for row in matrix:
+            for ele in row:
+                heapq.heappush(q, ele*-1)
+                if len(q)>k:
+                    heapq.heappop(q)
+        return q[0]*-1
         
