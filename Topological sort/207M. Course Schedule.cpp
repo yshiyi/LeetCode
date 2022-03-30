@@ -50,8 +50,8 @@ Method: Topological sort is an approach to solve the problems with Directed Acyc
         For each element in the queue, we reduce the value in the corresponding cell in the second vector.
         When there is a new cell has 0 parent, we then put it into the queue.
         
-        Time complexity: O(m+n), m is the total number of edges, n is the total number of vertices.
-        Space complexity: O(n), we create two vectors with size of number of vertices.
+        Time complexity: O(E+V), E is the total number of edges, V is the total number of vertices.
+        Space complexity: O(E+V), we create two vectors. One saves all vertices, and the other one saves edges.
 */
 class Solution {
 public:
