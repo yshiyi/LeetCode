@@ -1,7 +1,7 @@
 /*
 1229M. Meeting Scheduler
 Description:
-Given the availability time slots arrays slots1 and slots2 of two people and a meeting duration duration, 
+Given the availability time slots arrays slots1 and slots2 of two people and a meeting duration, 
 return the earliest time slot that works for both of them and is of duration duration.
 If there is no common time slot that satisfies the requirements, return an empty array.
 The format of a time slot is an array of two elements [start, end] 
