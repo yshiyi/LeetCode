@@ -40,6 +40,10 @@ ai != bi
 All the pairs [ai, bi] are distinct.
 """
 
+"""
+Time complexity: O(E+V), E is the total number of edges, V is the total number of vertices.
+Space complexity: O(E+V), we create two vectors. One saves all vertices, and the other one saves edges.
+"""
 # Solution:
 class Solution(object):
     def findOrder(self, numCourses, prerequisites):
