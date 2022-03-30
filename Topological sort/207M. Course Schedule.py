@@ -38,6 +38,9 @@ Method: Directed Acyclic Graph (Topological sort)
         1st list: contains the children of each node
         2nd list: contains the number of parents of each node
         Use a queue to track the nodes that have no parents
+        
+        Time complexity: O(E+V), E is the total number of edges, V is the total number of vertices.
+        Space complexity: O(E+V), we create two vectors. One saves all vertices, and the other one saves edges.
 """
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
