@@ -80,3 +80,31 @@ class Solution(object):
         return True
 
 
+        """
+        Method 2:
+        """
+        children = collections.defaultdict(list)
+        parents = collections.defaultdict(int)
+        for i in range(numCourses):
+            parents[i] = 0
+        
+        for pre in prerequisites:
+            children[pre[1]].append(pre[0])
+            parents[pre[0]] += 1
+        
+        q = collections.deque()
+        for course in parents.keys():
+            if parents[course]==0:
+                q.append(course)
+        
+        while len(q):
+            course = q.popleft()
+            for child in children[course]:
+                parents[child] -= 1
+                if parents[child]==0:
+                    q.append(child)
+        
+        for course in parents.keys():
+            if parents[course]!=0:
+                return False
+        return True
