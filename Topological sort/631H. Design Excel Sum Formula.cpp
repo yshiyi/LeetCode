@@ -1,5 +1,6 @@
 /*
 631H. Design Excel Sum Formula
+
 Description:
 Your task is to design the basic function of Excel and implement the function of sum formula. 
 Specifically, you need to implement the following functions:
@@ -20,6 +21,7 @@ For example, "F7" represents the cell at (7, F).
 If the string represent a range of cells, then it has the following format : ColRow1:ColRow2. 
 The range will always be a rectangle, and ColRow1 represent the position of the top-left cell, 
 and ColRow2 represents the position of the bottom-right cell.
+
 Example 1:
 Excel(3,"C"); 
 // construct a 3*3 2D array with all zero.
