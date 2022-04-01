@@ -1716,14 +1716,16 @@ public:
 ```
 class Solution(object):
     def nextGreatestLetter(self, letters, target):
+        if letters[-1]<=target:
+            return letters[0]
         left, right = 0, len(letters)
         while left < right:
-            mid = (right+left)//2
+            mid = (left+right)//2
             if letters[mid]<=target:
                 left = mid + 1
             else:
                 right = mid
-        return letters[left%len(letters)]
+        return letters[left]
 ```
 
 ### 852. Peak Index in a Mountain Array
