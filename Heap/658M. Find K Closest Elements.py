@@ -48,25 +48,19 @@ class Solution(object):
         return arr[left:left+k]
     
 # Solution: Heap
-class Dis(object):
-    def __init__(self, num, dis):
-        self.num = num
-        self.dis = dis
-    def __cmp__(self, other):
-        if self.dis!=other.dis:
-            return self.dis>=other.dis
-        else:
-            return self.num<other.num
-
 class Solution(object):
     def findClosestElements(self, arr, k, x):
         q = []
         heapq.heapify(q)
         for num in arr:
-            heapq.heappush(q, Dis(num, -abs(num-x)))
-            if len(q)>k:
+            if len(q)<k:
+                heapq.heappush(q, (-abs(num-x), num))
+            elif q[0][0]<-abs(num-x):
                 heapq.heappop(q)
+                heapq.heappush(q, (-abs(num-x), num))
+
         ans = []
         while len(q)>0:
-            ans.append(heapq.heappop(q).num)
+            val, num = heapq.heappop(q)
+            ans.append(num)
         return sorted(ans)
