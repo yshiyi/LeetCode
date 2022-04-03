@@ -33,6 +33,9 @@ grid[i][j] is '0' or '1'.
 """
 
 # Solution:
+"""
+Method BFS, queue
+"""
 class Solution(object):
     def numIslands(self, grid):
         """
@@ -58,5 +61,36 @@ class Solution(object):
                         if new_x<0 or new_x>=r or new_y<0 or new_y>=c or grid[new_x][new_y]=='0' or (new_x, new_y) in visited:
                             continue
                         q.append((new_x, new_y))
+                        visited.add((new_x, new_y))
+        return res
+
+"""
+Method 2: DFS, stack
+"""
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        r, c = len(grid), len(grid[0])
+        dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+        res = 0
+        visited = set()
+        for i in range(r):
+            for j in range(c):
+                if grid[i][j]=='0' or (i, j) in visited:
+                    continue
+                res += 1
+                stack = collections.deque()
+                stack.append((i, j))
+                while len(stack):
+                    x, y = stack.pop()
+                    for dir in dirs:
+                        new_x = x + dir[0]
+                        new_y = y + dir[1]
+                        if new_x<0 or new_x>=r or new_y<0 or new_y>=c or grid[new_x][new_y]=='0' or (new_x, new_y) in visited:
+                            continue
+                        stack.append((new_x, new_y))
                         visited.add((new_x, new_y))
         return res
