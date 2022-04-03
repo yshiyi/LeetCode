@@ -5,13 +5,10 @@ class Solution(object):
         :rtype: int
         """
         left, right = 0, n
-        while(left < right):
-            mid = int((left+right)/2)
-            if not isBadVersion(mid) and isBadVersion(mid+1):
-                return mid+1
-            if not isBadVersion(mid) and not isBadVersion(mid+1):
-                left = mid + 1
-            if isBadVersion(mid):
+        while left<right:
+            mid = (left+right)//2
+            if not isBadVersion(mid):
+                left = mid+1
+            else:
                 right = mid
-        if left==right and isBadVersion(left):
-            return left
+        return left
