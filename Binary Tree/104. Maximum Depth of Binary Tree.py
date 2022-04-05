@@ -7,9 +7,7 @@ class Solution(object):
         """
         if root is None:
             return 0
-        res = 1
-        res = res + max(self.maxDepth(root.left), self.maxDepth(root.right))
-        return res
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
 # Method 2: using collections.deque()
@@ -21,18 +19,14 @@ class Solution(object):
         """
         if root is None:
             return 0
-        res = 0
         q = collections.deque()
         q.append(root)
-        while len(q)!=0:
-            n = len(q)
-            while n!=0:
-                root = q[0]
-                q.popleft()
-                if root.left is not None:
-                    q.append(root.left)
-                if root.right is not None:
-                    q.append(root.right)
-                n -= 1
-            res += 1
-        return res
+        steps = 0
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                node = q.popleft()
+                if node.right: q.append(node.right)
+                if node.left: q.append(node.left)
+            steps += 1
+        return steps
