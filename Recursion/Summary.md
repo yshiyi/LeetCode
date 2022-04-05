@@ -1007,6 +1007,32 @@ public:
     }
 };
 ```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/104.%20Maximum%20Depth%20of%20Binary%20Tree.py)
+```
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        q = collections.deque()
+        q.append(root)
+        steps = 0
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                node = q.popleft()
+                if node.right: q.append(node.right)
+                if node.left: q.append(node.left)
+            steps += 1
+        return steps
+    
+        if root is None:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+```
 
 # 4. Divide and Conquer
 Divide-and-conquer algorithm is naturally implemented in the form of recursion. Another subtle difference that tells a divide-and-conquer algorithm apart from other recursive algorithms is that we break the problem down into two or more subproblems in the divide-and-conquer algorithm, rather than a single smaller subproblem.\
