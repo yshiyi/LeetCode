@@ -82,7 +82,10 @@ Method: Similar to 987H
         Therefore, we can use bfs to traverse the tree and use use a hashmap to save them.
         The key is the col, and the value is a list.
         Time complexity: O(NlogN), mainly due to the sorting part at the end
+        Time complexity: O(N), we can also keep tracking the minCol and maxCol
+        
         Space complexity: O(N), hashmap
+        
 """
 # Solution:
 import collections
@@ -97,8 +100,11 @@ class Solution(object):
         dic = collections.defaultdict(list)
         q = collections.deque()
         q.append((0, root))
+        minCol, maxCol = 0, 0
         while len(q):
             col, node = q.popleft()
+            minCol = min(minCol, col)
+            maxCol = max(maxCol, col)
             dic[col].append(node.val)
             if node.left is not None:
                 q.append((col-1, node.left))
@@ -106,6 +112,8 @@ class Solution(object):
                 q.append((col+1, node.right))
         
         ans = []
-        for key in sorted(dic.keys()):
-            ans.append(dic[key])
+#         for key in sorted(dic.keys()):
+#             ans.append(dic[key])
+        for i in range(minCol, maxCol+1, 1):
+              ans.append(dic[i])
         return ans
