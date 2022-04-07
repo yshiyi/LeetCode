@@ -626,6 +626,8 @@ Given the root of a binary tree and an integer targetSum, return true if the tre
 Pre-order traverse. Check if the currrent sum is equal to the target sum and if both the left node and the right node are null. If so, then return true. Otherwise, call recursion function for left subtree and right subtree.\
 *Iterative approach*\
 Breadth-first Search. Save the current node and the current sum to a queue while traversing. When both the left and right node are null, save the current sum to a vector. Finally, check if the target sum is in the vector.\
+Time complexity: O(N), traverse all the nodes.\
+Space complexity: O(N)\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/112.%20Path%20Sum.cpp)
 ```
 // Method 1: Recursive approach
@@ -687,19 +689,21 @@ public:
 # Method 1: Recursive approach, define sum as a general variable
 class Solution(object):
     def hasPathSum(self, root, targetSum):
-        self.res = False
+        if not root:
+            return False
         Sum = 0
-        self.checkSum(root, targetSum, Sum)
-        return self.res
-    
-    def checkSum(self, node, targetSum, Sum):
-        if node is None:
-            return
-        Sum += node.val
-        if node.left is None and node.right is None and Sum == targetSum:
-            self.res = True
-        self.checkSum(node.left, targetSum, Sum)
-        self.checkSum(node.right, targetSum, Sum)
+        return self.helper(root, targetSum, Sum)
+        
+    def helper(self, root, targetSum, Sum):
+        if root is None:
+            return False
+        if root.left is None and root.right is None:
+            if Sum+root.val==targetSum:
+                return True
+            else:
+                return False
+        Sum += root.val
+        return self.helper(root.left, targetSum, Sum) or self.helper(root.right, targetSum, Sum)
 
 
 # Method 2: Iterative approach, Breadth-first Search
