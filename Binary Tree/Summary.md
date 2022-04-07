@@ -403,6 +403,25 @@ public:
 ```
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/117M.%20Populating%20Next%20Right%20Pointers%20in%20Each%20Node%20II.py)
 ```
+# Method: Iterative approach
+class Solution(object):
+    def connect(self, root):
+        if not root:
+            return None
+        q = collections.deque()
+        q.append(root)
+        while len(q):
+            size = len(q)
+            for i in range(size):
+                node = q.popleft()
+                if i==size-1:
+                    node.next = None
+                else:
+                    node.next = q[0]
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+        return root
+
 # Method: Recursive approach
 class Solution(object):
     def connect(self, root):
