@@ -6,54 +6,64 @@
 #         self.right = right
 
 # Method 1: Recursive approach, Depth-first Search
-#           Note: define sum as a general variable. 
-#           If we define it as self.sum (global variable), it will keep accumlating every time we call it.
 class Solution(object):
     def hasPathSum(self, root, targetSum):
-        """
-        :type root: TreeNode
-        :type targetSum: int
-        :rtype: bool
-        """
-        self.res = False
+        if not root:
+            return False
         Sum = 0
-        self.checkSum(root, targetSum, Sum)
-        return self.res
-    
-    def checkSum(self, node, targetSum, Sum):
-        if node is None:
-            return
-        Sum += node.val
-        if node.left is None and node.right is None and Sum == targetSum:
-            self.res = True
-        self.checkSum(node.left, targetSum, Sum)
-        self.checkSum(node.right, targetSum, Sum)
+        return self.helper(root, targetSum, Sum)
+        
+    def helper(self, root, targetSum, Sum):
+        if root is None:
+            return False
+        if root.left is None and root.right is None:
+            if Sum+root.val==targetSum:
+                return True
+            else:
+                return False
+        Sum += root.val
+        return self.helper(root.left, targetSum, Sum) or self.helper(root.right, targetSum, Sum)
 
 
 # Method 2: Iterative approach, Breadth-first Search
 class Solution(object):
     def hasPathSum(self, root, targetSum):
+        if not root:
+            return False
+        q = collections.deque()
+        q.append((root, 0))
+        while len(q):
+            node, curSum = q.popleft()
+            curSum += node.val
+            if node.left is None and node.right is None:
+                if curSum == targetSum:
+                    return True
+            if node.left:
+                q.append((node.left, curSum))
+            if node.right:
+                q.append((node.right, curSum))
+        return False
+
+# Depth-first Search    
+class Solution(object):
+    def hasPathSum(self, root, targetSum):
         """
         :type root: TreeNode
         :type targetSum: int
         :rtype: bool
         """
-        if root is None:
+        if not root:
             return False
-        q = collections.deque()
-        q.append((root, root.val))
-        res = []
-        while len(q)!=0:
-            cur, curSum = q[0]
-            q.popleft()
-            if cur.left is None and cur.right is None:
-                res.append(curSum)
-            if cur.left is not None:
-                q.append((cur.left, curSum+cur.left.val))
-            if cur.right is not None:
-                q.append((cur.right, curSum+cur.right.val))
-        
-        for v in res:
-            if v == targetSum:
-                return True
+        s = collections.deque()
+        s.append((root, 0))
+        while len(s):
+            node, curSum = s.pop()
+            curSum += node.val
+            if node.left is None and node.right is None:
+                if curSum == targetSum:
+                    return True
+            if node.left:
+                s.append((node.left, curSum))
+            if node.right:
+                s.append((node.right, curSum))
         return False
