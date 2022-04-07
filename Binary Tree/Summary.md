@@ -541,6 +541,10 @@ Given the root of a binary tree, check whether it is a mirror of itself (i.e., s
 Similar to 116M. Populating Next Right Pointers in Each Node We send two nodes to the recursive function in every iteration.\
 *Iterative approach*\
 Using queue. Take the first two elements from the queue in each iteration. The sequence of the nodes is important.\
+Time Complexity: O(N), we have to traverse all the nodes.\
+Space complexity: O(N)\
+Space 
+Space complexity: 
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/101.%20Symmetric%20Tree.cpp)
 ```
 // Method 1: Recursive approach
