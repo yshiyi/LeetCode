@@ -460,6 +460,10 @@ Return the maximum binary tree built from nums.\
 **Method:**\
 For recursive approach, find the max element, and create a new node using this max. Then work on the left and the right subarray recursively. The terminate condition is when lo > hi. To find the max element, we need to loop from i=lo to i=hi.\
 For iterative approach, we can use a stack to keep some nodes and ensure a decreasing order. For each number, we keep pop the stack until empty or a bigger number. The bigger number is current number's root.\
+Time Complexity: O(n^2), we call helper n times and at each time we traverse over all elements. The worst case is O(n^2). But in average, there is logN levels, so the time complexity is O(NlogN).\
+Space complexity: O(n), in the worst case. In average, O(logN)\
+
+
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/654M.%20Maximum%20Binary%20Tree.cpp)
 ```
 // Method 1: Recursive approach
