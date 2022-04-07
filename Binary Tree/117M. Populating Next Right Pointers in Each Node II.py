@@ -46,20 +46,18 @@ class Solution(object):
         :type root: Node
         :rtype: Node
         """
-        if root is None:
-            return None;
+        if not root:
+            return None
         q = collections.deque()
         q.append(root)
-        while len(q)!=0:
-            n1 = n2 = len(q)
-            while n2!=0:
-                cur = q[0]
-                q.popleft()
-                n2 -= 1
-                if n2!=0:
-                    cur.next = q[0]
-                if cur.left:
-                    q.append(cur.left)
-                if cur.right:
-                    q.append(cur.right)
+        while len(q):
+            size = len(q)
+            for i in range(size):
+                node = q.popleft()
+                if i==size-1:
+                    node.next = None
+                else:
+                    node.next = q[0]
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
         return root
