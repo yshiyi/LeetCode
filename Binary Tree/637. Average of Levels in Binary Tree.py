@@ -10,23 +10,17 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[float]
         """
-        ans = []
-        if root is None:
-            return ans
         q = collections.deque()
         q.append(root)
-        while len(q)!=0:
-            n1 = n2 = len(q)
-            sum = 0.0
-            while n1!=0:
-                root = q[0]
-                q.popleft()
-                sum += root.val
-                if root.left is not None:
-                    q.append(root.left)
-                if root.right is not None:
-                    q.append(root.right)
-                n1 -= 1
-            ans.append(sum/n2)
+        ans = []
+        while len(q):
+            size = len(q)
+            sum = 0
+            for _ in range(size):
+                node = q.popleft()
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+                sum += node.val
+            ans.append(float(sum)/size)
         return ans
         
