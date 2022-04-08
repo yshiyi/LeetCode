@@ -1063,17 +1063,15 @@ class Solution(object):
 class Solution(object):
     def flatten(self, root):
         if root is None:
-            return None
-        self.flatten(root.left)
-        self.flatten(root.right)
-        tempLeft = root.left
-        tempRight = root.right
+            return root
+        leftTree = self.flatten(root.left)
+        rightTree = self.flatten(root.right)
+        root.right = leftTree
         root.left = None
-        root.right = tempLeft
         cur = root
-        while cur.right is not None:
+        while cur.right:
             cur = cur.right
-        cur.right = tempRight
+        cur.right = rightTree
         return root
 ```
 
