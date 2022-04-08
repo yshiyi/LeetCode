@@ -1852,20 +1852,23 @@ public:
 
 class Solution(object):
     def allPathsSourceTarget(self, graph):
-        self.res = []
+        """
+        :type graph: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        res = []
         path = []
-        self.traverse(graph, 0, path)
-        return self.res
+        self.helper(graph, 0, path, res)
+        return res
     
-    def traverse(self, graph, s, path):
-        path.append(s)
-        if s==(len(graph)-1):
-            self.res.append(deepcopy(path))
-            path.pop()
+    def helper(self, graph, idx, path, res):
+        path.append(idx)
+        if idx==len(graph)-1:
+            res.append(copy.deepcopy(path))
             return
-        for node in graph[s]:
-            self.traverse(graph, node, path)
-        path.pop()
+        for node in graph[idx]:
+            self.helper(graph, node, path, res)
+            path.pop()
 ```
 
 
