@@ -1088,6 +1088,8 @@ Recursive approach, consider what needs to be done for the current node:
 As to the first one, we need to use the post-order traverse method. \
 As to the second one, we need to create an unordered_map to save the subtrees as to_string(root->val) + ',' + Recur(root->left) + ',' + Recur(root->right).\
 Keep in mind that don't save duplicate results when one appears more than two times.\
+Time complexity: O(N), traverse all the nodes.\
+Space complexity: O(N).\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/652M.%20Find%20Duplicate%20Subtrees.cpp)
 ```
 class Solution {
@@ -1118,31 +1120,19 @@ private:
 ```
 class Solution(object):
     def findDuplicateSubtrees(self, root):
-        result = []
-        seen = collections.defaultdict(int)
-        def collect(root):
-            if not root:
-                return '#'
-            l = str(root.val) + " " + collect(root.left) + " " + collect(root.right)
-            seen[l] = seen.get(l, 0) + 1
-            if seen[l] == 2:
-                result.append(root)
-            return l
-        collect(root)
-        return result
-        
-        count = collections.Counter()
         ans = []
-        def collect(node):
-            if not node: return "#"
-            serial = "{},{},{}".format(node.val, collect(node.left), collect(node.right))
-            count[serial] += 1
-            if count[serial] == 2:
-                ans.append(node)
-            return serial
-
-        collect(root)
+        seen = collections.defaultdict(int)
+        self.helper(root, ans, seen)
         return ans
+    
+    def helper(self, root, ans, seen):
+        if root is None:
+            return "#"
+        node_struc = str(root.val)+","+self.helper(root.left, ans, seen)+","+self.helper(root.right, ans, seen)
+        seen[node_struc] += 1
+        if seen[node_struc]==2:
+            ans.append(root)
+        return node_struc
 ```
 
 
