@@ -1380,48 +1380,55 @@ private:
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/297H.%20Serialize%20and%20Deserialize%20Binary%20Tree.py)
 ```
 class Codec:
-    ans = []
     def serialize(self, root):
         """Encodes a tree to a single string.
-        
         :type root: TreeNode
         :rtype: str
         """
-        ans = []
-        self.help1(root, ans)
-        return ans
-    
-    def help1(self, root, ans):
         if root is None:
-            ans.append('#')
-            return 
-        ans.append(root.val)
-        self.help1(root.left, ans)
-        self.help1(root.right, ans)
-        return ans
+            return "#"
+        q = collections.deque()
+        q.append(root)
+        data = ""
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                node = q.popleft()
+                if node is None:
+                    data += "#" + ","
+                    continue
+                else:
+                    data += str(node.val) + ","
+                q.append(node.left)
+                q.append(node.right)
+        return data[:-1]
+                
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
-        
         :type data: str
         :rtype: TreeNode
         """
-        if data is None:
+        if data == "#":
             return None
-        d = collections.deque(data)
-        return self.helper2(d)
-    
-    def helper2(self, d):
-        i = d[0]
-        d.popleft()
-        if i is None:
-            return None
-        if i=='#':
-            return None
-        node = TreeNode(str(i))
-        node.left = self.helper2(d)
-        node.right = self.helper2(d)
-        return node
+        strs = data.split(",")
+        root = TreeNode(int(strs[0]))
+        i = 1
+        q = collections.deque()
+        q.append(root)
+        while len(q):
+            node = q.popleft()
+            if strs[i]!="#":
+                node.left = TreeNode(int(strs[i]))
+            if strs[i+1]!="#":
+                node.right = TreeNode(int(strs[i+1]))
+            i += 2
+            
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        return root
 ```
 
 ### 341M. Flatten Nested List Iterator
