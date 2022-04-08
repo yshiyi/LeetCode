@@ -29,6 +29,28 @@ class Solution(object):
                 ref.right = cur
                 ref = cur
         return root
+        
+        # Another approach:
+        if root is None:
+            return root
+        s = collections.deque()
+        s.append((root, 0))
+        parent = root
+        while len(s):
+            cur, v = s.pop()
+            if v==0:
+                if cur.right:
+                    s.append((cur.right, 0))
+                if cur.left:
+                    s.append((cur.left, 0))
+                    cur.left = None
+                s.append((cur, 1))
+            else:
+                if parent!=cur:
+                    parent.right = cur
+                    parent = cur
+                
+        return root
 
 
 # Method 2: Recursive approach
@@ -39,15 +61,13 @@ class Solution(object):
         :rtype: None Do not return anything, modify root in-place instead.
         """
         if root is None:
-            return None
-        self.flatten(root.left)
-        self.flatten(root.right)
-        tempLeft = root.left
-        tempRight = root.right
+            return root
+        leftTree = self.flatten(root.left)
+        rightTree = self.flatten(root.right)
+        root.right = leftTree
         root.left = None
-        root.right = tempLeft
         cur = root
-        while cur.right is not None:
+        while cur.right:
             cur = cur.right
-        cur.right = tempRight
+        cur.right = rightTree
         return root
