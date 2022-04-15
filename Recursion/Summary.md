@@ -2212,21 +2212,26 @@ public:
 ```
 class Solution(object):
     def permute(self, nums):
-        res = []
-        temp = []
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.ans = []
+        num = []
+        self.helper(nums, num)
+        return self.ans
+    
+    def helper(self, nums, num):
+        if len(num)==len(nums):
+            self.ans.append(copy.deepcopy(num))
+            return
+        for n in nums:
+            if n in num:
+                continue
+            num.append(n)
+            self.helper(nums, num)
+            num.pop()
         
-        def backtrack(nums, temp):
-            if len(temp) == len(nums):
-                res.append(list(temp))
-                return
-            for num in nums:
-                if num not in temp:
-                    temp.append(num)
-                    backtrack(nums, temp)
-                    temp.pop()
-                    
-        backtrack(nums, temp)
-        return res
 ```
 
 ## 47M. Permutations II
@@ -2284,31 +2289,34 @@ public:
 ```
 class Solution(object):
     def permuteUnique(self, nums):
-        res = []
-        temp = []
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.ans = []
+        num = []
         check = [0]*len(nums)
-        
-        def isValid(nums, check, i):
-            if check[i]==1:
-                return False
-            if i>0 and nums[i]==nums[i-1] and check[i-1]==0:
-                return False
-            return True
-        
-        def backtrack(nums, check, temp):
-            if len(temp) == len(nums):
-                res.append(list(temp))
-                return
-            for i in range(len(nums)):
-                if isValid(nums, check, i):
-                    check[i] = 1
-                    temp.append(nums[i])
-                    backtrack(nums, check, temp)
-                    temp.pop()
-                    check[i] = 0
-                    
-        backtrack(sorted(nums), check, temp)
-        return res
+        self.helper(sorted(nums), num, check)
+        return self.ans
+    
+    def valid(self, nums, check, i):
+        if check[i]==1:
+            return False
+        elif i>0 and nums[i]==nums[i-1] and check[i-1]==0:
+            return False
+        return True
+    
+    def helper(self, nums, num, check):
+        if len(num)==len(nums):
+            self.ans.append(copy.deepcopy(num))
+            return
+        for i in range(len(nums)):
+            if self.valid(nums, check, i):
+                num.append(nums[i])
+                check[i]=1
+                self.helper(nums, num, check)
+                check[i]=0
+                num.pop()
 ```
 
 ## 17M. Letter Combinations of a Phone Number
