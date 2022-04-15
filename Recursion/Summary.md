@@ -2149,10 +2149,10 @@ class Solution(object):
         self.helper(sorted(nums), 0, check, tmp)
         return self.ans
     
-    def valid(self, nums, check, i):
+    def valid(self, nums, check, i, start):
         if check[i]==1:
             return False
-        elif i>0 and nums[i]==nums[i-1] and check[i-1]==0:
+        elif i>start and nums[i]==nums[i-1] and check[i-1]==0:
             return False
         return True
     
@@ -2160,7 +2160,7 @@ class Solution(object):
         if start==len(nums):
             return
         for i in range(start, len(nums)):
-            if self.valid(nums, check, i):
+            if self.valid(nums, check, i, start):
                 tmp.append(nums[i])
                 self.ans.append(copy.deepcopy(tmp))
                 check[i]=1
