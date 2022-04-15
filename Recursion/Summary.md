@@ -39,7 +39,7 @@
        * [78M. Subsets](#78M-Subsets)
        * [90M. Subsets II](#90M-Subsets-II)
        * [46M. Permutations](#46M-Permutations)
-       * [47M. Permutations II](#46M-Permutations-II)
+       * [47M. Permutations II](#47M-Permutations-II)
        * [17M. Letter Combinations of a Phone Number](#17M-Letter-Combinations-of-a-Phone-Number)
        * [698M. Partition to K Equal Sum Subsets](#698M-Partition-to-K-Equal-Sum-Subsets)
     * [6. Divide and Conquer vs Backtracking](#6-Divide-and-Conquer-vs-Backtracking)
