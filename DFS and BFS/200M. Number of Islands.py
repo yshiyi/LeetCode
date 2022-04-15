@@ -84,6 +84,7 @@ class Solution(object):
                 res += 1
                 stack = collections.deque()
                 stack.append((i, j))
+                visited.add((i, j))
                 while len(stack):
                     x, y = stack.pop()
                     for dir in dirs:
