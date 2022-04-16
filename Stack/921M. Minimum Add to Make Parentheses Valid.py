@@ -28,13 +28,7 @@ s[i] is either '(' or ')'.
 """
 
 """
-Method: We need to record the number of moves for both left and right parenthese.
-        Specifically, if we see a left bracket, the needs for the right bracket should increase by 1.
-        When we see a right bracket, we reduce the needs for the right brackest by 1.
-        The tricky part is how to deal witht the needs for the left bracket.
-        When the needs for the right bracket is equal to -1, it means there is a redundant right bracket.
-        In other words, we need an extra left bracket. Increase left by 1, and set right back to 0.
-        
+Method: 
 """
 class Solution(object):
     def minAddToMakeValid(self, s):
@@ -42,14 +36,18 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        left = 0
-        right = 0
+        # num_in: record the number of bracket that we need to insert into the string
+        # need_right: record the number of right bracket that we need from the string
+        num_in, need_right = 0, 0
         for i in range(len(s)):
             if s[i]=="(":
-                right += 1
+                need_right += 1
             if s[i]==")":
-                right -= 1
-                if right == -1:
-                    right = 0
-                    left += 1
-        return left + right
+                need_right -= 1
+                # when there is an extra right bracket
+                if need_right == -1:
+                    # we need to insert a left bracket into the string
+                    num_in += 1
+                    # set need_right = 0, because we don't need any more right bracket from the string
+                    need_right = 0
+        return num_in + need_right
