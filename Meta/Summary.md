@@ -24,7 +24,7 @@
     * [125. Valid Palindrome](#125-Valid-Palindrome)
     * [346. Moving Average from Data Stream](#346-Moving-Average-from-Data-Stream)
     * [88. Merge Sorted Array](#88-Merge-Sorted-Array)
-    * [139. Word Break](#139. Word Break)
+    * [139. Word Break](#139-Word-Break)
 
 * [Binary Search](#Binary-Search)
     * [528. Random Pick with Weight](#528-Random-Pick-with-Weight)
@@ -74,6 +74,6 @@
     * [311. Sparse Matrix Multiplication](#311-Sparse-Matrix-Multiplication)
     * [Medium Filter](#Medium Filter)
     * [Candy Crash 1D](Candy-Crash-1D)
-    * [Logical values]
+    * [Logical values](Logical-values)
 <!-- GFM-TOC -->
 
