@@ -76,7 +76,7 @@ Note that it is the kth largest element in the sorted order, not the kth distinc
 Example 1:\
 Input: nums = \[3,2,1,5,6,4\], k = 2\
 Output: 5\
-Constraints:\
+**Constraints:**\
 1 <= k <= nums.length <= 104\
 -104 <= nums\[i\] <= 104\
 **Method:**\
@@ -106,7 +106,7 @@ You may return the answer in any order.\
 Example 1:\
 Input: nums = \[1,1,1,2,2,3\], k = 2\
 Output: \[1,2\]\
-Constraints:\
+**Constraints:**\
 1 <= nums.length <= 105\
 k is in the range \[1, the number of unique elements in the array\].\
 It is guaranteed that the answer is unique.\
@@ -136,3 +136,27 @@ class Solution(object):
             ans.append(val)
         return ans
 ```
+
+## 23. Merge K Sorted Lists
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\
+Merge all the linked-lists into one sorted linked-list and return it.\
+Example 1:\
+Input: lists = \[\[1,4,5\],\[1,3,4\],\[2,6\]\]\
+Output: \[1,1,2,3,4,4,5,6\]\
+Explanation: The linked-lists are:\
+\[1->4->5, 1->3->4, 2->6\]\
+merging them into one sorted list:\
+1->1->2->3->4->4->5->6\
+Example 2:\
+Input: lists = \[\]\
+Output: \[\]\
+Example 3:\
+Input: lists = \[\[\]\]\
+Output: \[\]\
+**Constraints:**\
+k == lists.length\
+0 <= k <= 104\
+0 <= lists\[i\].length <= 500\
+-104 <= lists\[i\]\[j\] <= 104\
+lists\[i\] is sorted in ascending order.\
+The sum of lists\[i\].length will not exceed 104.\
