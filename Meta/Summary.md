@@ -71,4 +71,31 @@
 
 # Heap
 ## 215. Kth Largest Element in an Array
-
+Given an integer array nums and an integer k, return the kth largest element in the array.\
+Note that it is the kth largest element in the sorted order, not the kth distinct element.\
+Example 1:\
+Input: nums = \[3,2,1,5,6,4\], k = 2\
+Output: 5\
+Constraints:\
+1 <= k <= nums.length <= 104\
+-104 <= nums\[i\] <= 104\
+**Method:**\
+Create a heap to store k element. Pop the top one when length of the heap is greater than k.\
+Time complexity: O(Nlogk), using O(logk) to maintain the heap\
+Space complexity: O(k)
+```
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        h = []
+        heapq.heapify(h)
+        for num in nums:
+            heapq.heappush(h, num)
+            if len(h)>k:
+                heapq.heappop(h)
+        return h[0]
+```
