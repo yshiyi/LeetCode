@@ -51,6 +51,7 @@
 * [Hash Table](#Hash-Table)
     * [939. Minimum Area Rectangle](#939-Minimum-Area-Rectangle)
     * [791. Custom Sort String](#791-Custom-Sort-String)
+    * [13. Roman to Integer](#13-Roman-to-Integer)
     * [Flip a number over 180 degrees](#Flip-a-number-over-180-degrees)
 * [Binary Search](#Binary-Search)
     * [528. Random Pick with Weight](#528-Random-Pick-with-Weight)
