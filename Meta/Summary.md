@@ -7,12 +7,13 @@
     * [973. K Closest Points to Origin](#973-K-Closest-Points-to-Origin)
 * [BFS](#BFS)
     * [1091. Shortest Path in Binary Matrix](#1091-Shortest-Path-in-Binary-Matrix)
-    * [133. Clone Graph](#133-Clone-Graph)
-    * [515. Find Largest Value in Each Tree Row](#515-Find-Largest-Value-in-Each-Tree-Row)
-    * [1036. Escape a Large Maze](#1036-Escape-a-Large-Maze)
     * [199. Binary Tree Right Side View](#199-Binary-Tree-Right-Side-View)
+    * [103. Binary Tree Zigzag Level Order Traversal](#103-Binary-Tree-Zigzag-Level-Order-Traversal)
+    * [515. Find Largest Value in Each Tree Row](#515-Find-Largest-Value-in-Each-Tree-Row)
     * [314. Binary Tree Vertical Order Traversal](#314-Binary-Tree-Vertical-Order-Traversal)
     * [987. Vertical Order Traversal of a Binary Tree](#987-Vertical-Order-Traversal-of-a-Binary-Tree)
+    * [133. Clone Graph](#133-Clone-Graph)
+    * [1036. Escape a Large Maze](#1036-Escape-a-Large-Maze)
 
 * [DFS Backtracking](#DFS-Backtracking)
     * [113. Path Sum III](#113-Path-Sum-III)
@@ -278,3 +279,298 @@ class Solution(object):
             ans.append(point)
         return ans
 ```
+
+#  BFS
+## 1091. Shortest Path in Binary Matrix
+Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix. If there is no clear path, return -1.\
+A clear path in a binary matrix is a path from the top-left cell (i.e., (0, 0)) to the bottom-right cell (i.e., (n - 1, n - 1)) such that:\
+All the visited cells of the path are 0.\
+All the adjacent cells of the path are 8-directionally connected (i.e., they are different and they share an edge or a corner).\
+The length of a clear path is the number of visited cells of this path.\
+**Method:**\
+Use BFS.
+Time complexity: O(N^2)\
+Space complexity: O(N^2)
+```
+class Solution(object):
+    def shortestPathBinaryMatrix(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if grid[0][0]==1:
+            return -1
+        n = len(grid)
+        step = 1
+        q = collections.deque()
+        q.append((0, 0))
+        visited = set()
+        visited.add((0, 0))
+        dirs = [[0, 1], [1, 1], [1, 0], [1, -1],
+                [0, -1], [-1, -1], [-1, 0], [-1, 1]]
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                curx, cury = q.popleft()
+                if curx==n-1 and cury==n-1:
+                    return step
+                for d in dirs:
+                    newx = curx + d[0]
+                    newy = cury + d[1]
+                    if newx<0 or newx>=n or newy<0 or newy>=n or (newx, newy) in visited or grid[newx][newy]==1:
+                        continue
+                    visited.add((newx, newy))
+                    q.append((newx, newy))
+            step += 1
+        return -1
+```
+
+## 199. Binary Tree Right Side View
+Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.\
+Constraints:\
+The number of nodes in the tree is in the range \[0, 100\].\
+-100 <= Node.val <= 100\
+**Method: **\
+Use BFS. save the node from right to left, and save the first element.\
+Time complexity: O(N)\
+Space complexity: O(N)
+```
+class Solution(object):
+    def rightSideView(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root is None:
+            return []
+        q = collections.deque()
+        q.append(root)
+        ans = []
+        while len(q):
+            size = len(q)
+            for i in range(size):
+                node = q.popleft()
+                if i==0:
+                    ans.append(node.val)
+                if node.right:
+                    q.append(node.right)
+                elif node.left:
+                    q.append(node.left)
+        return ans
+```
+
+## 103. Binary Tree Zigzag Level Order Traversal
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).\
+**Method:**\
+BFS. Record the level. When we are in an odd row, we need to reverse the list before saving it.\
+Time complexity: O(N)\
+Space complexity: O(N)
+```
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if root is None:
+            return []
+        q = collections.deque()
+        q.append(root)
+        ans = []
+        l = 1
+        while len(q):
+            size = len(q)
+            level = []
+            for _ in range(size):
+                node = q.popleft()
+                level.append(node.val)
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+            if l%2==1:
+                ans.append(level)
+            else:
+                ans.append(level[::-1])
+            l += 1
+        return ans
+```
+
+## 515. Find Largest Value in Each Tree Row
+Given the root of a binary tree, return an array of the largest value in each row of the tree (0-indexed).\
+**Method:**\
+BFS\
+Time complexity: O(N), N is the number of nodes\
+Space complexity: O(N)
+```
+class Solution(object):
+    def largestValues(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root is None:
+            return []
+        q = collections.deque()
+        q.append(root)
+        ans = []
+        while len(q):
+            size = len(q)
+            max_node = float('-inf')
+            for _ in range(size):
+                node = q.popleft()
+                max_node = max(max_node, node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            ans.append(max_node)
+        return ans
+```
+
+## 314. Binary Tree Vertical Order Traversal
+Given a binary tree, return thevertical ordertraversal of its nodes' values. (ie, from top to bottom, column by column).\
+If two nodes are in the same row and column, the order should be from left to right.\
+**Method:**\
+**In this question, we don't need to sort the values. We only need a dictionary to record the values based on the column.**\
+Specifically, the key is the column number, and the values are the nodes on that column.\
+We also need to track the most left column number and the most right column number.\
+Time complexity: O(N)\
+Space complexity: O(N), dictionary
+```
+class Solution(object):
+    def verticalOrder(self, root):
+        dic = collections.defaultdict(list)
+        q = collections.deque()
+        q.append((0, root))
+        minCol, maxCol = 0, 0
+        while len(q):
+            col, node = q.popleft()
+            minCol = min(minCol, col)
+            maxCol = max(maxCol, col)
+            dic[col].append(node.val)
+            if node.left is not None:
+                q.append((col-1, node.left))
+            if node.right is not None:
+                q.append((col+1, node.right))
+        
+        ans = []
+        for i in range(minCol, maxCol+1, 1):
+              ans.append(dic[i])
+        return ans
+```
+
+## 987. Vertical Order Traversal of a Binary Tree
+Given the root of a binary tree, calculate the vertical order traversal of the binary tree.\
+There may be multiple nodes in the same row and same column. In such a case, sort these nodes by their values.\
+**Method:**\
+**In this question, when there are multiple nodes at the same position, we need to sort them before saving.**\
+Use a heap to save the column number, row number, and the node's value.\
+Time complexity: O(NlogN)\
+Space complexity: O(N)
+```
+class Solution(object):
+    def verticalTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if root is None:
+		    return []
+        h = []
+        heapq.heapify(h)
+        q = collections.deque()
+        q.append((root, 0, 0))
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                node, row, col = q.popleft()
+                heapq.heappush(h, (col, row, node.val))
+                if node.left:
+                    q.append((node.left, row+1, col-1))
+                if node.right:
+                    q.append((node.right, row+1, col+1))
+        ans = []
+        pre_c, c = h[0][0], []
+        while len(h):
+            col, row, val = heapq.heappop(h)
+            if col == pre_c:
+                c.append(val)
+            else:
+                ans.append(c)
+                c = []
+                pre_c = col
+                c.append(val)
+        if len(c):
+            ans.append(c)
+        return ans
+
+```
+
+## 133. Clone Graph
+Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.\
+**Method:**\
+Use BFS to traverse the graph.\
+Need a dictionary and a set. The dictionary is to save to cloned nodes, and the set is to save the visited nodes.\
+Time complexity: O(N)\
+Space complexity: O(N)
+```
+class Solution(object):
+    def cloneGraph(self, node):
+        """
+        :type node: Node
+        :rtype: Node
+        """
+        if node is None:
+            return None
+        dic, visited, q = {}, set(), collections.deque()
+        q.append(node)
+        while len(q):
+            node_org = q.popleft()
+            if node_org in visited:
+                continue
+            visited.add(node_org)
+            if node_org not in dic:
+                dic[node_org] = Node(node_org.val)
+            for node_org_nei in node_org.neighbors:
+                if node_org_nei not in dic:
+                    dic[node_org_nei] = Node(node_org_nei.val)
+                dic[node_org].neighbors.append(dic[node_org_nei])
+                q.append(node_org_nei)
+        return dic[node]
+```
+## 1036. Escape a Large Maze
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
