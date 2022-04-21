@@ -13,7 +13,6 @@
     * [314. Binary Tree Vertical Order Traversal](#314-Binary-Tree-Vertical-Order-Traversal)
     * [987. Vertical Order Traversal of a Binary Tree](#987-Vertical-Order-Traversal-of-a-Binary-Tree)
     * [133. Clone Graph](#133-Clone-Graph)
-    * [1036. Escape a Large Maze](#1036-Escape-a-Large-Maze)
 
 * [DFS Backtracking](#DFS-Backtracking)
     * [113. Path Sum III](#113-Path-Sum-III)
@@ -22,6 +21,7 @@
     * [543. Diameter of Binary Tree](#543-Diameter-of-Binary-Tree)
     * [78. Subsets](#78-Subsets)
     * [90. Subsets II](#90-Subsets-II)
+    * [The Knight’s Dialer](#The-Knights-Dialer)
 * [Stack](#Stack)
     * [227. Basic Calculator II](#227-Basic-Calculator-II)
     * [1762. Building With an Ocean View](#1762-Building-With-an-Ocean-View)
@@ -537,8 +537,48 @@ class Solution(object):
                 q.append(node_org_nei)
         return dic[node]
 ```
-## 1036. Escape a Large Maze
 
+# DFS Backtracking
+## The Knight’s Dialer
+Imagine you place a knight chess piece on a phone dial pad. This chess piece moves in an uppercase “L” shape: \
+two steps horizontally followed by one vertically, or one step horizontally then two vertically:\
+Image for post\
+1  2  3\
+4  5  6\
+7  8  9\
+   0\
+**Method:**\
+Backtracking.\
+Time complexity: O(N^2), N is the number of hops. Because there are at least two neighbors for each number.\
+Space complexity: O(N^2)
+```
+class Solution(object):
+    def countDial(self, start, numhops):
+        self.moves = {1: [6, 8],
+                      2: [7, 9],
+                      3: [5, 8],
+                      4: [0, 3, 9],
+                      6: [0, 1, 7],
+                      7: [2, 6],
+                      8: [1, 3],
+                      9: [2, 4],
+                      0: [4, 6]}
+        self.ans = []
+        self.helper(start, numhops, 1, [start])
+        return self.ans
+
+    def helper(self, start, numhops, cur_numhops, nums):
+        if cur_numhops==numhops:
+            self.ans.append(copy.deepcopy(nums))
+            return
+
+        for num in self.moves[start]:
+            nums.append(num)
+            cur_numhops += 1
+            self.helper(num, numhops, cur_numhops, nums)
+            cur_numhops -= 1
+            nums.pop()
+```
 
 
 
