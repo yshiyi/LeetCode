@@ -106,6 +106,30 @@ class Solution(object):
 ```
 
 # 238. Product of Array Except Self
+Given an integer array nums, return an array answer such that answer\[i\] is equal to the product of all the elements of nums except nums\[i\].\
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\
+You must write an algorithm that runs in O(n) time and without using the division operation.\
+**Method:**\
+Sweep the array twice.\
+First time, sweep from left and record the product until n-1.\
+Second time, sweep from right and keep tracking the product from the right.
+```
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        product_left = [1]
+        for i in range(len(nums)-1):
+            product_left.append(product_left[-1]*nums[i])
+        ans = [0] * len(nums)
+        product_right=1
+        for i in range(len(nums)-1, -1, -1):
+            ans[i] = product_left[i] * product_right
+            product_right *= nums[i]
+        return ans
+```
 
 # 146. LRU Cache
 
