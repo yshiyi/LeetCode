@@ -46,6 +46,34 @@ class Solution(object):
 Example:\
 Input: \[2,2,2,2,2,1,1,4,4\]\
 Output: \[2,2,2,2,2\]\
+**Method:**\
+At the end of the sript, remember to check the length of _window, in case the last window is the longest.
+```
+class Solution(object):
+    def longestRepeat(self, nums):
+        if len(nums)==1:
+            return nums
+        left, right = 0, 1
+        max_size, _window = 0, [nums[0]]
+        ans = []
+        while right < len(nums):
+            if nums[right]==nums[right-1]:
+                _window.append(nums[right])
+                right += 1
+            else:
+                if len(_window)>max_size:
+                    ans = _window
+                    max_size = len(_window)
+                _window = [nums[right]]
+                right += 1
+        if len(_window)>max_size:
+            ans = _window
+        return ans
+
+sol = Solution()
+nums = [4,4,4,3,2,2,2,2,1,1,1,1,1,1]
+print(sol.longestRepeat(nums))
+```
 
 # 29. Divide Two Integers
 Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\
