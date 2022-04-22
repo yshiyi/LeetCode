@@ -228,7 +228,10 @@ Implement the LRUCache class:
 
 The functions get and put must each run in O(1) average time complexity.
 **Method:**\
-
+First, we need a dictionary to hold all the keys so that we can check and get a key in O(1) time.\
+Second, we need a doubly linked list to hold all the values so taht we can insert and remove a key in O(1) time.\
+Time complexity: O(1)\
+Space complexity: O(n), n is the size of capacity
 ```
 class Node(object):
     def __init__(self, k, v, next=None, prev=None):
