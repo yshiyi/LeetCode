@@ -220,6 +220,78 @@ class Solution(object):
 ```
 
 # 146. LRU Cache
+Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.\
+Implement the LRUCache class:
+1. LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+2. int get(int key) Return the value of the key if the key exists, otherwise return -1.
+3. void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+
+The functions get and put must each run in O(1) average time complexity.
+**Method:**\
+
+```
+class Node(object):
+    def __init__(self, k, v, next=None, prev=None):
+        self.key = k
+        self.value = v
+        self.next = next
+        self.prev = prev
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.dic = collections.defaultdict(Node)
+        self.cap = capacity
+        self.head = Node(0, 0)
+        self.tail = Node(0, 0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if key not in self.dic.keys():
+            return -1
+        self.removeNode(self.dic[key])
+        self.addNode(self.dic[key])
+        
+        return self.dic[key].value
+        
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: None
+        """
+        if key in self.dic.keys():
+            self.removeNode(self.dic[key])
+        self.dic[key] = Node(key, value)
+        self.addNode(self.dic[key])
+        if len(self.dic) > self.cap:
+            node = self.head.next
+            self.removeNode(node)
+            self.dic.pop(node.key, None)
+    
+    def removeNode(self, node):
+        tmp1 = node.prev
+        tmp2 = node.next
+        tmp1.next = node.next
+        tmp2.prev = node.prev
+    
+    def addNode(self, node):
+        tmp1 = self.tail.prev
+        self.tail.prev = node
+        node.next = self.tail
+        tmp1.next = node
+        node.prev = tmp1
+```
 
 # 69. Sqrt(x)
 Given a non-negative integer x, compute and return the square root of x.\
