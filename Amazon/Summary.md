@@ -243,3 +243,52 @@ print(sol.knapSack(N, W, wt, val))
 ```
 
 # 208. Implement Trie (Prefix Tree)
+```
+class TrieNode(object):
+    def __init__(self):
+        self.children = collections.defaultdict(TrieNode)
+        self.is_word = False
+
+class Trie(object):
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        """
+        :type word: str
+        :rtype: None
+        """
+        cur = self.root
+        for letter in word:
+            if letter not in cur.children:
+                cur.children[letter] = TrieNode()
+            cur = cur.children[letter]
+        cur.is_word = True
+        
+
+    def search(self, word):
+        """
+        :type word: str
+        :rtype: bool
+        """
+        cur = self.root
+        for letter in word:
+            cur = cur.children.get(letter)
+            if cur is None:
+                return False
+        return cur.is_word
+        
+
+    def startsWith(self, prefix):
+        """
+        :type prefix: str
+        :rtype: bool
+        """
+        cur = self.root
+        for letter in prefix:
+            cur = cur.children.get(letter)
+            if cur is None:
+                return False
+        return True
+```
