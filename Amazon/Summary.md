@@ -2,6 +2,10 @@
 * [Longest Repeated Subarray](#Longest-Repeated-Subarray)
 * [29. Divide Two Integers](#29-Divide-Two-Integers)
 * [Simplified XML Validator](#Simplified-XML-Validator)
+* [66. Plus One](#66-Plus-One)
+* [238. Product of Array Except Self](#238-Product-of-Array-Except-Self)
+* [146. LRU Cache](#146-LRU-Cache)
+* [69. Sqrt(x)](#69-sqrtx)
 
 
 
@@ -27,5 +31,10 @@ Output: \[2,2,2,2,2\]\
 
 # Simplified XML Validator
 
+# 66. Plus One
 
+# 238. Product of Array Except Self
 
+# 146. LRU Cache
+
+# 69. Sqrt(x)
