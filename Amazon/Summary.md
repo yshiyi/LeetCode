@@ -48,16 +48,93 @@ Input: \[2,2,2,2,2,1,1,4,4\]\
 Output: \[2,2,2,2,2\]\
 
 # 29. Divide Two Integers
+Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\
+The integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\
+Return the quotient after dividing dividend by divisor.\
+**Method:**\
+Two pointers. Need to check the signs of both dividend and divisor.\
+```
+class Solution(object):
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        left, right = -sys.maxint, sys.maxint
+        if (divisor>0 and dividend>0) or (divisor<0 and dividend<0):
+            sign = 1
+        else:
+            sign = -1
+        while left < right:
+            mid = (left + right)//2
+            if mid*abs(divisor)<=abs(dividend) and (mid+1)*abs(divisor)>abs(dividend):
+                res = mid*sign
+                break
+            elif mid*abs(divisor)>abs(dividend):
+                right = mid
+            else:
+                left = mid + 1
+
+        res = min(res, 2147483647)
+        res = max(res, -2147483648)
+        return res
+```
 
 # Simplified XML Validator
 
 # 66. Plus One
+You are given a large integer represented as an integer array digits, where each digits\[i\] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.\
+Increment the large integer by one and return the resulting array of digits.\
+**Method:**\
+We need to check the value of carry at the end of script.
+```
+class Solution(object):
+    def plusOne(self, digits):
+        carry = 1
+        for i in range(len(digits)-1, -1, -1):
+            if digits[i] + carry > 9:
+                digits[i] = 0
+                carry = 1
+            else:
+                digits[i] += carry
+                carry = 0
+        if carry == 1:
+            return [1]+digits
+        else:
+            return digits
+```
 
 # 238. Product of Array Except Self
 
 # 146. LRU Cache
 
 # 69. Sqrt(x)
+Given a non-negative integer x, compute and return the square root of x.\
+Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.\
+Note: You are not allowed to use any built-in exponent function or operator, such as pow(x, 0.5) or x ** 0.5.\
+Constraints:\
+0 <= x <= 231 - 1\
+**Method:**\
+Note: we need to return left at the end.
+```
+class Solution(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        left, right = 0, x
+        while left < right:
+            mid = (left+right)//2
+            if mid**2<=x and (mid+1)**2>x:
+                return mid
+            elif mid**2>x:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+```
 
 # 13. Roman to Integer
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\
