@@ -40,22 +40,31 @@ class Solution(object):
                 valid, tag = self.helper(text[i:])
                 if not valid:
                     return False
+		#tags cannot be empty
                 if tag=="" or tag=="/":
                     return False
+		#If we find a closing tag </abc>
                 if tag[0]=="/":
+		    #if stack is empty, that means there was no opening tag, return false
                     if len(stack)==0:
                         return False
+		    #if stack top is 'abc' but our closing tag is 'xyz', return False
                     if stack[-1]!=tag[1:]:
                         return False
+		    #if there is a match to our closing tag then pop it from stack
                     stack.pop()
                 else:
+		     #if this is the opening tag then add it to stack
                     stack.append(tag)
+		#we increment i to tag length plus 2 to add <> to the legth of i
                 i += len(tag)+2
             elif text[i]==">":
+		#if there is a random > in text then return false
                 return False
             else:
                 i += 1
         if len(stack):
+	    #if we never found a closing tag to one of our opening tags
             return False
         return True
     
@@ -66,6 +75,7 @@ class Solution(object):
                 #text = <<abc>
                 return False, -1
             if text[i]==">":
+		#Completes the tag <abc>
                 return True, tag
             tag += text[i]
         return True, tag
