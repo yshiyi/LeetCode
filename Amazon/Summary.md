@@ -11,19 +11,36 @@
 * [208. Implement Trie (Prefix Tree)](#208-Implement-Trie-Prefix-Tree)
 
 
-
-
-
-
-
-
-
-
 # Two Sum
 Output all possible solutions.\
 Example:\
-Input: \[4,4,4,4,4,1\], target = 5\
-Output: \[4,1\], \[4,1\], \[4,1\], \[4,1\], \[4,1\]\
+Input: \[4,4,4,1,1\], target = 5\
+Output: \[4,1\], \[4,1\], \[4,1\], \[4,1\], \[4,1\], \[4,1\]\
+**Method:**\
+Notice, there are duplicate solutions. Therefore, we need to use Counter to count all the appearances of each element.\
+Then use two pointer to sweep the keys from the two ends.
+```
+import collections
+class Solution(object):
+    def twoSum(self, nums, target):
+        count = collections.Counter(nums)
+        vals = list(count.keys())
+        vals.sort()
+        p1, p2 = 0, len(vals)-1
+        ans = []
+        while p1 < p2:
+            _sum = vals[p1] + vals[p2]
+            if _sum==target:
+                for _ in range(count[vals[p1]]*count[vals[p2]]):
+                    ans.append([vals[p1], vals[p2]])
+                p2 -= 1
+            elif _sum > target:
+                p2 -= 1
+            else:
+                p1 += 1
+        return ans
+```
+
 
 # Longest Repeated Subarray
 Example:\
@@ -43,6 +60,43 @@ Output: \[2,2,2,2,2\]\
 # 69. Sqrt(x)
 
 # 13. Roman to Integer
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\
+Symbol       Value\
+I             1\
+V             5\
+X             10\
+L             50\
+C             100\
+D             500\
+M             1000\
+Example:\
+Input: s = "MCMXCIV"\
+Output: 1994\
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.\
+**Method:**\
+In most of cases, the string is in non-ascending order.\
+We only need to find the letters that are smaller than its next one.\
+Time complexity: O(N)\
+Space complexity: O(1)\
+```
+class Solution(object):
+    def romanToInt(self, s):
+        dic = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        if len(s)==1:
+            return dic[s[0]]
+        ans = 0
+        i = 0
+        while i < len(s)-1:
+            if dic[s[i]]>=dic[s[i+1]]:
+                ans += dic[s[i]]
+                i += 1
+            else:
+                ans += dic[s[i+1]] - dic[s[i]]
+                i += 2
+        if i == len(s)-1:
+            ans += dic[s[i]]
+        return ans
+```
 
 # Knapsack
 给你⼀个可装载重量为 W 的背包和 N 个物品，每个物品有重量和价值两个属性。其中第 i 个物品的重量为 wt\[i\]，价值为 val[i]，现在让你⽤这个背包装物品，最多能装的价值是多少？\
