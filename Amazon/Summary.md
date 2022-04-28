@@ -9,6 +9,7 @@
 * [13. Roman to Integer](#13-Roman-to-Integer)
 * [Knapsack](#Knapsack)
 * [208. Implement Trie (Prefix Tree)](#208-Implement-Trie-Prefix-Tree)
+* [346. Moving Average from Data Stream](#346-Moving-Average-from-Data-Stream)
 
 
 # Two Sum
@@ -455,3 +456,33 @@ class Trie(object):
                 return False
         return True
 ```
+
+# 346. Moving Average from Data Stream
+**Description:**\
+Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.\
+For example,\
+MovingAverage m = new MovingAverage(3);\
+m.next(1) = 1\
+m.next(10) = (1 + 10) / 2\
+m.next(3) = (1 + 10 + 3) / 3\
+m.next(5) = (10 + 3 + 5) / 3\
+**Method:**\
+Use queue to save the desired number of elements.
+```
+import collections
+class Solution(object):
+    def MovingAverage(self, size):
+        self.queue = collections.deque()
+        self.size = size
+        self.sum = 0
+        return
+    def next(self, val):
+        if len(self.queue) > self.size:
+            self.sum -= self.queue.popleft()
+        self.queue.append(val)
+        self.sum += val
+        return self.sum//len(self.queue)
+```
+
+
+
