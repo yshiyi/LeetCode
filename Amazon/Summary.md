@@ -477,11 +477,11 @@ class Solution(object):
         self.sum = 0
         return
     def next(self, val):
-        if len(self.queue) > self.size:
-            self.sum -= self.queue.popleft()
         self.queue.append(val)
         self.sum += val
-        return self.sum//len(self.queue)
+        if len(self.queue) > self.size:
+            self.sum -= self.queue.popleft()
+	return self.sum//len(self.queue)
 ```
 
 
