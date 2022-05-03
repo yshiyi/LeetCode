@@ -10,7 +10,8 @@
 * [Cluster](#Cluster)
 * [Robot](#Robot)
 * [268. Missing Number](#268-Missing-Number)
-* [Segment Tree](#Segment Tree)
+* [Segment Tree](#Segment-Tree)
+* [Triple next list](#Triple-next-list)
 
 
 
