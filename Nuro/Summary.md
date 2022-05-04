@@ -10,7 +10,7 @@
 * [Cluster](#Cluster)
 * [Robot](#Robot)
 * [268. Missing Number](#268-Missing-Number)
-* [Segment Tree](#Segment-Tree)
+* [Speed limit](#Speed-limit)
 * [Triple next list](#Triple-next-list)
 * [494. Target Sum](#494-Target-Sum)
 
