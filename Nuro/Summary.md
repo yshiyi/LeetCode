@@ -13,6 +13,9 @@
 * [Speed limit](#Speed-limit)
 * [Triple next list](#Triple-next-list)
 * [494. Target Sum](#494-Target-Sum)
+* [Symmetric line](#Symmetric-line)
+* [1268. Search Suggestions System](#1268-Search-Suggestions-System)
+
 
 
 
