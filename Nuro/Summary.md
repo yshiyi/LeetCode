@@ -17,6 +17,10 @@
 * [1268. Search Suggestions System](#1268-Search-Suggestions-System)
 * [529. Minesweeper](#529-Minesweeper)
 * [394. Decode String](#394-Decode-String)
+* [1293. Shortest Path in a Grid with Obstacles Elimination](#1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination)
+* [542. 01 Matrix](#542-01-Matrix)
+* [Point in max overlapping intervals](#Point-in-max-overlapping-intervals)
+* [Robot in matrix](#Robot-in-matrix)
 
 
 
