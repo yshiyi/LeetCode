@@ -33,4 +33,9 @@ Constraints:
 0 <= nums[i] <= 1000
 0 <= sum(nums[i]) <= 1000
 -1000 <= target <= 1000
+
+Follow up:
+string = "1111", target = 0
+11 - 11 = 0
+-11 + 11 = 0
 """
