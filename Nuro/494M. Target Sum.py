@@ -64,3 +64,36 @@ class Solution(object):
         subtract = self.helper(nums, start+1, Sum+nums[start], target)
         self.dic[start][Sum+self.total]=add+subtract
         return self.dic[start][Sum+self.total]
+
+       
+
+"""
+Follow up:
+string = "1111", target = 0
+"""
+class Solution(object):
+    def targetSum(self, string, target):
+        self.ans = []
+        self.helper(string, 0, 0, target, "")
+        return self.ans
+    
+    def helper(self, string, start, Sum, target, s):
+        if start==len(string):
+            if Sum==target:
+                self.ans.append(copy.deepcopy(s))
+            return
+        for i in range(start, len(string)):
+            new_s = string[start:i+1]
+            if i==0:
+                s += new_s
+            else:
+                s += "+"+new_s
+            self.helper(string, i+1, Sum+int(new_s), target, s)
+            if i==0:
+                s = s[:-len(new_s)]
+            else:
+                s = s[:-len(new_s)-1]
+            
+            s += "-"+new_s
+            self.helper(string, i+1, Sum-int(new_s), target, s)
+            s = s[:-len(new_s)-1]
