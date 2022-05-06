@@ -16,6 +16,7 @@
 * [Symmetric line](#Symmetric-line)
 * [1268. Search Suggestions System](#1268-Search-Suggestions-System)
 * [529. Minesweeper](#529-Minesweeper)
+* [394. Decode String](#394-Decode-String)
 
 
 
