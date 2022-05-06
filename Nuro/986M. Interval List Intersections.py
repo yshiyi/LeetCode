@@ -29,3 +29,34 @@ endi < starti+1
 0 <= startj < endj <= 109
 endj < startj+1
 """
+
+"""
+Method: Merge intervals
+        Merge two lists, and sort the new list.
+        Note, the tricky part is how to determine the value of ref.
+        |----------|
+              |-----------|
+        This is the standard case. The start of the overlap interval is max(list[i-1][0], list[i][0]), end of it is min(ref, list[i][1]).
+        The new ref is list[i][1]. ref = max(ref, list[i][1]). NOT!!!! ref = list[i][1]
+        Consider this case
+        |---------------------------------------|
+          |----------| |------------|
+        In this case, ref = max(ref, list[i][1])
+        
+"""
+class Solution(object):
+    def intervalIntersection(self, firstList, secondList):
+        """
+        :type firstList: List[List[int]]
+        :type secondList: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        newList = firstList + secondList
+        newList.sort()
+        ref = newList[0][1]
+        ans = []
+        for i in range(1, len(newList)):
+            if newList[i][0]<=ref:
+                ans.append([max(newList[i-1][0], newList[i][0]), min(ref, newList[i][1])])
+            ref = max(ref, newList[i][1])
+        return ans
