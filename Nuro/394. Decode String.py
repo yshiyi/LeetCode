@@ -11,7 +11,6 @@ You may assume that the input string is always valid; there are no extra white s
 Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. 
 For example, there will not be input like 3a or 2[4].
 
- 
 
 Example 1:
 Input: s = "3[a]2[bc]"
@@ -31,4 +30,8 @@ Constraints:
 s consists of lowercase English letters, digits, and square brackets '[]'.
 s is guaranteed to be a valid input.
 All the integers in s are in the range [1, 300].
+
+Follow up:
+不过每个元素从char变成了command，command由“1个大写字母 + 0个或多个小写字母”组成，返回值是一个dict，
+表示每个command出现过几次，括号部分可以nest（e.g. Acc2Ne[N3[Ac‍‍c2W]3]Brk）
 """
