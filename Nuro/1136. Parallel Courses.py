@@ -39,5 +39,45 @@ Note:
 1 <= relations.length <= 5000
 relations[i][0] != relations[i][1]
 There are no repeated relations in the input.
+"""
 
 """
+Method: Topological sort
+"""
+import collections
+class Solution(object):
+    def parallelCourse(self, courses):
+        children = collections.defaultdict(list)
+        parent = collections.defaultdict(int)
+
+        for course in courses:
+            parent[course[0]] = 0
+
+        for course in courses:
+            children[course[0]].append(course[1])
+            parent[course[1]] += 1
+        
+        q = collections.deque()
+        for p in parent.keys():
+            if parent[p]==0:
+                q.append(p)
+        
+        ans = 0
+        while len(q):
+            size = len(q)
+            for _ in range(size):
+                course = q.popleft()
+                for child in children[course]:
+                    parent[child] -= 1
+                    if parent[child]==0:
+                        q.append(child)
+            ans += 1
+        for p in parent.keys():
+            if parent[p]!=0:
+                return -1
+        return ans
+
+sol = Solution()
+courses = [[1,2],[2,3],[3,1]]
+print(sol.parallelCourse(courses))
+
