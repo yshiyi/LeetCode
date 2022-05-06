@@ -39,3 +39,28 @@ string = "1111", target = 0
 11 - 11 = 0
 -11 + 11 = 0
 """
+class Solution(object):
+    def findTargetSumWays(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        self.total = sum(nums)
+        self.dic = [collections.defaultdict(int) for _ in range(len(nums))]
+        return self.helper(nums, 0, 0, target)
+    
+    def helper(self, nums, start, Sum, target):
+        if start==len(nums):
+            if Sum==target:
+                return 1
+            else:
+                return 0
+        
+        if Sum+self.total in self.dic[start]:
+            return self.dic[start][Sum+self.total]
+        
+        add = self.helper(nums, start+1, Sum-nums[start], target)
+        subtract = self.helper(nums, start+1, Sum+nums[start], target)
+        self.dic[start][Sum+self.total]=add+subtract
+        return self.dic[start][Sum+self.total]
