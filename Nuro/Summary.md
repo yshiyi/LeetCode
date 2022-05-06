@@ -15,6 +15,7 @@
 * [494. Target Sum](#494-Target-Sum)
 * [Symmetric line](#Symmetric-line)
 * [1268. Search Suggestions System](#1268-Search-Suggestions-System)
+* [529. Minesweeper](#529-Minesweeper)
 
 
 
