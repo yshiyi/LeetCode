@@ -52,13 +52,13 @@ class Solution(object):
         '''
         Method 2: Similar to method 1, create a set instead of a dictionary
         '''
-        single = set()
-        for i in range(len(nums)):
-            if nums[i] not in single:
-                single.add(nums[i])
+        s = set()
+        for val in nums:
+            if val not in s:
+                s.add(val)
             else:
-                single.remove(nums[i])
-        return list(single)[0]
+                s.remove(val)
+        return s.pop()
     
         '''
         Method 3: Apply Math, 2 * (a+b+c) - (a+a+b+b+c) = c
