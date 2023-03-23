@@ -51,4 +51,15 @@ class Solution(object):
         return max(nums)
             
 
+import collections
+class Solution(object):
+    def thirdMax(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dic = collections.Counter(nums)
+        l = dic.keys()
+        l_sorted = sorted(l, reverse=True)
+        return l_sorted[2] if len(l_sorted)>2 else l_sorted[0]
 
