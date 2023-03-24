@@ -17,7 +17,7 @@
    * [5. Hash Map with Array](#5-Hash-Map-with-Array)
        * [347M. Top K Frequent Elements](#347M-Top-K-Frequent-Elements)
        * [380M. Insert Delete GetRandom O(1)](#380M-Insert-Delete-GetRandom)
-   * [6. Sliding Window](#5-Sliding-Window)
+   * [6. Sliding Window](#6-Sliding-Window)
        * [219. Contains Duplicate II](#219-Contains-Duplicate-II)
        * [3M. Longest Substring Without Repeating Characters](#3M-Longest-Substring-Without-Repeating-Characters)
        * [438M. Find All Anagrams in a String](#438M-Find-All-Anagrams-in-a-String)
