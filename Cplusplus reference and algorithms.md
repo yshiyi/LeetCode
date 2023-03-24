@@ -521,7 +521,7 @@ public:
         }
         
         if (len!=INT_MAX){
-            string res = s.substr(start, len+1);
+            string res = s.substr(start, len);
             return res;
         }else{
             return "";
