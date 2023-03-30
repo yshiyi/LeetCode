@@ -35,3 +35,36 @@ class Solution(object):
             ans = ans + words[i] + ' '
             
         return ans + words[0]
+
+'''
+Method 3:
+'''
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        sub_str = ""
+        l = []
+        i = 0
+        while i < len(s):
+            if s[i] != " ":
+                sub_str += s[i]
+                i += 1
+                continue
+            else:
+                l.append(sub_str+" ")
+                sub_str = ""
+                while i < len(s) and s[i] == " ":
+                    i += 1
+        if len(sub_str):
+            l.append(sub_str+" ")
+        res = ""
+        while len(l):
+            res += l.pop()
+        while res[0] == " ":
+            res = res[1:]
+        while res[-1] == " ":
+            res = res[:-1]
+        return res
