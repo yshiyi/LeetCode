@@ -29,6 +29,7 @@
        * [6.3 Find the first value greater than target](#63-Find-the-first-value-greater-than-target)
           * [270. Closest Binary Search Tree Value](#270-Closest-Binary-Search-Tree-Value)
           * [69. Sqrt(x)](#69-Sqrtx)
+          * [870M. Advantage Shuffle](#870M-Advantage-Shuffle)
        * [6.4 Use subfunction to determine the relation](#64-Use-subfunction-to-determine-the-relation)
           * [287M. Find the Duplicate Number](#287M-Find-the-Duplicate-Number)
           * [378M. Kth Smallest Element in a Sorted Matrix](#378M-Kth-Smallest-Element-in-a-Sorted-Matrix)
@@ -1200,6 +1201,47 @@ class Solution(object):
             else:
                 left = mid+1
         return -1
+```
+
+### 870M. Advantage Shuffle
+**Description:**\
+You are given two integer arrays nums1 and nums2 both of the same length. \
+The advantage of nums1 with respect to nums2 is the number of indices i for which nums1\[i\] > nums2\[i\].\
+Return any permutation of nums1 that maximizes its advantage with respect to nums2.\
+Example 1:\
+Input: nums1 = \[2,7,11,15\], nums2 = \[1,10,4,11\]\
+Output: \[2,11,7,15\]\
+**Method:**\
+The key idea is 田忌赛马.  \
+Sort nums1 and traverse nums2. Keep the min and max of nums1 in each iteration. \
+If none of value in nums1 is larger than the value in nums2, use the min to match it up.\
+Otherwise, use binary search to find the smallest number that is greater than the value in nums2.\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Search/870M.%20Advantage%20Shuffle.py)
+```
+class Solution(object):
+    def advantageCount(self, nums1, nums2):
+        ans = [0]*len(nums1)
+        nums1.sort()
+        for i in range(len(nums2)):
+            _min, _max = nums1[0], nums1[-1]
+            if nums2[i]>=_max:
+                ans[i] = _min
+                nums1.pop(0)
+            else:
+                index = self.helper(nums1, nums2[i])
+                ans[i] = nums1[index]
+                nums1.pop(index)
+        return ans
+    
+    def helper(self, nums, target):
+        left ,right = 0, len(nums)-1
+        while left<=right:
+            mid = left+(right-left)//2
+            if nums[mid]<=target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return left
 ```
 
 
