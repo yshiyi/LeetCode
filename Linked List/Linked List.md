@@ -15,6 +15,7 @@
        * [21. Merge Two Sorted Lists](#21-Merge-Two-Sorted-Lists)
     * [5. Reverse linked list](#5-Reverse-linked-list)
        * [206. Reverse Linked List](#206-Reverse-Linked-List)
+       * [92M. Reverse Linked List II](#92M-Reverse-Linked-List-II)
        * [234. Palindrome Linked List](#234-Palindrome-Linked-List)
     * [6. Reverse nodes in pairs or groups](#6-Reverse-nodes-in-pairs-or-groups)
        * [24M. Swap Nodes in Pairs](#24M-Swap-Nodes-in-Pairs)
@@ -415,6 +416,44 @@ def CreateRev(self, head):
       return
    self.CreateRev(head)
    return self.head2
+```
+
+### 206. Reverse Linked List II
+**Description:**\
+Given the head of a singly linked list and two integers left and right where left <= right, \
+reverse the nodes of the list from position left to position right, and return the reversed list. \
+Example:\
+Input: head = [1,2,3,4,5], left = 2, right = 4\
+Output: [1,4,3,2,5]
+
+**Method:** 
+Method: First, consider reversing first N nodes in the list. Second, traverse the list until reaching the first node that needs to reverse.\
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/92M.%20Reverse%20Linked%20List%20II.py)\
+```
+class Solution(object):
+    successor = None
+    def reverseN(self, head, n):
+        global successor
+        if n == 1:
+            successor = head.next
+            return head
+        last = self.reverseN(head.next, n-1)
+        head.next.next = head
+        head.next = successor
+        return last
+
+    def reverseBetween(self, head, left, right):
+        """
+        :type head: ListNode
+        :type left: int
+        :type right: int
+        :rtype: ListNode
+        """
+        if left == 1:
+            return self.reverseN(head, right)
+        head.next = self.reverseBetween(head.next, left-1, right-1)
+        return head
 ```
 
 ### 234. Palindrome Linked List
