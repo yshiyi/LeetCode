@@ -256,8 +256,7 @@ Then move both pointers together and remain the gap n.
 When the first pointer reaches the last node, then p2.next = p2.next.next.
 Note, when p1 finishes moving n steps, we need to check if p1 is none.
 If it is, then it means to remove the head.\
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.cpp)\
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.cpp)
 ```
 class Solution {
 public:
@@ -278,6 +277,21 @@ public:
         return head;
     }
 };
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/19M.%20Remove%20Nth%20Node%20From%20End%20of%20List.py)
+```
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        dummy_head = ListNode(None)
+        dummy_head.next = head
+        slow, fast = dummy_head, dummy_head
+        for _ in range(n):
+            fast = fast.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+        slow.next = slow.next.next
+        return dummy_head.next
 ```
 
 ##  4. Merge two sorted linked lists
