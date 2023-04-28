@@ -427,7 +427,6 @@ Output: [1,4,3,2,5]
 
 **Method:** 
 Method: First, consider reversing first N nodes in the list. Second, traverse the list until reaching the first node that needs to reverse.\
-```
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/92M.%20Reverse%20Linked%20List%20II.py)\
 ```
 class Solution(object):
