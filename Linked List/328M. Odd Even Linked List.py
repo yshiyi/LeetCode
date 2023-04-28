@@ -32,8 +32,28 @@ class Solution(object):
         :rtype: ListNode
         """
         
+        
         """
         Method 1: Two Pointers
+                  The fast pointer always points at the even position. 
+                  Then take out the next odd node, and move the fast pointer to its next.next.
+                  Then incert this odd node to the next position to where the slow pointer points.
+        """
+        if head is None or head.next is None:
+            return head
+        slow, fast = head, head.next
+        while fast and fast.next:
+            tmp = ListNode(fast.next.val)
+            tmp.next = slow.next
+            slow.next = tmp
+            slow = slow.next
+            fast.next = fast.next.next
+            fast = fast.next
+        return head
+        
+        
+        """
+        Method 2: Two Pointers
                   Create a variable to count the position.
                   When the fast pointer reaches the even position, take out the next odd node.
                   Then insert this odd node to the next position to where the slow pointer points.
@@ -61,7 +81,7 @@ class Solution(object):
         return head
         
         """
-        Method 2: Create two list
+        Method 3: Create two list
                   Insert the odd nodes to the odd list and insert the even nodes to the even list.
                   Finally, link two list together.
         """
