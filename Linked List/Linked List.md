@@ -897,32 +897,21 @@ Output: 1->3->5->2->4->NULL
 
 **Method 1:**
 Two pointers\
-Create a variable to count the position.
-When the fast pointer reaches the even position, take out the next odd node.
+The fast pointer always points at the even position. Then take out the next odd node, and move the fast pointer to its next.next.\
 Then incert this odd node to the next position to where the slow pointer points.\
 [C++](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.cpp)\
 [Python](https://github.com/yshiyi/LeetCode/blob/main/Linked%20List/328M.%20Odd%20Even%20Linked%20List.py)
 ```
-if head is None:
+if head is None or head.next is None:
    return head
-cur1, cur2 = head, head
-
-p = 1
-while cur2 and cur2.next:
-   if p % 2 == 0:
-       # Take out odd node
-       temp = cur2.next
-       cur2.next = cur2.next.next
-       # Incert node
-       temp.next = cur1.next
-       cur1.next = temp
-       # Move the first pointers
-       cur1 = cur1.next
-       p += 1
-   else:
-       cur2 = cur2.next
-       p += 1
-
+slow, fast = head, head.next
+while fast and fast.next:
+   tmp = ListNode(fast.next.val)
+   tmp.next = slow.next
+   slow.next = tmp
+   slow = slow.next
+   fast.next = fast.next.next
+   fast = fast.next
 return head
 ```
 
