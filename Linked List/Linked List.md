@@ -228,15 +228,14 @@ So, we create a while loop to check the head.val.\
 ```
 if head is None:
    return head
-while head and head.val == val:
-   head = head.next
-curr = head
-while curr:
-   if curr.next and curr.next.val == val:
-       curr.next = curr.next.next
-   else:
-       curr = curr.next
-return head
+dummy = ListNode()
+dummy.next = head
+cur = dummy
+while cur and cur.next:
+   while cur.next and cur.next.val==val:
+       cur.next = cur.next.next
+   cur = cur.next
+return dummy.next
 ```
 
 ### 19M. Remove Nth Node From End of List
