@@ -43,12 +43,12 @@ class Solution(object):
         slot2.sort()
         i, j = 0, 0
         while i<len(slot1) and j<len(slot2):
-            if slot1[i][1] < slot2[j][0]+d:
-                i += 1
-                continue
-            if slot2[j][1] < slot1[i][0]+d:
-                j += 1
-                continue
+#             if slot1[i][1] < slot2[j][0]+d:
+#                 i += 1
+#                 continue
+#             if slot2[j][1] < slot1[i][0]+d:
+#                 j += 1
+#                 continue
             starting = max(slot1[i][0], slot2[j][0])
             ending = min(slot1[i][1], slot2[j][1])
             if starting+d<=ending:
