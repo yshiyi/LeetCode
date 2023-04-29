@@ -25,6 +25,23 @@ k is in the range [1, The number of unique words[i]]
 '''
 
 # Solution:
+# Method 1:
+class Solution(object):
+    def topKFrequent(self, words, k):
+        dic = collections.Counter(words)
+        q = []
+        heapq.heapify(q)
+        for word, freq in dic.items():
+            heapq.heappush(q, (-freq, word))
+        ans = []
+        for _ in range(k):
+            _, word = heapq.heappop(q)
+            ans.append(word)
+
+        return ans
+
+
+# Method 2:
 class Freq(object):
     def __init__(self, count, word):
         self.count = count
