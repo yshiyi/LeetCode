@@ -35,6 +35,7 @@
        * [1.6 Construct a Binary Tree](#16-Construct-a-Binary-Tree)
           * [105M. Construct Binary Tree from Preorder and Inorder Traversal](#105M-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal)
           * [106M. Construct Binary Tree from Inorder and Postorder Traversal](#106M-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal)
+          * [889M. Construct Binary Tree from Preorder and Postorder Traversal](#889M-Construct-Binary-Tree-from-Preorder-and-Postorder-Traversal)
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Tree
@@ -1998,6 +1999,44 @@ class Solution(object):
         length_left = index - inStart
         root.left = self.build(inorder, inStart, index-1, postorder, postStart, postStart+length_left-1)
         root.right = self.build(inorder, index+1, inEnd, postorder, postStart+length_left, postEnd-1)
+        return root
+```
+
+### 889M. Construct Binary Tree from Preorder and Postorder Traversal
+**Desciption:**\
+Given two integer arrays, preorder and postorder where preorder is the preorder traversal of a binary tree of distinct values and postorder is the postorder traversal of the same tree, reconstruct and return the binary tree.\
+If there exist multiple answers, you can return any of them.\
+**Method:**\
+There is no unique solution, because we can't determine the exact left branch or right branch.\
+Then we choose the value right behind preorder\[preleft\] as the value of the root.left.\
+Then we use this value to determine the left branch and the right branch in postorder.\
+
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/889M.%20Construct%20Binary%20Tree%20from%20Preorder%20and%20Postorder%20Traversal.py)
+```
+class Solution(object):
+    def constructFromPrePost(self, preorder, postorder):
+        return self.helper(preorder, 0, len(preorder)-1, postorder, 0, len(postorder)-1)
+    
+    def helper(self, preorder, preleft, preright, postorder, postleft, postright):
+        if preleft > preright:
+            return None
+        if preleft == preright:
+            return TreeNode(preorder[preleft])
+        rootVal = preorder[preleft]
+        targetVal = preorder[preleft+1]
+        for i in range(postleft, postright+1):
+            if postorder[i] == targetVal:
+                index = i
+                break
+        
+        postleftstart, postleftend = postleft, index
+        postrightstart, postrightend = index+1, postright-1
+        preleftstart, preleftend = preleft+1, preleft+1+index-postleft
+        prerightstart, prerightend = preleft+2+index-postleft, preright
+
+        root = TreeNode(rootVal)
+        root.left = self.helper(preorder, preleftstart, preleftend, postorder, postleftstart, postleftend)
+        root.right = self.helper(preorder, prerightstart, prerightend, postorder, postrightstart, postrightend)
         return root
 ```
 
