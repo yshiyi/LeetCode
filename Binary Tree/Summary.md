@@ -1397,11 +1397,10 @@ class Codec:
                 node = q.popleft()
                 if node is None:
                     data += "#" + ","
-                    continue
                 else:
                     data += str(node.val) + ","
-                q.append(node.left)
-                q.append(node.right)
+                    q.append(node.left)
+                    q.append(node.right)
         return data[:-1]
                 
 
