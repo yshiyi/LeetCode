@@ -24,7 +24,6 @@
           * [117M. Populating Next Right Pointers in Each Node II](#117M-Populating-Next-Right-Pointers-in-Each-Node-II)
           * [297H. Serialize and Deserialize Binary Tree](#297H-Serialize-and-Deserialize-Binary-Tree)
           * [341M. Flatten Nested List Iterator](#341M-Flatten-Nested-List-Iterator)
-          * [236M. Lowest Common Ancestor of a Binary Tree](#236M-Lowest-Common-Ancestor-of-a-Binary-Tree)
           * [222M. Count Complete Tree Nodes](#222M-Count-Complete-Tree-Nodes)
           * [101. Symmetric Tree](#101-Symmetric-Tree)
           * [104. Maximum Depth of Binary Tree](#104-Maximum-Depth-of-Binary-Tree)
@@ -36,6 +35,11 @@
           * [105M. Construct Binary Tree from Preorder and Inorder Traversal](#105M-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal)
           * [106M. Construct Binary Tree from Inorder and Postorder Traversal](#106M-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal)
           * [889M. Construct Binary Tree from Preorder and Postorder Traversal](#889M-Construct-Binary-Tree-from-Preorder-and-Postorder-Traversal)
+       * [1.7 Lowest Common Ancestor](#17-Lowest-Common-Ancestor)
+          * [236M. Lowest Common Ancestor of a Binary Tree](#236M-Lowest-Common-Ancestor-of-a-Binary-Tree) 
+          * [1644M. Lowest Common Ancestor of a Binary Tree II](#1644M-Lowest-Common-Ancestor-of-a-Binary-Tree-II) 
+          * [1650M. Lowest Common Ancestor of a Binary Tree III](#1650M-Lowest-Common-Ancestor-of-a-Binary-Tree-III) 
+          * [1676M. Lowest Common Ancestor of a Binary Tree IV](#1676M-Lowest-Common-Ancestor-of-a-Binary-Tree-IV) 
 <!-- GFM-TOC -->
 
 # 1. Introduction to Binary Tree
@@ -1508,130 +1512,7 @@ class NestedIterator(object):
         return len(self.v)
 ```
 
-### 236M. Lowest Common Ancestor of a Binary Tree
-**Description:**\
-Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
-According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”\
-**Method:**\
-*Iterative approach*\
-Use a map to save the current node and its parent. We traverse the tree and save all the nodes and their corresponding parents to the map.\
-Then, we create a set and save all the ancestors of p to the set. Finally, we check the ancestors of q and find the one that appears in the p's set.\
-*Recursive approach*\
-When apply recursive approach, we only need to consider what we need to do for a single node.
-1. We need to check if the root is p or q. If so, root is the LCA.
-2. We inquire the left subtree recursion and the right subtree recursion.
-3. If both of them are not NULL, in other words, they are either p or q, then the root is LCA.
-4. The subtree that returns non-NULL value is the root. In other words, the other target root is in the subtree of this root.
 
-[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.cpp)
-```
-// Method 1: Iterative approach
-class Solution {
-public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==NULL){
-            return NULL;
-        }
-        unordered_map<TreeNode*, TreeNode*> m;
-        m.insert({root, NULL});
-        stack<TreeNode*> s;
-        s.push(root);
-        TreeNode* cur;
-        while(s.size()!=0){
-            cur = s.top(); s.pop();
-            if(cur->right!=NULL){
-                s.push(cur->right);
-                m.insert({cur->right, cur});
-            }
-            if(cur->left!=NULL){
-                s.push(cur->left);
-                m.insert({cur->left, cur});
-            }
-        }
-        set<TreeNode*> s_anc;
-        while(m[p]!=NULL){
-            s_anc.insert(p);
-            p = m[p];
-        }
-        while(m[q]!=NULL){
-            if(s_anc.find(q)!=s_anc.end()){
-                break;
-            }
-            q = m[q];
-        }
-        return q;
-    }
-};
-
-// Method 2: Recursive approach
-class Solution {
-public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==NULL)
-            return NULL;
-        if(root==p || root==q)
-            return root;
-        TreeNode* left=lowestCommonAncestor(root->left,p,q);
-        TreeNode* right=lowestCommonAncestor(root->right,p,q);
-        if(left!=NULL && right!=NULL)
-            return root;
-        else
-        {
-            if(left!=NULL)
-                return left;
-            return right;
-        }
-    }
-};
-```
-[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.py)
-```
-# Method 1: Recursive approach
-class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        if root is None:
-            return None
-        if root==p or root==q:
-            return root
-        leftRoot = self.lowestCommonAncestor(root.left, p, q)
-        rightRoot = self.lowestCommonAncestor(root.right, p, q)
-        if leftRoot is not None and rightRoot is not None:
-            return root
-        if leftRoot is not None:
-            return leftRoot
-        if rightRoot is not None:
-            return rightRoot
-
-
-# Method 2: Iterative approach
-class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        if root is None:
-            return None
-        m = {}
-        m[root] = None
-        s = collections.deque()
-        s.append(root)
-        while len(s)!=0:
-            cur = s[-1]
-            s.pop()
-            if cur.right is not None:
-                s.append(cur.right)
-                m[cur.right] = cur
-            if cur.left is not None:
-                s.append(cur.left)
-                m[cur.left] = cur
-        
-        s_ans = set()
-        while m[p] is not None:
-            s_ans.add(p)
-            p = m[p]
-        while m[q] is not None:
-            if q in s_ans:
-                break
-            q = m[q]
-        return q
-```
 
 ### 222M. Count Complete Tree Nodes
 **Description:**\
@@ -2039,8 +1920,238 @@ class Solution(object):
         return root
 ```
 
+## 1.7 Lowest Common Ancestor](#17-Lowest-Common-Ancestor)
+### 236M. Lowest Common Ancestor of a Binary Tree
+**Description:**\
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”\
+**Method:**\
+*Iterative approach*\
+Use a map to save the current node and its parent. We traverse the tree and save all the nodes and their corresponding parents to the map.\
+Then, we create a set and save all the ancestors of p to the set. Finally, we check the ancestors of q and find the one that appears in the p's set.\
+*Recursive approach*\
+When apply recursive approach, we only need to consider what we need to do for a single node.
+1. Since p and q must exist in the tree, then we need to first check if the root is p or q. If so, root is the LCA. Because the other one must be below it.
+2. We inquire the left subtree recursion and the right subtree recursion.
+3. If both of them are not NULL, in other words, they are either p or q, then the root is LCA.
+4. The subtree that returns non-NULL value is the root. In other words, the other target root is in the subtree of this root.
+
+[C++](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.cpp)
+```
+// Method 1: Iterative approach
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL){
+            return NULL;
+        }
+        unordered_map<TreeNode*, TreeNode*> m;
+        m.insert({root, NULL});
+        stack<TreeNode*> s;
+        s.push(root);
+        TreeNode* cur;
+        while(s.size()!=0){
+            cur = s.top(); s.pop();
+            if(cur->right!=NULL){
+                s.push(cur->right);
+                m.insert({cur->right, cur});
+            }
+            if(cur->left!=NULL){
+                s.push(cur->left);
+                m.insert({cur->left, cur});
+            }
+        }
+        set<TreeNode*> s_anc;
+        while(m[p]!=NULL){
+            s_anc.insert(p);
+            p = m[p];
+        }
+        while(m[q]!=NULL){
+            if(s_anc.find(q)!=s_anc.end()){
+                break;
+            }
+            q = m[q];
+        }
+        return q;
+    }
+};
+
+// Method 2: Recursive approach
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL)
+            return NULL;
+        if(root==p || root==q)
+            return root;
+        TreeNode* left=lowestCommonAncestor(root->left,p,q);
+        TreeNode* right=lowestCommonAncestor(root->right,p,q);
+        if(left!=NULL && right!=NULL)
+            return root;
+        else
+        {
+            if(left!=NULL)
+                return left;
+            return right;
+        }
+    }
+};
+```
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/236M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree.py)
+```
+# Method 1: Recursive approach
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        if root is None:
+            return None
+        if root==p or root==q:
+            return root
+        leftRoot = self.lowestCommonAncestor(root.left, p, q)
+        rightRoot = self.lowestCommonAncestor(root.right, p, q)
+        if leftRoot is not None and rightRoot is not None:
+            return root
+        if leftRoot is not None:
+            return leftRoot
+        if rightRoot is not None:
+            return rightRoot
 
 
+# Method 2: Iterative approach
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        if root is None:
+            return None
+        m = {}
+        m[root] = None
+        s = collections.deque()
+        s.append(root)
+        while len(s)!=0:
+            cur = s[-1]
+            s.pop()
+            if cur.right is not None:
+                s.append(cur.right)
+                m[cur.right] = cur
+            if cur.left is not None:
+                s.append(cur.left)
+                m[cur.left] = cur
+        
+        s_ans = set()
+        while m[p] is not None:
+            s_ans.add(p)
+            p = m[p]
+        while m[q] is not None:
+            if q in s_ans:
+                break
+            q = m[q]
+        return q
+```
+
+
+### 1644M. Lowest Common Ancestor of a Binary Tree II
+**Description:**\
+Given the root of a binary tree, return the lowest common ancestor (LCA) of two given nodes, p and q. \
+If either node p or q does not exist in the tree, return null. \
+All values of the nodes in the tree are unique.\
+According to the definition of LCA on Wikipedia: \
+“The lowest common ancestor of two nodes p and q in a binary tree T is the lowest node that has both p and q as descendants (where we allow a node to be a descendant of itself)”. A descendant of a node x is a node y that is on the path from node x to some leaf node.\
+**Constraints:**\
+1. The number of nodes in the tree is in the range \[1, 10^4\].\
+2. -10^9 <= Node.val <= 10^9\
+3. All Node.val are unique.\
+4. p != q\
+**Method:**\
+In this case, we can't check if the node is p or q at first. Because p or q may not exist in the tree.\
+Therefore, we need to check the left and right branches first.\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/1644M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree%20II.py)
+"""
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        self.findP, self.findQ = False, False
+        node = self.helper(root, p, q)
+        if not self.findP or not self.findQ:
+            return None
+        return node
+    
+    def helper(self, node, p, q):
+        if not node:
+            return None
+        
+        left = self.helper(node.left, p, q)
+        right = self.helper(node.right, p, q)
+        
+        if left and right:
+            return node
+        if node == p or node == q:
+            if node == p: self.findP = True
+            if node == q: self.findQ = True
+            return node
+"""
+
+### 1650M. Lowest Common Ancestor of a Binary Tree III
+**Description:**\
+Given two nodes of a binary tree p and q, return their lowest common ancestor (LCA).\
+Each node will have a reference to its parent node. The definition for Node is below:\
+"""
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node parent;
+}
+"""
+According to the definition of LCA on Wikipedia: “The lowest common ancestor of two nodes p and q in a tree T is the lowest node that has both p and q as descendants (where we allow a node to be a descendant of itself).”\
+**Constraints:**\
+1. The number of nodes in the tree is in the range \[2, 10^5\].\
+2. -10^9 <= Node.val <= 10^9\
+3. All Node.val are unique.\
+4. p != q\
+5. p and q exist in the tree.\
+**Method:**\
+I can consider looking for the intersection of two linked lists, as each node has a parent pointer.\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/1650M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree%20III.py)
+"""
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        cur1, cur2 = p, q
+        while cur1 != cur2:
+            if not cur1: cur1 = q
+            else: cur1 = cur1.parent
+            if not cur2: cur2 = p
+            else: cur2 = cur2.parent
+        return cur1
+"""
+
+### 1676M. Lowest Common Ancestor of a Binary Tree IV
+**Description:**\
+Given the root of a binary tree and an array of TreeNode objects nodes, return the lowest common ancestor (LCA) of all the nodes in nodes. 
+All the nodes will exist in the tree, and all values of the tree’s nodes are unique.\
+Extending the definition of LCA on Wikipedia: “The lowest common ancestor of n nodes p_1, p_2, …, p_n in a binary tree T is the lowest node that has every p_i as a descendant (where we allow a node to be a descendant of itself) for every valid i”. A descendant of a node x is a node y that is on the path from node x to some leaf node.\
+**Constraints:**\
+1. The number of nodes in the tree is in the range \[1, 10^4\].\
+2. -10^9 <= Node.val <= 10^9\
+3. All Node.val are unique.\
+4. All nodes\[i\] will exist in the tree.\
+5. All nodes\[i\] are distinct.\
+**Method:**\
+Just like a general problem of looking for the lowest common ancestor. Instead of checking p and q, we check if the node in the list.\
+[Python](https://github.com/yshiyi/LeetCode/blob/main/Binary%20Tree/1676M.%20Lowest%20Common%20Ancestor%20of%20a%20Binary%20Tree%20IV.py)
+"""
+class Solution(object):
+    def lowestCommonAncestor(self, root, nodes):
+        self.set = set(nodes)
+        return self.helper(root)
+    
+    def helper(self, root):
+        if not root:
+            return None
+        if root.val in self.set:
+            return root
+        left = self.helper(root.left)
+        right = self.helper(root.right)
+        if left and right:
+            return root
+        return left if left else right
+"""
 
 
 
