@@ -49,6 +49,7 @@ Method: Use BFS.
         Check if it is one of the deadends. If it is, then just continue.
         Check if it has been visited. If it has, then continue.
         Then for each wheel, we turn it up and down, and insert the new string into the queue.
+        这里，我们不能把visited.add() 放在for i in range(4)之前。因为这样效率会很低，每一个一加。
 """
 class Solution(object):
     def openLock(self, deadends, target):
@@ -98,4 +99,44 @@ class Solution(object):
             num[i] = str(int(num[i])-1)
         return "".join(num)
 
-
+       
+"""
+Method: Bidirectional BFS
+        Notice, visited.add() excutes before for i in range(4).
+        如果我们把每一个第一次见到的node就加进visited，比如在正向时获得target，把它加进visited。
+        当反向时，因为target已在visited，就不能加进q。那在下一循环就不能检测是否相遇。
+"""
+def openLock(self, deadends, target):
+        """
+        :type deadends: List[str]
+        :type target: str
+        :rtype: int
+        """
+        visited = set()
+        q1 = collections.deque()
+        q2 = collections.deque()
+        q1.append('0000')
+        q2.append(target)
+        visited.add("0000")
+        step = 0
+        while len(q1) and len(q2):
+            size = len(q1)
+            for _ in range(size):
+                seq = q1.popleft()
+                if seq in deadends:
+                    continue
+                if seq in q2:
+                    return step
+                visited.add(seq)
+                for i in range(4):
+                    seq_up = self.up(seq, i)
+                    seq_down = self.down(seq, i)
+                    if seq_up not in visited:
+                        q1.append(seq_up)
+                        # visited.add(seq_up)
+                    if seq_down not in visited:
+                        q1.append(seq_down)
+                        # visited.add(seq_down)
+            step += 1
+            q1, q2 = q2, q1
+        return -1
