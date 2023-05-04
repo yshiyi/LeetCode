@@ -11,7 +11,7 @@
        * [21. Merge Two Sorted Lists](#21-Merge-Two-Sorted-Lists)
        * [779M. K-th Symbol in Grammar](#779M-Kth-Symbol-in-Grammar)
        * [95M. Unique Binary Search Trees II](#95M-Unique-Binary-Search-Trees-II)
-       * [33. Search in Rotated Sorted Array](#33-Search-in-Rotated-Sorted-Array)
+       * [33M. Search in Rotated Sorted Array](#33M-Search-in-Rotated-Sorted-Array)
     * [2. Memoization](#2-Memoization)
        * [509. Fibonacci Number](#509-Fibonacci-Number)
        * [70. Climbing Stairs](#70-Climbing-Stairs)
