@@ -16,6 +16,7 @@
   * [isalpha()](#isalpha)
   * [tolower()](#tolower)
   * [max element](#max-element)
+  * [sort()](#sort)
 
 # int vs unsigned int
 A variable defined as int can be either positive or negative.\
@@ -567,6 +568,16 @@ while (str[i])
 
 ## max element
 \*max_element() returns the maximum value of a 1D vector.
+
+## sort
+To sort a list using a custom function
+```
+def func(num):
+    return nums[2]
+
+# In this case, the list is sorted using the third element.
+nums.sort(key=func)
+```
 
 
 
